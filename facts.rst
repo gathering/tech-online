@@ -220,9 +220,9 @@ Cli basics
 - Use ? to play with auto-complete
 - Check cable-setup with ``show lldp neighbours``
 - Check interfaces with ``show interfaces``
-- Or ``check interfaces terse``
-- Or ``check itnerfaces terse | match ae``
-- Or ``check interfaces ae0 extensive``
+- Or ``show interfaces terse``
+- Or ``show itnerfaces terse | match ae``
+- Or ``show interfaces ae0 extensive``
 - Check hardware with ``show chassis hardware``
 - Configure things by entering "config" mode with ``configure``
 
