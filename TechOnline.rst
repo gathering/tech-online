@@ -37,6 +37,37 @@ This document outlines all you need to know (hopefully), and we also invite
 you to hang out at discord to get or give tips. And feedback. We can change
 this!
 
+Suggested progress
+------------------
+
+You can work the issue however you desire, but for your own benefit, we
+recommend using verify.sh, and following roughly this order of progress:
+
+0. Skim through this entire document! There is a ton of useful information!
+1. Find the distro switch
+2. Set up LACP on distro0, ae0, towards core. Set up ae0.0 with the
+   link-net IP below. Use 'show interface ae0 extensive' to see status. Use
+   verify.sh (or check web(FIXME)).
+3. Set up OSPF on distro0 towards core - it isn't nearly as difficult as it
+   sounds, and it will ease everything else.
+4. Set up lo0.0 on distro0 with the appropriate management IP - verify.sh
+   should not get a reply from it.
+5. Take a break.
+6. Find edge0
+7. Consider deleting the entire 'interface' section to unclutter it.
+8. Set up ae0 on edge0 to point to ae100 on distro0 - focus on LACP first,
+   but you need to assign an IP to unit 0. This is the same as step 2, but
+   now you need to do both sides.
+9. Set up ospf on edge0
+10. Set up management interface on edge0
+11. Check your progress with verify.sh - take a break!
+12. Set up client ports on edge0
+13. The default vlan is fine, but you need to assign an IP address to
+    vlan.0 - the gateway IP.
+14. Verify that it works!
+15. If it works, use ``configure show | display set`` to easily copy the
+    relevant bits to edge1, but remember to change IP addresses!
+
 Hardware
 --------
 
