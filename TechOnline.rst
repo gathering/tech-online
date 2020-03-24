@@ -156,12 +156,16 @@ Pictures
 --------
 
 .. image:: overview.jpg
+   :width: 70%
 
 .. image:: ports1.jpg
+   :width: 70%
 
 .. image:: ports2.jpg
+   :width: 70%
 
 .. image:: lcd.jpg
+   :width: 70%
 
 Credentials
 -----------
