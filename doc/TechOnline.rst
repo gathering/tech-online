@@ -1,9 +1,6 @@
-================
-Tech:Online 2020
-================
-
 .. contents::
 
+.. sectnum::
 
 Intro
 =====
