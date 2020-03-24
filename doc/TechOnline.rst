@@ -37,6 +37,18 @@ to get you going and will refer you back to this document.
 
 If in doubt: Ask for help or hints on Discord!
 
+End result
+----------
+
+This is exactly what is being checked for:
+
+1. The FOO pc at 10.x.100.2 needs to successfully get ping replies from the
+   internet. You should also be able to ping it from your jumphost.
+2. LACP needs to be configured between the distro and core and between
+   distro and each edge switch.
+3. Likewise: linknets need to work.
+4. The systems should reply to ssh (they do already if brought on-line).
+
 Progress
 ========
 
@@ -219,13 +231,13 @@ The bottom-most EX4300 is the core, and excluded from the event.
 From the distro::
 
    kly@distro0> show lldp neighbors 
-   Local Interface  Parent Interface  Chassis Id          Port info   System Name
-   ge-1/0/0.0       ae100.0           44:f4:77:68:d9:c0   uplink      edge0
-   ge-0/0/0.0       ae100.0           44:f4:77:68:d9:c0   uplink      edge0
-   ge-1/0/2.0       ae101.0           44:f4:77:69:2b:80   uplink      edge1
-   ge-0/0/2.0       ae101.0           44:f4:77:69:2b:80   uplink      edge1
-   xe-1/1/0.0       ae0.0             44:f4:77:ff:9d:00   xe-0/2/0    klycore
-   xe-0/1/0.0       ae0.0             44:f4:77:ff:9d:00   xe-0/2/1    klycore
+   Local Interface    Parent Interface  Chassis Id          Port info    System Name
+   ge-1/0/0.0         ae100.0           44:f4:77:68:d9:c0   ge-0/0/0.0   edge0
+   ge-0/0/0.0         ae100.0           44:f4:77:68:d9:c0   ge-0/0/1.0   edge0
+   ge-1/0/2.0         ae101.0           44:f4:77:69:2b:80   ge-0/0/0.0   edge1
+   ge-0/0/2.0         ae101.0           44:f4:77:69:2b:80   ge-0/0/1.0   edge1
+   ge-0/0/47.0        ae0.0             44:f4:77:ff:9d:00   ge-0/0/22    klycore
+   ge-1/0/47.0        ae0.0             44:f4:77:ff:9d:00   ge-0/0/23    klycore
 
 Note that edge1 is plugged into ``ge-x/0/2``, and ``ge-x/0/1`` is free.
 This is purely for practical reasons.
