@@ -1,72 +1,211 @@
+================
 Tech:Online 2020
 ================
 
 .. contents::
 
+
 Intro
------
+=====
 
 .. warning::
 
    This is a WORK IN PROGRESS and is currently the first iteration of a
    _pilot_. It WILL change.
 
-The Gathering 2020 had to go truly digital due to a virus outbreak not even
-our firewalls could stop.
+The task at hand
+----------------
 
-We had been looking forward to being part of the Tech crew at The
-Gathering, and when "The Gathering: Online" was announced, an idea formed:
-Let's do "Tech:Online" as well!
+Our job is simple: We want to get FOO online. FOO is connected to a switch,
+the switch is connected to a distribution switch and the distribution
+switch is connected to the internet.
 
-We have hundreds of switches, let's see what we can do with them. But more
-than that, we want to let others in on the fun.
+But to support thousands of users, we need to do network segmentation. Your
+job is to configure the Juniper-switches to get FOO online. There are
+varying degrees of guidance throughout the event.
 
-So welcome to the very first Tech:Online, where you get to configure an
-actual TG distribution switch and edge switch. From scratch.
+The rest of this document is split in three:
 
-The task is simple: We've set up two edge switches and a distribution
-switch for each participant in the event, but we've left out the
-configuration. Instead, you get to log in to a raspbery pi with a bunch of
-serial adapters and you get to configure the actual hardware yourself.
+1. A suggested progression which should allow you to get things gradually
+   up and running and see actual progress. You do not have to follow this,
+   but it is strongly recommended.
+2. Facts about both the hardware configuration and expected IP plan. You
+   need this. Parts of the IP plan is mandatory, the rest is strongly
+   recommended.
+3. Intro to junos, networking and general tips and tricks which are highly
+   relevant.
 
-Normally we would have had a few thousand participants on a slightly larger
-variant of this topology, but instead we have a laptop emulating a
-participant.
+You should also watch the verification tool, which provide generous hints
+to get you going and will refer you back to this document.
 
-This document outlines all you need to know (hopefully), and we also invite
-you to hang out at discord to get or give tips. And feedback. We can change
-this!
+If in doubt: Ask for help or hints on Discord!
+
+Progress
+========
+
+Environment
+-----------
+
+You need an SSH client, if you are on windows "PuTTy" is recommended.
+
+You will be provided an IP address, port and a username and password to SSH
+to, this is where you will work.
+
+Start by making sure that works. You may want to use multiple windows.
+
+To connect to a switch, run the commands ``screen /dev/ttyUSB0`` for the
+first switch, and ``screen /dev/ttyUSB1`` for the second, and so on for
+``/dev/ttyUSB2`` and ``/dev/ttyUSB3``. You may have to hit "enter" to get
+an actual prompt the first time.
+
+Two of those ``/dev/ttyUSB`` devices will be the EX3300 distribution
+switch - you can use either - see if you can figure out why there are
+two...
+
+Once screen is running, you can exit screen with ``ctrl+a d`` - that is,
+hold CTRL while pressing ``a``, let go, then press d. This will "detach"
+and you can "re-attach" with ``screen -r``.
+
+The machine you have ssh'ed to is connected to the same network as your
+switches, so when things are configured, you can reach FOO from that
+machine. But you do not have to worry about locking yourself out: The
+console access you have is "out of band" and does not require the switches
+to work (beyond being able to see a login prompt).
 
 Suggested progress
 ------------------
 
-You can work the issue however you desire, but for your own benefit, we
-recommend using verify.sh, and following roughly this order of progress:
+Typically there are three general strategies when setting up a network: 
+
+1. Start at the client and work towards the internet/core
+2. Start at the core and work towards the client
+3. Random order
+
+Because it makes it much easier to test, we recommend following option
+number 2. Specifically:
+
+Phase 1: First linknet
+......................
+
 
 0. Skim through this entire document! There is a ton of useful information!
-1. Find the distro switch
-2. Set up LACP on distro0, ae0, towards core. Set up ae0.0 with the
-   link-net IP below. Use 'show interface ae0 extensive' to see status. Use
-   verify.sh (or check web(FIXME)).
-3. Set up OSPF on distro0 towards core - it isn't nearly as difficult as it
-   sounds, and it will ease everything else.
-4. Set up lo0.0 on distro0 with the appropriate management IP - verify.sh
-   should not get a reply from it.
-5. Take a break.
-6. Find edge0
-7. Consider deleting the entire 'interface' section to unclutter it.
-8. Set up ae0 on edge0 to point to ae100 on distro0 - focus on LACP first,
-   but you need to assign an IP to unit 0. This is the same as step 2, but
-   now you need to do both sides.
-9. Set up ospf on edge0
-10. Set up management interface on edge0
-11. Check your progress with verify.sh - take a break!
-12. Set up client ports on edge0
-13. The default vlan is fine, but you need to assign an IP address to
-    vlan.0 - the gateway IP.
-14. Verify that it works!
-15. If it works, use ``configure show | display set`` to easily copy the
-    relevant bits to edge1, but remember to change IP addresses!
+1. Find the distro switch with screen
+2. The distribution switch has two cables connected to the core (see the
+   `Reference documentation`_ chapter) and you need to configure them as an
+   aggregated interface.
+3. Set up LACP on distro0, ae0, towards core (see `Tips and tricks`_). That
+   means setting up an ``interfaces`` section for both physical devices -
+   or a interfaces-range that cover both.
+4. Set up "unit 0" on ae0 on the distro. It needs to have the link-net IP
+   provided in the `Reference documentation`_ chapter.
+5. Check that your uplink ports (`ge-0/0/46` and `ge-0/0/46`) are listed as
+   "up" when you use ``show interfaces``.
+6. If they are, check that ``ae0.0`` is up with ``show interfaces ae0.0
+   extensive``.
+7. If you've done everything right up until now, verify.sh should tell you
+   that 10.x.200.2 replies to ping from core, but not globally.
+8. Let your distro switch know that `10.x.200.1` is your default route. See
+   `Reference documentation`_ on static routing to accomplish this.
+9. At this point, you should be able to run ``ping 192.168.2.2`` from the
+   distro0 switch and get a reply, and the verification script should state
+   that `10.x.200.2` replies both from core and globally.
+
+At this point you have a working distro0 switch! Be happy! Take a break.
+
+Interesting things to try: Try ``ssh 10.x.200.2`` from the jumphost
+directly. It should let you ssh directly to the switch.
+
+Phase 2: Establish a link to edge0
+..................................
+
+Now that distro0 is up, we want to get a link to edge0. We start on
+distro0.
+
+1. Edge0 is connected through ports ``ge-0/0/0`` and ``ge-1/0/0`` on
+   distro0. Just as with your core link, you need to configure LACP to bond
+   these to interfaces together.
+2. Create an ``interface`` section for ``ge-0/0/0`` and ``ge-1/0/0`` that
+   enables 802.3ad. Call the ae-interface ``ae100`` for convenience.
+3. Set up "unit 0" on ae100. You will find the appropriate link-net IP in
+   the reference documentation.
+4. Once this is up, using ``show interfaces ae100 extensive`` should show
+   the link as DOWN, but it should also show the IP and the physical ports
+   should be listed as up. It's time to connect to edge0.
+5. Open a screen session to ``edge0`` - log in.
+6. On edge0, it's the same deal, but different interfaces: ``ge-0/0/0`` and
+   ``ge-0/0/1`` is connected to the distro.
+7. Do the same as step 2 and 3: Set up an ``interface`` section for the
+   physical interfaces (``ge-0/0/0`` and ``ge-0/0/1``). For this end, use
+   ``ae0``.
+8. Set up an ``interface`` section for ``ae0`` and ``ae0`` unit 0, with the
+   other end of the link-net IP.
+9. Check ``show interfaces ae0``. It _should_ display as UP, and with the
+   correct IP and bandwidth 2Gbps.
+10. Verify: run ``ping 10.x.200.5`` on edge0 and ``ping 10.x.200.6`` on
+    distro0: it should reply.
+11. The verify-script will still only get a global reply from 10.x.200.5 -
+    the distro side of the link.
+12. Back on edge0, set up a static route using 10.x.200.5 as default
+    gateway.
+13. Verify should now get a global reply from both 10.x.200.5 and
+    10.x.200.6
+
+If you've gotten this far, you've gotten basic connectivity done! Good
+work! Take a break, brag a bit.
+
+Things to test: Try disabling an up-link with ``set interfaces ge-0/0/0
+disable`` (in configure), then check the speed of ae0 with ``show
+interfaces ae0``. Re-enable the uplink-port with ``delete interfaces
+ge-0/0/0 disable``.
+
+Phase 3: Rinse and repeat for edge1
+...................................
+
+There are two edge-switches, so now you get to do phase 2 all over again.
+Instead of repeating the instructions, here's a tip:
+
+``show configuration interfaces | display set`` can be used to extract
+set-statements, edit (in vim/notepad/whatever), and paste it back in. Just
+remember to modify the IP addresses!
+
+By the end of this phase, all three switches should be fully connected,
+everything should verify correctly, except that the client FOO is still not
+on-line.
+
+Phase 4: Get a client on-line!
+..............................
+
+1. Connect to edge0, what you want to do is set all client ports to belong
+   to "family ethernet-switching". This is probably best done with ``set
+   interfaces interface-range clients member-range ge-0/0/2 to ge-0/0/47``,
+   and then applying any other interface-statements to the ``clients``
+   interface range. See `Reference documentation`_ for examples.
+2. Once this is done, basic switching works, but there's no way for you to
+   know and there's no way to test. You have created a LAN with no
+   connection to the outside world.
+3. Each such port is connected to a vlan, by default, this is the `default`
+   vlan - you can look at it with ``show vlans default``.
+4. Assign a "layer 3" interface to the default vlan, it should be named
+   `vlan.0`.
+5. Assign an IP address to the `vlan.0` interface.
+6. Check if vlan.0 is up with ``show interface vlan.0``.
+7. Ping 10.x.100.2 locally from edge0 - it should now reply (locally).
+8. To get it working globally, you need to log in to distro0 and create a
+   static route for 10.x.100.0/24 via 10.x.200.6 (the edge0 linknet IP).
+9. Check that it works.
+10. Do the same for edge1 :D
+
+If you made it this far, the verify script should be very happy just about
+now, and you should be happy as well!
+
+Things to try: You may want to set up OSPF instead of all this static
+routing. For our 3-switch example, it's not a big deal, but as you can
+imagine, keeping track of which network belongs where can get bothersome.
+Try deleting all the static routing, except the default route on distr0,
+and setting up OSPF. It isn't nearly as tricky as it might sound.
+
+Reference documentation
+=======================
 
 Hardware
 --------
@@ -247,33 +386,215 @@ Table
 
 
 Tips and tricks
+===============
+
+Basic Junos CLI
 ---------------
 
-Cli basics
-..........
+First: Junos is Juniper's OS.
 
-- Use ? to play with auto-complete
-- Check cable-setup with ``show lldp neighbours``
-- Check interfaces with ``show interfaces``
-- Or ``show interfaces terse``
-- Or ``show itnerfaces terse | match ae``
-- Or ``show interfaces ae0 extensive``
-- Check hardware with ``show chassis hardware``
-- Configure things by entering "config" mode with ``configure``
+Junos CLI is a command-line interface to configure and review Juniper
+hardware. This isn't a complete guide, but a crash course.
 
-Configuration basics
-....................
+First: Tab completion works, and '?' will give you extensive help. Learn to
+love it. You also have "help reference (topic)".
 
-- Once in configure-mode, you probably want to use ``set`` and ``delete``.
-- To apply the configuration, use ``commit``, or ``commit confirmed``,
-  which gives you a 10 minute window to verify that things work. If you do
-  not issue an other ``commit``, the change will be rolled backed after 10
-  minutes.
-- Check changes with ``show | compare``
-- Working in mostly one section? Use ``edit interfaces`` to avoid having to
-  prefix everything with 'interfaces'.
-- When done, use ``exit`` to go back to the regular cli.
-- You can also roll back configuration changes with the "rollback" command.
+You will be working mostly with the ``show`` command to review system
+status, the ``ping`` command to ping locally, and ``configure`` to change
+configuration.
+
+The actual CLI for ``show`` is mostly self explanatory, but here are a few
+hints::
+
+   # Show all interfaces configured, with moderate amount of extra
+   # information
+   show interfaces 
+
+   # Show a single interface, with extensive information
+   show interfaces ae0 extensive
+
+   # Show a one-line output per interface
+   show interfaces terse
+
+   # ... and look only for lines matching "ae"
+   show interfaces terse | match ae
+
+   # Show LLDP neighbors: LLDP is a protocol for discovering physically
+   # connected devices - it isn't fool proof, but it's  a great help
+   show lldp neighbours
+
+   # Others:
+   show chassis hardware
+   show version
+   show system uptime
+
+Configuration can be reviewed with ``show configuration``, but to modify
+it, run ``configure`` stand-alone, which will enter configuration mode.
+
+When in configuration mode, you can review the current configuration stance
+with ``show`` (by default: the entire configuration). You modify the
+configuration by adding and deleting statements with ``set`` and
+``delete``. The configuration changes do *not* take effect immediately, but
+only after you issue ``commit``, which also does various checks first.
+
+You can also issue ``rollback`` to roll back the configuration. Use
+``rollback ?`` to see timestamps of versions you can roll back to.
+
+You can see what changes you've made prior to a commit with ``show |
+compare``.
+
+You can also combine all ``show`` commands in configuration mode with
+``display set``, which displays the configuration as ``set``/``delete``
+commands, which is also suitable for copy/paste.
+
+Cheat sheet for configuration mode::
+
+   # Set options on a single interface
+   set interfaces ge-0/0/46 ether-options 802.3ad ae0
+
+   # Create an interface-range to avoid having a gazillion set-statements
+   set interfaces interface-range clients member-range ge-0/0/2 to ge-0/0/47
+   set interfaces interface-range clients description clients
+   set interfaces interface-range clients unit 0 family ethernet-switching
+
+   # You don't have to specify all set-commands to delete something under a
+   # "tree", so:
+   delete interfaces interface-range clients member-range ge-0/0/2 to ge-0/0/47
+   delete interfaces interface-range clients description clients
+   delete interfaces interface-range clients unit 0 family ethernet-switching
+
+   # might be better written as
+   delete interfaces interface-range clients
+
+   # Commit changes
+   show | compare
+   show | compare | display set
+   commit
+
+   # You can use "edit" to focus on a single section, so this:
+   set interfaces ae0 unit 0 family inet 10.1.200.2/30
+
+   # is the same as:
+   edit interfaces ae0
+   set family inet 10.1.200.2/30
+
+   # To get to the top again, use "top".
+   top
+
+   # Exit config mode - if you used "edit", it will exit that section
+   exit
+
+Aggregated interfaces
+---------------------
+
+This is were terminology is annoying, because there are about fifty
+different words that describe roughly the same thing. "Bonding", "trunk",
+"link aggregate groups", "aggregated interfaces"... All refer to more or
+less the same thing.
+
+The essence is: You have more than one physical link/cable going from A to
+B, and you want to bundle them together and treat them as one logical
+interface.
+
+For us, this serves two purposes:
+
+1. If someone accidentally unplugs a cable, the switch will still be
+   on-line (this happens ALL THE TIME at The Gathering, specially on day 1)
+2. Increased bandwidth.
+
+On Juniper, aggregated interfaces are named "aeX", where X is an arbitrary
+number you assign to it. For convenience, we use ae0 to refer to "uplink to
+a bigger device".
+
+To set up an aggregated interface, you need to first configure the
+_physical_ device to be part of the aggregate, then configure the
+aggregated device itself.
+
+The first step is fairly simple::
+
+   delete interfaces ge-0/0/0
+   delete interfaces ge-0/0/1
+   set interfaces ge-0/0/0 ether-options 802.3ad ae0
+   set interfaces ge-0/0/1 ether-options 802.3ad ae0
+
+It might be nicer to write::
+
+   delete interfaces ge-0/0/0
+   delete interfaces ge-0/0/1
+   set interfaces interface-range uplink description uplink
+   set interfaces interface-range uplink member ge-0/0/0
+   set interfaces interface-range uplink member ge-0/0/1
+   set interfaces interface-range uplink ether-options 802.3ad ae0
+
+Generally speaking, interface-ranges are very nice (though for two ports,
+it's not much of a difference).
+
+Next, you need to actually enable LACP on the device and configure a family
+to bring the interface up::
+
+   set interfaces ae0 description uplink
+   set interfaces ae0 aggregated-ether-options lacp active
+   set interfaces ae0 unit 0 family inet address 10.1.200.2/30
+
+To review this, commit it, exit config mode and see ``show interfaces ae0
+extensive``.
+
+LACP?
+.....
+
+LACP is the Link Aggregation Control Protocol. It is used explicitly to
+connect devices with multiple ports, but most importantly, it is the
+protocol that figures out exactly how many of the available links are
+actually working and how to deal with link failures. For our purposes, it's
+not very exotic, but for more complex setups you can use LACP to say that
+if less than 3 of these 5 links are up, then take the entire link down (so
+the router can move the traffic to alternate routes).
+
+Linknets - theory and practice
+------------------------------
+
+A link-net is a tiny IP network that works as an interconnect between two
+routers. A linknet has two IP addresses assigned to it, one belonging to
+each of the interconnected devices. A router can have multiple linknets if
+it is connected to multiple other routers.
+
+In our example, there are exactly three linknets:
+
+1. A linknet between distro0 and core - you only have to configure one side
+   of it.
+2. A linknet between distro0 and edge0
+3. A linknet between distro0 and edge1
+
+Since it only requires two IP addresses, the netmask is 255.255.255.252, or
+more commonly /30 - one IP for either end, plus an IP for the network and
+broadcast (it is also common to use /31, but this is somewhat iffy).
+
+Setting up a link-net is a two-step process. First you need to configure
+the physical link. All the linknets we are using are established on top of
+multiple physical links - multiple cables. So you first need to establish
+an aggregate interface (see the previous chapter).
+
+Once the physical link is up, you need to set up an IP address on it. For
+juniper, this is fairly easy. Let's assume we are working on the distro0 -
+edge1 connection. On distro0, you run (assuming ae101 has LACP up)::
+
+   set interfaces ae101 description edge0
+   set interfaces ae101 unit 0 family inet address 10.1.200.9/30
+   commit
+
+On the edge1 side, you match it up::
+
+   set interfaces ae0 description distro
+   set interfaces ae0 unit 0 family inet address 10.1.200.10/30
+   commit
+
+After this, both sides should be able to ping 10.1.200.10 and 10.1.200.9.
+
+And that's really all there is to it.
+
+Leftovers
+---------
+
 
 Virtual chassis
 ...............
@@ -294,92 +615,6 @@ one or more "line card".
 One thing you may want to do is set ``set virtual-chassis
 no-split-detection`` in case of a "power outage" on one "member".  Feel
 free to google what that means.
-
-Junos basics
-............
-
-- Interfaces are named 'ge-' for gigabit ethernet, 'xe-' for 10g-ethernet.
-- Interface names are ``tech-FPC/PIC/PORT``, which comes out as
-  ``ge-0/0/5``. FPC is normally a line card, but in our lab, it also refers
-  to each member of a virtual chassis. So ``ge-0/0/5`` and ``ge-1/0/5`` is
-  the same port on two different EX3300 in the same "virtual chassis".
-- ``show`` commands are harmless
-- ``request`` commands might trigger changes on the system
-- Use ``ping`` and ``traceroute`` to check your progress.
-- ``show route`` and ``show ospf route`` is neat.
-
-Gotcha: aggregate count
-.......................
-
-Let me save you time::
-
-   kly@distro0# show chassis
-   aggregated-devices {
-       ethernet {
-           device-count 3;
-       }
-   }
-
-Without this, no ae-interfaces will be created. With this, 3 will be made.
-You can name them whatever, but this count needs to match or exceed the
-number of ae-interfaces you define. It's silly, but there you are.
-
-Linknets
-........
-
-A link-net is a network with two peers, typically two routers (in our
-setup, each switch acts as a router).
-
-To set up a link net you first need to establish the layer-2 connection.
-Since every uplink is prepared with redundancy - two cables - you need to
-configure an aggregate. Do this by configuring the physical interface with
-``ether-options 802.3ad ae0``, where ae0 is a name you provide. You can
-also use "interface-range" to avoid having to do it for each physical
-interface individually.
-
-Example::
-
-       interface-range core {
-           member xe-0/1/0;
-           member xe-1/1/0;
-           description core;
-           ether-options {
-               802.3ad ae0;
-           }
-       }
-
-You also need to specify the actual aggregate interface, in this case, ae0.
-For layer two, that means::
-
-    ae0 {
-        description core;
-        aggregated-ether-options {
-            lacp {
-                active;
-            }
-        }
-    }
-
-If you commit this on both ends, you should be able to see the interface
-coming alive with ``show interface ae0 extensive``. The names are local, so
-edge0:ae0 can be connected to distro0:ae100.
-
-Once this is up, you still need to set up an IP link - layer 3. For
-distro0 to core, that means::
-
-   ae0 {
-       description core;
-       aggregated-ether-options {
-           lacp {
-               active;
-           }
-       }
-       unit 0 {
-           family inet {
-               address 10.1.200.2/30;
-           }
-       }
-   }
 
 Routing
 .......
