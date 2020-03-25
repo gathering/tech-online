@@ -216,6 +216,12 @@ and setting up OSPF. It isn't nearly as tricky as it might sound.
 Reference documentation
 =======================
 
+Topology
+--------
+
+.. image:: topology.svg
+   :width: 70%
+
 Hardware
 --------
 
