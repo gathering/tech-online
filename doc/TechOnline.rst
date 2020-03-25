@@ -240,13 +240,10 @@ From the distro::
    Local Interface    Parent Interface  Chassis Id          Port info    System Name
    ge-1/0/0.0         ae100.0           44:f4:77:68:d9:c0   ge-0/0/0.0   edge0
    ge-0/0/0.0         ae100.0           44:f4:77:68:d9:c0   ge-0/0/1.0   edge0
-   ge-1/0/2.0         ae101.0           44:f4:77:69:2b:80   ge-0/0/0.0   edge1
-   ge-0/0/2.0         ae101.0           44:f4:77:69:2b:80   ge-0/0/1.0   edge1
+   ge-1/0/1.0         ae101.0           44:f4:77:69:2b:80   ge-0/0/0.0   edge1
+   ge-0/0/1.0         ae101.0           44:f4:77:69:2b:80   ge-0/0/1.0   edge1
    ge-0/0/47.0        ae0.0             44:f4:77:ff:9d:00   ge-0/0/22    klycore
    ge-1/0/47.0        ae0.0             44:f4:77:ff:9d:00   ge-0/0/23    klycore
-
-Note that edge1 is plugged into ``ge-x/0/2``, and ``ge-x/0/1`` is free.
-This is purely for practical reasons.
 
 In the distro, FPC0 is the first virtual-chassis member (the first EX3300),
 and FPC1 is the second. It is fairly irrelevant which is which, since they
