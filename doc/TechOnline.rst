@@ -315,7 +315,7 @@ Pictures
 .. image:: ports2.jpg
    :width: 70%
 
-.. image:: lcd.jpg
+.. image:: overview2.jpg
    :width: 70%
 
 Credentials
