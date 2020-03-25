@@ -151,9 +151,7 @@ core_ping() {
 }
 
 mgmt
-if [ $USER = "kly" ]; then
-	core_ping
-	lacp_core
-fi
+core_ping
+lacp_core
 linkp
 laptop
