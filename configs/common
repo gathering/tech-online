@@ -6,6 +6,9 @@ set system login user kly authentication ssh-rsa "ssh-rsa AAAAB3NzaC1yc2EAAAADAQ
 set system login user tech uid 2001
 set system login user tech class super-user
 set system login user tech authentication encrypted-password "$5$D9KPKJj0$jyi/UTys6gU661W9NK./QpTQ0Np//eknOMbabcB8gw."
+set system login user pi uid 2002
+set system login user pi class super-user
+set system login user pi authentication ssh-rsa "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDE6WJOsZ0MlBldljZQLzAO7QXdtp7Rv8oPiNC+Zl9171yF+ze1ArkO46ipKTgyrew93fh7mcwlG1OXWejc2Ctk8KUxEh1WshYlvUDoOvhqRmxFSSwyLDaXhvy4aRmWzAcT2Vi+YV8F6/9mnPkZt6182dQbAz64Lx42uTDJVAU7JXa/S8dBRjKIS3svCt5/7+xHXNxK/0Jay019+q+0UoWXHxHe2Z9tDMEURI51E+ZQKP++pIjpp7Rz5vvC171kN8yQOoSoeGcDRKTmTgWmVMclJPlV1MFM7Oiv7k0vmoycqC/2w/Tqev31Vpe/WDoSpAfee8JTLkOpm98ulqrHWeFR pi@raspberrypi"
 set system services ssh root-login allow
 set system ntp server 172.16.0.1 prefer
 set chassis aggregated-devices ethernet device-count 5
