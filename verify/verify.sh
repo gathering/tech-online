@@ -1,18 +1,15 @@
+#!/bin/bash
 
-core=10.1.200.1
-distro=10.1.200.2
-e0=10.1.200.6
-e1=10.1.200.10
+prefix="10.1."
 
 declare -A mgmt_ip
-mgmt_ip[core]=10.1.200.1
-mgmt_ip[distro]=10.1.200.2
-mgmt_ip[edge0]=10.1.200.6
-mgmt_ip[edge1]=10.1.200.10
+mgmt_ip[core]=${prefix}200.1
+mgmt_ip[distro]=${prefix}200.2
+mgmt_ip[edge0]=${prefix}200.6
+mgmt_ip[edge1]=${prefix}200.10
 mgmt_ok=""
 mgmt_bad=""
 
-all="$core $distro $e0 $e1"
 gfail=0
 lfail=0
 
@@ -89,6 +86,17 @@ do_hint() {
 }
 
 mgmt() {
+	src=$1
+	shift
+	rest="$*"
+	if mgmt_ok ${mgmt_ip[$src]}; then	
+		ssh $src "$rest"
+		return 0
+	fi
+	return 1
+}
+
+v_mgmt() {
 	header "Testing management"
 	for a in core distro edge0 edge1; do
 		mping ${mgmt_ip[$a]} "$a" && test_mgmt ${mgmt_ip[$a]} $a
@@ -109,31 +117,40 @@ link_test() {
 	remote_ping $aname $bside "$fname: $aname from $bname" 
 	remote_ping $bname $aside "$fname: $bname from $aname" 
 }
+declare -A linknets
+linknets[distro-core]="${prefix}200.1 core ${prefix}200.2 distro"
+linknets[distro-edge0]="${prefix}200.5 distro ${prefix}200.6 edge0"
+linknets[distro-edge1]="${prefix}200.9 distro ${prefix}200.10 edge1"
+
 linkp() {
 	header "Pinging linknets"
-	link_test 10.1.200.1 core 10.1.200.2 distro
-	link_test 10.1.200.5 distro 10.1.200.6 edge0
-	link_test 10.1.200.9 distro 10.1.200.10 edge1
+	for a in ${!linknets[*]}; do
+		link_test ${linknets[$a]}
+	done
+#	link_test ${prefix}200.1 core 10.1.200.2 distro
+#	link_test ${prefix}200.5 distro 10.1.200.6 edge0
+#	link_test ${prefix}200.9 distro 10.1.200.10 edge1
 	do_hint hint_link
 }
 
 laptop() {
 	header "Pinging participant"
-	mping 10.1.100.1 "edge0 gateway-ip"
-	mping 10.1.100.2 "edge0 - participant"
-	remote_ping edge0 10.1.100.1 "edge0 - gw ip - locally from edge0"
-	remote_ping edge0 10.1.100.2 "edge0 - client ip - locally from edge0"
+	mping ${prefix}100.1 "edge0 gateway-ip"
+	mping ${prefix}100.2 "edge0 - participant"
+	remote_ping edge0 ${prefix}100.1 "edge0 - gw ip - locally from edge0"
+	remote_ping edge0 ${prefix}100.2 "edge0 - client ip - locally from edge0"
 	do_hint hint_participant
 }
+
 
 lacp_core() {
 	header 'Checking for LACP packets on core-distro link'
 	echo -n '[ xxxx ] Clearing counters...'
-	ssh $core 'clear lacp statistics'
+	mgmt ${mgmt_ip[core]} 'clear lacp statistics'
 	echo -n 'Sleeping for a second or two...'
 	sleep 2
 	echo 'Checking...'
-	lines=$(ssh $core  'show lacp statistics interfaces | display json ' | jq '."lacp-interface-statistics-list"[0]."lacp-interface-statistics"[0]."lag-lacp-statistics"[] | .name[0].data + " lacp-rx-packets: " + ."lacp-rx-packets"[0].data' | sed 's/"//g')
+	lines=$(mgmt ${mgmt_ip[core]}  'show lacp statistics interfaces | display json ' | jq '."lacp-interface-statistics-list"[0]."lacp-interface-statistics"[0]."lag-lacp-statistics"[] | .name[0].data + " lacp-rx-packets: " + ."lacp-rx-packets"[0].data' | sed 's/"//g')
 	echo -e "$lines" | awk '/\s+0$/ { exit 1 }; '
 	ret=$?
 
@@ -150,7 +167,7 @@ core_ping() {
 	remote_ping core 10.1.200.2 "core-distro linknet - distro-side"
 }
 
-mgmt
+v_mgmt
 core_ping
 lacp_core
 linkp
