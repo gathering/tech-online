@@ -1,6 +1,6 @@
 
-Tech:Online progress report
-===========================
+Progress report, station 1
+==========================
 
 Completion
 ----------

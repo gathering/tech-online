@@ -13,6 +13,7 @@
           }
         }
         row = b.insertRow()
+        row.classList.add("h4")
         c = row.insertCell()
         c.colSpan = 3
         c.innerText = data.tests[t].header
@@ -52,4 +53,4 @@
             last_header_c.bgColor = "red"
           }
         }
-   completion.innerText = "Completion: " + ok + " of " + t + " (" + (100 * ok/t) + "%) as of " + data.timestamp
+   completion.innerText = "Completion: " + ok + " of " + t + " (" + (100 * ok/t) + "%) as of " + data.timestamp + " - check took " + data.runtime + " seconds"

@@ -220,13 +220,13 @@ Topology
 --------
 
 .. image:: topology.svg
-   :width: 70%
+   :width: 80%
 
 Hardware
 --------
 
 .. image:: overview.jpg
-   :width: 70%
+   :width: 80%
 
 Two edge switches, EX2200.
 
@@ -307,16 +307,16 @@ Pictures
 --------
 
 .. image:: overview.jpg
-   :width: 70%
+   :width: 80%
 
 .. image:: ports1.jpg
-   :width: 70%
+   :width: 80%
 
 .. image:: ports2.jpg
-   :width: 70%
+   :width: 80%
 
 .. image:: overview2.jpg
-   :width: 70%
+   :width: 80%
 
 Credentials
 -----------

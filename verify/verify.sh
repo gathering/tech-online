@@ -1,7 +1,7 @@
 #!/bin/bash
 
 prefix="10.1."
-
+start_time=$(date +%s)
 hint_int=n
 declare -A mgmt_ip
 mgmt_ip[core]=${prefix}200.1
@@ -23,7 +23,16 @@ s_n=0
 json_out=$(mktemp)
 
 cleanup() {
-	echo '}, "timestamp": "'$(date --iso-8601=seconds)'"}' >> ${json_out}
+	runtime=$(( $(date +%s) - ${start_time} ))
+	echo '}, "timestamp": "'$(date --iso-8601=seconds)'","runtime": '$runtime' }' >> ${json_out}
+	if ! jq . < ${json_out} > /dev/null 2>&1; then
+		echo 'bad json-output'
+		ferdig=nope
+	fi
+	if [ $(wc -l < ${json_out}) -lt 15 ]; then
+		echo 'too few lines in json-output'
+		ferdig=nope
+	fi
 	if [ $ferdig = "yup" ]; then
 		cp ${json_out} ${prefix}$(date --iso-8601=minute).json
 		cp ${json_out} ${prefix}latest.json
