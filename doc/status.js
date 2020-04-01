@@ -1,3 +1,8 @@
+var b = null
+function update() {
+   if (b != null) {
+	   kek.removeChild(b)
+   }
    b = kek.createTBody()
    ok=0
    total=0
@@ -53,4 +58,7 @@
             last_header_c.bgColor = "red"
           }
         }
-   completion.innerText = "Completion: " + ok + " of " + t + " (" + (100 * ok/t) + "%) as of " + data.timestamp + " - check took " + data.runtime + " seconds"
+   completion.innerHTML = "Completion: " + ok + " of " + t + " (" + (100 * ok/t) + "%) as of " + data.timestamp + " - check took " + data.runtime + ' seconds. (<a onclick="update()" href="#">Check for updates</a>)'
+}
+
+update()
