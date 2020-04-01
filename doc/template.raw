@@ -49,8 +49,17 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
+        <li>
+          <a href="index.html">Index</a>
+        </li>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Resources <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Status<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="progress-1.html">Station 1 progress</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">External resources <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="https://gathering.org/">Gathering.org</a></li>
             <li><a href="https://friday.horse/">Horses</a></li>

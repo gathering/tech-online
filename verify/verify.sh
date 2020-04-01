@@ -2,6 +2,7 @@
 
 prefix="10.1."
 
+hint_int=n
 declare -A mgmt_ip
 mgmt_ip[core]=${prefix}200.1
 mgmt_ip[distro]=${prefix}200.2
@@ -13,17 +14,44 @@ mgmt_bad=""
 gfail=0
 lfail=0
 
+ferdig=nope
+t_header=""
 
+s_n=0
+
+
+json_out=$(mktemp)
+
+cleanup() {
+	echo '}, "timestamp": "'$(date --iso-8601=seconds)'"}' >> ${json_out}
+	if [ $ferdig = "yup" ]; then
+		cp ${json_out} ${prefix}$(date --iso-8601=minute).json
+		cp ${json_out} ${prefix}latest.json
+		echo -n 'data = ' > ${prefix}jsonp
+		cat ${json_out} >> ${prefix}jsonp
+	fi
+	rm ${json_out}
+}
+
+trap cleanup EXIT
+
+echo '{ "tests": {' > ${json_out}
 state() {
 	ret=$1
 	msg=$2
+	s_n=$(( $s_n + 1 ))
 	if [ $ret != 0 ]; then
-		echo -n '[ fail ] '
+		_state="fail"
 		lfail=$(( $lfail + 1 ))
 	else
-		echo -n '[  ok  ] '
+		_state="ok"
 	fi
-	echo $2
+	printf "[ %4s ] %s\n" "$_state" "$msg"
+	comma=""
+	if [ $s_n != 1 ]; then
+		comma=","
+	fi
+	printf '%s"%d": { "test": "%s", "state": "%s", "header": "%s" }\n' "$comma" "$s_n" "$msg" "$_state" "$t_header" >> ${json_out}
 }
 
 mping() {
@@ -66,12 +94,16 @@ remote_ping() {
 
 header() {
 	echo " *****: $*"
+	t_header="$*"
 	gfail=$(( $gfail + $lfail))
 	lfail=0
 }
 
 do_hint() {
 	if [ $lfail = 0 ]; then
+		return 1
+	fi
+	if [ $hint_int = "n" ]; then
 		return 1
 	fi
 	echo -n 'Do you want a hint? y/[n]: '
@@ -97,7 +129,7 @@ mgmt() {
 }
 
 v_mgmt() {
-	header "Testing management"
+	header "Management"
 	for a in core distro edge0 edge1; do
 		mping ${mgmt_ip[$a]} "$a" && test_mgmt ${mgmt_ip[$a]} $a
 	done
@@ -123,7 +155,7 @@ linknets[distro-edge0]="${prefix}200.5 distro ${prefix}200.6 edge0"
 linknets[distro-edge1]="${prefix}200.9 distro ${prefix}200.10 edge1"
 
 linkp() {
-	header "Pinging linknets"
+	header "Linknet"
 	for a in ${!linknets[*]}; do
 		link_test ${linknets[$a]}
 	done
@@ -134,7 +166,7 @@ linkp() {
 }
 
 laptop() {
-	header "Pinging participant"
+	header "Participant"
 	mping ${prefix}100.1 "edge0 gateway-ip"
 	mping ${prefix}100.2 "edge0 - participant"
 	remote_ping edge0 ${prefix}100.1 "edge0 - gw ip - locally from edge0"
@@ -144,7 +176,7 @@ laptop() {
 
 
 lacp_core() {
-	header 'Checking for LACP packets on core-distro link'
+	header 'LACP'
 	echo -n '[ xxxx ] Clearing counters...'
 	mgmt ${mgmt_ip[core]} 'clear lacp statistics'
 	echo -n 'Sleeping for a second or two...'
@@ -163,7 +195,7 @@ lacp_core() {
 }
 
 core_ping() {
-	header 'Ping from core'
+	header 'Ping'
 	remote_ping core 10.1.200.2 "core-distro linknet - distro-side"
 }
 
@@ -172,3 +204,4 @@ core_ping
 lacp_core
 linkp
 laptop
+ferdig=yup
