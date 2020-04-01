@@ -1,29 +1,31 @@
 
-Hint
-====
+Hints
+=====
 
 Management
 ----------
 
-Mangement IPs are not absolutely required, but make verification
-much easier. In the general sense, a management address is an address that
-is exclusively used for management - it isn't associated with a specific
-interface.
+The management checks test two things. First, they ping the IP of the
+uplink-interface for the relevant switch. This means you need to have
+linknets working.
 
-In this environment, we expect them to be routed addresses - though there
-are other ways of handling management addresses. A simple way of setting it
-up is assigning the address to loop-back interface, and then ensuring that
-it is announced with OSPF.
+If they successfully ping, they also try ssh. The switches have been
+pre-configured with ssh and a user, so as long as they are online, this
+_should_ work.
 
-See the PDF for an example of how to assign an IP to an interface, and a
-separate chapter for OSPF.
+Normally, a switch or router doesn't have a console cable attached, so we
+depend on management access over ssh to control them. In many setups it's
+common to assign a specific management IP, but for simplicity, we're
+skipping that part.
 
-If you have set up a management IP but it still fails to verify, try
-pinging the IP locally on the switch - if it replies, you've successfully
-set up the IP, but it isn't routed. Check your routing and/or OSPF.
+If you do feel like adding that, you can pick any unused IP address in the
+10.x.0.0/16 range assigned to you, for example 10.1.99.10/32 for the
+distro, 10.1.99.100/32 for edge0 and 10.1.99.101/32 for edge. But this is
+optional.
 
-If it doesn't reply locally, double check your configuration and use 'show
-interface' to see that the interface you've set it up on is actually up.
+You probably want to read about how to get linknets working if these tests
+fail. But if these tests fail, some other tests will be skipped since they
+require management access to succeed.
 
 Linknet
 -------
@@ -33,12 +35,12 @@ to an other.
 
 Since the core is configured correctly, you can use that as an
 indicator of whether you are doing it right. To get a link-net up
-in this environment, you need two thinks:
+in this environment, you need two things:
 
 1. You need to set of an aggregated interface (a bond interface).
    All uplinks use two physical links, and to bond them together,
    we use LACP / 802.3ad. See the "setting up LACP" hint in the
-   PDF.
+   reference documentation.
 2. An IP address assigned to the aggregated interface.
 
 If you are seeing a failure on _all_ linknets, both sides,

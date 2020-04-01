@@ -369,20 +369,13 @@ Table
 
 ::
 
-	Top-range: 10.1.0.0/16
+	Top prefix: 10.1.0.0/16
 
-	Management: 10.1.99.0/24
 	Linknet: 10.1.200.0/24
 	edge0 clients: 10.1.100.0/24
 	edge1 clients: 10.1.101.0/24
 
-	Management:
-	core - 10.1.99.1
-	distro - 10.1.99.10
-	e0 - 10.1.99.100
-	e1 - 10.1.99.101
-
-	linknet
+	Linknets
 
 	Core-link: 10.1.200.0/30
 		   10.1.200.1 - core
@@ -604,6 +597,91 @@ After this, both sides should be able to ping 10.1.200.10 and 10.1.200.9.
 
 And that's really all there is to it.
 
+LACP and linknets
+.................
+
+To get a linknet that relies on LACP up and running you need to combine the
+LACP-example and the linknet-ip.
+
+First, for interface ge-0/0/47 and ge-1/0/47, enable aggregation::
+
+   set interfaces ge-0/0/47 ether-options 802.3ad ae0
+   set interfaces ge-1/0/47 ether-options 802.3ad ae0
+
+Then bring it all together in ae0::
+
+   set interfaces ae0 description uplink
+   set interfaces ae0 aggregated-ether-options lacp active
+   set interfaces ae0 unit 0 family inet address 10.1.200.2/30
+
+Then commit and test.
+
+To get routing working, you also need to enable OSPF on the interface.
+
+For the other linknets, you need to find the correct ``ge-``-interfaces
+that are uplink and set the pre-defined IP. You can use what-ever ae-number
+you want, though.
+
+Routing - theory
+................
+
+Without routing, the router just knows about the IP networks it is directly
+attached to. That means your distro-switch can ping the linknet IP of its
+peers, but nothing that is connected to it.
+
+For a regular computer, routing is trivial: You have a single router for
+all traffic. For actual routers, it's slightly more complicated.
+
+For edge0 we want to route ``10.1.100.0/24`` from distro0 to edge0's
+link-net IP, 10.1.200.6. And edge0 needs to have a default route so all
+traffic is sent to the distro. That means for every network, all routers
+must have a clear idea how to connect to each other. It's possible to set
+this up manually, using "static routing", but it quickly gets cumbersome.
+
+This creates two problems, first, the obvious: You need to update a ton of
+static routes all over the place. Even with just three devices, it's very
+easy to make mistakes. Secondly: If there are multiple routes from A to B,
+there is no way to handle that.
+
+That's where dynamic routing comes into play. Dynamic routing is when two
+or more routers use a protocol to communicate their routing information.
+There are multiple protocols available, but we will be using OSPF - Open
+Shortest Path First.
+
+Core has already been set up with OSPF.
+
+OSPF can be somewhat complex, but on Junos, getting a simple setup like
+ours working is next to trivial.
+
+Routing - practice
+..................
+
+Setting up basic OSPF on Junos is pretty straight forward. There are
+different mechanisms that you want to use in a production environment, but
+for Tech:Online, you just need to set up "area 0.0.0.0" and define what
+interfaces should participate.
+
+The short version is::
+
+   set protocols ospf area 0.0.0.0 interface ae0.0
+
+For distro0, you also need to enable it for "downstream" interfaces to
+edge0 and edge1::
+   
+   set protocols ospf area 0.0.0.0 interface ae100.0
+   set protocols ospf area 0.0.0.0 interface ae101.0
+
+On edge0 and edge1 you want to enable it on the upstream interface, but you
+also want to enable it on the "client vlan", so but we don't need to
+actually communicate actively there. This is a bit of a hack, but works
+well for our use case::
+
+   set protocols ospf area 0.0.0.0 interface ae0.0
+   set protocols ospf area 0.0.0.0 interface vlan.0 passive
+
+And that's it! Check out the result after a commit with ``show ospf
+table`` after a few seconds.
+
 Leftovers
 ---------
 
@@ -627,78 +705,4 @@ one or more "line card".
 One thing you may want to do is set ``set virtual-chassis
 no-split-detection`` in case of a "power outage" on one "member".  Feel
 free to google what that means.
-
-Routing
-.......
-
-You can do routing the hard way or the easy way.
-
-The hard way is to set up static routing between each switch. For this
-setup, doing static routing isn't a big deal, but it wont get you on-line
-since "core" is expecting ospf.
-
-To set up ospf, you need a minimal config of::
-
-   protocols {
-      ospf {
-          reference-bandwidth 500g;
-          area 0.0.0.0 {
-              interface ae0.0;
-              interface lo0.0;
-              interface ae100.0;
-              interface ae101.0;
-          }
-      }
-   }
-
-(your interfaces may vary).
-
-A better approach that will work on the edge switches too is to include a
-policy. Since this is commonly cargo-culted, here's the gist::
-
-   policy-options {
-       policy-statement direct-to-ospf {
-           from protocol direct;
-           then {
-               external {
-                   type 1;
-               }
-               accept;
-           }
-       }
-       policy-statement static-to-ospf {
-           from protocol static;
-           then {
-               external {
-                   type 1;
-               }
-               accept;
-           }
-       }
-   }
-
-And then the ospf bit becomes::
-
-       ospf {
-           export [ static-to-ospf direct-to-ospf ];
-           reference-bandwidth 500g;
-           area 0.0.0.0 {
-               interface ae0.0;
-               interface lo0.0;
-               interface ae100.0;
-               interface ae101.0;
-           }
-       }
-
-(I suppose you don't need to add lo0.0 then either)
-
-Loopback
-........
-
-A special interface, lo0, can be used as loopback. It is a good idea to
-have a management interface on a switch, either on lo0 or some other
-vlan/interface, which isn't associated with a linknet or similar.
-
-For this exercise, I suggest using lo0.0 as management interface and
-getting it routed.
 
