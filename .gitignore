@@ -1,6 +1,10 @@
 *.pdf
 *.swp
-index.html
-progress-1.html
+doc/index.html
+doc/progress-1.html
+doc/doc.html
 verify/*.json
-doc.html
+node_modules
+yarn-error.log
+web/.cache
+web/dist
