@@ -4,10 +4,11 @@ Tech:Online
 
 .. warning::
 
-   This site is not launched yet, but we're too lazy to to password-protect
-   it for now.
+   This is still work in progress, and has not been officially launched
+   yet. But there are some nice pictures, though.
 
-Welcome to the Tech:Online hub! 
+
+Welcome to the Tech:Online hub!
 
 What is Tech:Online?
 ====================
@@ -18,12 +19,16 @@ We had to cancel The Gathering, but would otherwise have gathered over 5000
 people under the same roof for some digital hilarities. For many of us, The
 Gathering is an amazing opportunity to learn and experiment.
 
-Tech:Online is a realization that we can still learn and experiment, and
+Tech:Online is a realization that *we can still learn and experiment*, and
 even better, we can invite YOU to take part!
 
-The event takes place during the easter holiday. The target date is Friday
-the 10th of April. It will be preceded by a little introduction to basic
-LAN networking the day before.
+Do you have what it takes to set up a LAN? Or do you want to learn as much
+as possible!
+
+The event takes place during the Easter holiday. The target date is Friday
+the 10th of April. It will be preceded by a introduction to basic LAN
+networking the day before, and mentors will be available throughout the
+event to help you and guide you.
 
 During the event, you as a participant will be given remote access to a
 raspberry pie (or similar) that is hooked up directly with 4 switches,
@@ -36,8 +41,10 @@ The setup will look similar to this:
 .. image:: pic1.jpg
    :width: 50%
 
-You'll of course have all the help you need. Both in the form of
-documentation, and helpful mentors available on Discord.
+The task is split into different parts with clear feedback of your progress
+and hints as to what to do next. There's also a decent amount of relevant
+documentation available, so we hope most participants will be able to
+finish, and also learn a ton!
 
 Who can participate?
 ====================
@@ -64,7 +71,8 @@ How much time do I have?
 ========================
 
 No idea! All we know is the date, but we can extend the event if there's
-enough interest in it. We do not want you to feel pressed for time.
+enough interest in it. We do not want you to feel pressed for time. The
+exact time will be posted here when it's available.
 
 How do I track progress?
 ========================
@@ -82,8 +90,7 @@ Great, how do I sign up?
 
 Errrrrrrrrr, we're working on it!
 
-Come back in a few days? We're hoping to have prizes and signup ready by
-then.
+Come back in a few days? Hopefully, you'll be using unicorn.
 
 Either way, you should join our discord server, though.
 https://discord.gg/E58dr7c should work for invites. We hang out in the
@@ -94,10 +101,16 @@ Prizes? Did you say prizes?
 
 Yes I did!
 
-We don't know what they are, but we're working on it!
+We have three tickets for The Gathering 2021 to hand out to a lucky few who
+impress us in some way or an other. And there might be other surprises...
 
-Exactly what the conditions for said prizes might be is also somewhat
-uncertain, but keep checking back!
+To get a chance to grab a ticket, we have a few categories in mind:
+
+- Time to target: Finish in the shortest amount of time
+- Rookie of the year: The youngest and/or least experienced participant to
+  finish
+- Wildcard: Impress us! Set up something cool, be super-helpful to others,
+  or just plain impress us in some way or an other!
 
 Either way, if you do participate, you're invited to a guided tour of the
 network infrastructure at The Gathering 2021! (except if there's like a
