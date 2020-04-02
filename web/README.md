@@ -11,7 +11,10 @@ This is the frontend for documentation and handling the competition.
 
 ## Run me!!
 
-`yarn start`
+```
+yarn
+yarn build
+```
 
 # Build me
 
@@ -22,4 +25,7 @@ This is the frontend for documentation and handling the competition.
 
 ## Build me!!
 
-`yarn build`
+```
+yarn
+yarn build
+```
