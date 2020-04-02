@@ -2,33 +2,36 @@
 Tech:Online
 ===========
 
-.. warning::
+.. _The Gathering: https://gathering.org
 
-   This is still work in progress, and has not been officially launched
-   yet. But there are some nice pictures, though.
+.. _`The Gathering:Online`: https://www.gathering.org/tg20/article/6402/tg20online
 
-
-Welcome to the Tech:Online hub!
 
 What is Tech:Online?
 ====================
 
 Tech:Online is a network-hacking event and experiment!
 
-We had to cancel The Gathering, but would otherwise have gathered over 5000
+We had to cancel `The Gathering`_, but would otherwise have gathered over 5000
 people under the same roof for some digital hilarities. For many of us, The
 Gathering is an amazing opportunity to learn and experiment.
+
+To soften the pain, `The Gathering:Online`_ is being arranged. But what can
+Tech-side of The Gathering contribute now that there isn't a large,
+temporary network to build?
+
+Enter: Tech:Online.
 
 Tech:Online is a realization that *we can still learn and experiment*, and
 even better, we can invite YOU to take part!
 
 Do you have what it takes to set up a LAN? Or do you want to learn as much
-as possible!
+as you can about operating a professional network? Tech:Online is for you.
 
 The event takes place during the Easter holiday. The target date is Friday
 the 10th of April. It will be preceded by a introduction to basic LAN
-networking the day before, and mentors will be available throughout the
-event to help you and guide you.
+networking the day before (probably), and mentors will be available
+throughout the event to help you and guide you.
 
 During the event, you as a participant will be given remote access to a
 raspberry pie (or similar) that is hooked up directly with 4 switches,

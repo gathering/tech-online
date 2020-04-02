@@ -15,4 +15,4 @@ progress-1.html: status-1.rst hint* status*js template.raw
 	rst2html --initial-header-level=2 --toc-top-backlinks --syntax-highlight=short --template template.raw status-1.rst > progress-1.html
 
 dist: all
-	rsync -av --delete ./ techo.gathering.org:/var/www/html/
+	rsync -av --exclude=*.rst --delete ./ techo.gathering.org:/var/www/html/
