@@ -31,6 +31,11 @@ using console cables. The four switches are connected similar to how we
 would do things at The Gathering, and your task is to get the "participant"
 online.
 
+The setup will look similar to this:
+
+.. image:: pic1.jpg
+   :width: 50%
+
 You'll of course have all the help you need. Both in the form of
 documentation, and helpful mentors available on Discord.
 
