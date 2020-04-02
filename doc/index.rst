@@ -41,8 +41,8 @@ online.
 
 The setup will look similar to this:
 
-.. image:: pic1.jpg
-   :width: 50%
+.. image:: poc.jpg
+   :width: 70%
 
 The task is split into different parts with clear feedback of your progress
 and hints as to what to do next. There's also a decent amount of relevant
