@@ -4,3 +4,7 @@ index.html
 progress-1.html
 verify/*.json
 doc.html
+node_modules
+yarn-error.log
+web/.cache
+web/dist

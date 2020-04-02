@@ -1,0 +1,38 @@
+:root {
+    font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+
+    header {
+        display: flex;
+        align-items: center;
+        padding: 3rem 2rem;
+        font-size: 1.25rem;
+        background-color: black;
+        color: white;
+
+        a {
+            text-decoration: none;
+            color: white;
+            transition: color 0.15s ease-in-out;
+
+            &:hover {
+                color: #4fd1c5;
+            }
+        }
+
+        .nav-left {
+            display: flex;
+        }
+
+        .nav-right {
+            display: flex;
+            flex-grow: 1;
+            justify-content: flex-end;
+        }
+    }
+}
