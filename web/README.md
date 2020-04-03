@@ -29,3 +29,7 @@ yarn build
 yarn
 yarn build
 ```
+
+# Deploy me
+
+Push code to master. It'll be built and deployed by [GH Actions](https://github.com/gathering/tech-online/actions) to a [GH Page](https://gathering.github.io/tech-online/) within a fathom of time.
