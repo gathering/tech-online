@@ -4,11 +4,11 @@ import './frontpage.scss';
 const Frontpage = () => {
     return (
         <div className="frontpage">
-            <div className="super">
+            <div className="frontpage-super">
                 <h1>Welcome to the Tech:Online hub!</h1>
             </div>
 
-            <div className="container">
+            <div className="frontpage-container">
                 <h2>What is Tech:Online?</h2>
                 <p>Tech:Online is a network-hacking event and experiment!</p>
                 <p>

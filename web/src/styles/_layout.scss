@@ -10,10 +10,11 @@
     header {
         display: flex;
         align-items: center;
-        padding: 3rem 2rem;
+        padding: 2rem 2rem;
         font-size: 1.25rem;
         background-color: black;
         color: white;
+        flex-grow: 0;
 
         a {
             text-decoration: none;
@@ -23,16 +24,71 @@
             &:hover {
                 color: #4fd1c5;
             }
+
+            &.active {
+                color: #4fd1c5;
+            }
         }
 
         .nav-left {
             display: flex;
+
+            & > * {
+                padding-top: 0.5rem;
+                padding-bottom: 0.5rem;
+
+                &:not(:first-child) {
+                    padding-left: 1rem;
+                }
+
+                &:not(:last-child) {
+                    padding-right: 1rem;
+                    border-right: 1px solid darken(white, 75%);
+                }
+            }
         }
 
         .nav-right {
             display: flex;
             flex-grow: 1;
             justify-content: flex-end;
+        }
+    }
+
+    main {
+        flex-grow: 1;
+    }
+
+    footer {
+        flex-grow: 0;
+        justify-self: flex-end;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: black;
+        color: white;
+        padding: 1rem;
+
+        & > * {
+            &:not(:first-child) {
+                padding-left: 1rem;
+            }
+
+            &:not(:last-child) {
+                padding-right: 1rem;
+                border-right: 1px solid darken(white, 75%);
+            }
+        }
+
+        a {
+            text-decoration: none;
+            padding: 0.5rem 0.5rem;
+            transition: color 0.15s ease-in-out;
+            color: white;
+
+            &:hover {
+                color: #4fd1c5;
+            }
         }
     }
 }
