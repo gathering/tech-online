@@ -5,7 +5,7 @@ import App from './components/App';
 import './styles/main.scss';
 
 render(
-    <Router>
+    <Router basename="/tech-online">
         <App />
     </Router>,
     document.getElementById('root')
