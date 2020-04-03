@@ -17,7 +17,6 @@ const Documentation = () => {
 
     useEffect(() => {
         if (hash) {
-            console.log(hash);
             const id = hash.replace('#', '');
             _scrollTo(id);
         }
@@ -152,6 +151,10 @@ const Documentation = () => {
                         </ol>
                     </li>
                 </ol>
+
+                <div className="documentation-menu__scroll-top" onClick={() => window.scrollTo(0, 0)}>
+                    To top
+                </div>
             </div>
             <div className="documentation-container">
                 <div className="section" id="intro">

@@ -68,6 +68,7 @@
         background-color: black;
         color: white;
         padding: 1rem;
+        text-transform: uppercase;
 
         & > * {
             &:not(:first-child) {
@@ -88,6 +89,35 @@
 
             &:hover {
                 color: #4fd1c5;
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    #root {
+        header {
+            flex-direction: column;
+            align-items: unset;
+            & > * {
+                flex-direction: column;
+            }
+
+            .nav-right,
+            .nav-left {
+                & > * {
+                    padding-left: 0 !important;
+                    border: none !important;
+                }
+            }
+        }
+
+        footer {
+            flex-direction: column;
+
+            & > * {
+                padding-left: 0 !important;
+                border-right: none !important;
             }
         }
     }

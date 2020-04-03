@@ -5,13 +5,14 @@
         ol {
             list-style: none;
             counter-reset: item;
+            padding-inline-start: 1rem;
 
             li {
                 padding-top: 0.5rem;
                 counter-increment: item;
 
                 &:before {
-                    margin-right: 10px;
+                    margin-right: 0.75rem;
                     content: counters(item, '.') ' ';
                     display: inline-block;
                 }
@@ -19,8 +20,7 @@
         }
 
         & > ol {
-            position: sticky;
-            top: 1rem;
+            overflow: auto;
         }
 
         & > ol > li:not(:first-of-type) {
@@ -39,6 +39,13 @@
             &.active {
                 color: #319795;
             }
+        }
+
+        &__scroll-top {
+            position: sticky;
+            padding-left: 1rem;
+            cursor: pointer;
+            top: calc(100vh - 2rem);
         }
     }
 
@@ -97,6 +104,31 @@
                 font-size: 1.2rem;
                 letter-spacing: 0.1rem;
             }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .documentation {
+        flex-direction: column;
+
+        &-menu {
+            ol {
+                padding-inline-start: 0.5rem;
+                li {
+                    &:before {
+                        margin-right: 0.5rem;
+                    }
+                }
+            }
+
+            &__scroll-top {
+                display: none;
+            }
+        }
+
+        &-container {
+            padding: 2rem 1rem;
         }
     }
 }
