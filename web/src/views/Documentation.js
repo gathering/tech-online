@@ -9,11 +9,15 @@ const _scrollTo = (id) => {
     }
 };
 
+// TODO Fix linking to id
+// TODO Scroll-spy
+
 const Documentation = () => {
     const { hash, pathname } = useLocation();
 
     useEffect(() => {
         if (hash) {
+            console.log(hash);
             const id = hash.replace('#', '');
             _scrollTo(id);
         }
