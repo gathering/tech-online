@@ -7,7 +7,7 @@ const App = () => {
     const user = useUserState();
     const userDispatch = useUserDispatch();
 
-    const loggedIn = useMemo(() => !!user.token, [user]);
+    const loggedIn = useMemo(() => !!user.access_token, [user]);
     return (
         <>
             <header>

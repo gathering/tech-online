@@ -1,5 +1,6 @@
-import React, { createContext, useReducer } from 'react';
+import React, { createContext, useReducer, useState, useEffect } from 'react';
 import jwtDecode from 'jwt-decode';
+import { httpPost, FETCH_STATUS, httpGet, localStorageKey } from '../common/api';
 
 const UserStateContext = createContext();
 const UserDispatchContext = createContext();
@@ -12,7 +13,7 @@ export const actions = {
 const userReducer = (state, action) => {
     switch (action.type) {
         case actions.LOGIN: {
-            return { token: action.data, token_meta: jwtDecode(action.data.access_token) };
+            return { ...state, ...action.payload };
         }
         case actions.LOGOUT: {
             return {};
@@ -48,4 +49,53 @@ const useUserDispatch = () => {
     return context;
 };
 
-export { UserProvider, useUserState, useUserDispatch };
+const useLogin = (code) => {
+    const dispatch = useUserDispatch();
+    const [fetchStatus, setFetchStatus] = useState(FETCH_STATUS.IDLE);
+    const [fetchResult, setFetchResult] = useState();
+
+    useEffect(() => {
+        if (fetchStatus === FETCH_STATUS.IDLE) {
+            setFetchStatus(FETCH_STATUS.PENDING);
+            httpPost(
+                `o/token/?code=${code}&client_secret=${process.env.CLIENT_SECRET}&client_id=${process.env.CLIENT_ID}&grant_type=authorization_code&redirect_uri=http://localhost:1234/login`,
+                {},
+                {
+                    host: 'https://oscar.zoodo.io',
+                }
+            )
+                .then((data) => {
+                    dispatch({
+                        type: actions.LOGIN,
+                        payload: {
+                            ...data,
+                            meta: jwtDecode(data.access_token),
+                        },
+                    });
+                    window.localStorage.setItem(localStorageKey, data.access_token);
+                    setFetchResult(data);
+                    setFetchStatus(FETCH_STATUS.RESOLVED);
+
+                    httpGet('api/accounts/myprofile/', {
+                        host: 'https://oscar.zoodo.io',
+                    }).then((data) => {
+                        dispatch({
+                            type: actions.LOGIN,
+                            payload: {
+                                profile: data,
+                            },
+                        });
+                    });
+                })
+                .catch((error) => {
+                    dispatch({ type: actions.LOGOUT });
+                    setFetchResult(error);
+                    setFetchStatus(FETCH_STATUS.REJECTED);
+                });
+        }
+    }, [code, dispatch, fetchStatus]);
+
+    return [fetchStatus, fetchResult];
+};
+
+export { UserProvider, useUserState, useUserDispatch, useLogin };
