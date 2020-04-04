@@ -1,6 +1,9 @@
 import React, { createContext, useReducer, useState, useEffect } from 'react';
 import jwtDecode from 'jwt-decode';
-import { httpPost, FETCH_STATUS, httpGet, localStorageKey } from '../common/api';
+import { httpPost, FETCH_STATUS, httpGet } from '../common/api';
+
+export const localStorageTokenKey = '__tgo_token__';
+export const localStorageDataKey = '__tgo_data__';
 
 const UserStateContext = createContext();
 const UserDispatchContext = createContext();
@@ -25,7 +28,22 @@ const userReducer = (state, action) => {
 };
 
 const UserProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(userReducer, {});
+    let initialData = localStorage.getItem(localStorageDataKey);
+    if (initialData) {
+        initialData = JSON.parse(initialData);
+        if (initialData && initialData.meta && initialData.meta.exp < Date.now() / 1000) {
+            initialData = {};
+        }
+    }
+
+    const [state, dispatch] = useReducer(userReducer, initialData || {});
+
+    useEffect(() => {
+        localStorage.setItem(localStorageDataKey, JSON.stringify(state));
+    }, [state]);
+
+    // TODO refresh token hook
+
     return (
         <UserStateContext.Provider value={state}>
             <UserDispatchContext.Provider value={dispatch}>{children}</UserDispatchContext.Provider>
@@ -72,7 +90,7 @@ const useLogin = (code) => {
                             meta: jwtDecode(data.access_token),
                         },
                     });
-                    window.localStorage.setItem(localStorageKey, data.access_token);
+                    window.localStorage.setItem(localStorageTokenKey, data.access_token);
                     setFetchResult(data);
                     setFetchStatus(FETCH_STATUS.RESOLVED);
 

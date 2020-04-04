@@ -1,4 +1,4 @@
-export const localStorageKey = '__tgo_token__';
+import { localStorageTokenKey } from '../store/userContext';
 
 export const FETCH_STATUS = {
     IDLE: 'idle',
@@ -23,7 +23,7 @@ export const httpPut = (url, data, config) =>
     });
 
 const client = (endpoint, { body, host = process.env.API_URL, ...customConfig } = {}) => {
-    const token = window.localStorage.getItem(localStorageKey);
+    const token = window.localStorage.getItem(localStorageTokenKey);
     const headers = { 'content-type': 'application/json' };
     if (token) {
         headers.Authorization = `JWT ${token}`;
