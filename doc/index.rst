@@ -134,3 +134,15 @@ switch really is.
 
 But mostly, it's just far more fun to do this with physical equipment. And
 we do have a couple of hundred switches that are otherwise unused.
+
+Sneak peak
+==========
+
+.. image::
+   pics/left000M.jpg
+
+.. image::
+   pics/center000M.jpg
+
+.. image::
+   pics/right000M.jpg

@@ -26,7 +26,7 @@ Progress
 Pic
 ---
 
-.. image:: pic1.jpg
+.. image:: pics/left000M.jpg
 
 
 
