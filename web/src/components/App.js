@@ -13,7 +13,7 @@ const App = () => {
             <header>
                 <div className="nav-left">
                     <NavLink to="/" exact>
-                        TG Tech Online
+                        TG: Tech Online
                     </NavLink>
                     <NavLink to="/documentation">Reference documentation</NavLink>
                     {loggedIn && <NavLink to="/participate">Participate</NavLink>}

@@ -2,4 +2,12 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 
+@font-face {
+  font-family: 'BigNoodleTitling';
+  src: url('../styles/fonts/big_noodle_titling.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 500;
+}
+
+@import 'theme';
 @import 'layout';

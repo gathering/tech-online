@@ -2,17 +2,45 @@
     font-family: 'Open Sans', Arial, Helvetica, sans-serif;
 }
 
+body {
+	background-color: $backgroundColor;
+	color: $fontColor;
+}
+
+h2 {
+	font-family: 'BigNoodleTitling';
+	letter-spacing: 2px;
+	font-size: 1.85rem;
+	color: #FFF;
+	margin: 0;
+}
+
+hr {
+	border-color: $ascentColor;
+}
+
+strong {
+	color: lighten($primaryColor, 10);
+}
+
+img {
+	display: block;
+	max-width: 100%;
+	height: auto;
+}
+
 #root {
     display: flex;
     flex-direction: column;
     height: 100vh;
 
     header {
+		padding-left: 30px;
+		padding-right: 30px;
         display: flex;
         align-items: center;
-        padding: 2rem 2rem;
         font-size: 1.25rem;
-        background-color: black;
+        background-color: $ascentColor;
         color: white;
         flex-grow: 0;
 
@@ -20,31 +48,31 @@
             text-decoration: none;
             color: white;
             transition: color 0.15s ease-in-out;
+			color: rgba(#FFF, .7);
 
             &:hover {
-                color: #4fd1c5;
+                color: #FFF;
+				background: darken($ascentColor, 8);
             }
 
             &.active {
-                color: #4fd1c5;
+				background: darken($ascentColor, 7);
+                color: #FFF;
             }
         }
 
         .nav-left {
             display: flex;
+			align-items: center;
+			font-size: 1rem;
+			text-transform: uppercase;
 
             & > * {
-                padding-top: 0.5rem;
-                padding-bottom: 0.5rem;
-
-                &:not(:first-child) {
-                    padding-left: 1rem;
-                }
-
-                &:not(:last-child) {
-                    padding-right: 1rem;
-                    border-right: 1px solid darken(white, 75%);
-                }
+				padding-top: 15px;
+				padding-bottom: 15px;
+				
+                padding-left: 1rem;
+				padding-right: 1rem;
             }
         }
 
@@ -52,6 +80,19 @@
             display: flex;
             flex-grow: 1;
             justify-content: flex-end;
+			text-transform: uppercase;
+			font-size: 1rem;
+			
+			a {
+				padding: 15px 1rem;
+			}
+			
+			span {
+				padding: 15px 1rem;
+				&:hover {
+					background: darken($ascentColor, 8);
+				}
+			}
         }
     }
 
@@ -65,8 +106,8 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: black;
-        color: white;
+        background-color: $headerColor;
+        color: rgba(#FFF, .2);
         padding: 1rem;
         text-transform: uppercase;
 
@@ -77,18 +118,18 @@
 
             &:not(:last-child) {
                 padding-right: 1rem;
-                border-right: 1px solid darken(white, 75%);
+                border-right: 1px solid darken(#FFF, 50);
             }
         }
 
         a {
             text-decoration: none;
             padding: 0.5rem 0.5rem;
-            transition: color 0.15s ease-in-out;
-            color: white;
+            transition: color 0.25s ease-in-out;
+            color: rgba(#FFF, .7);
 
             &:hover {
-                color: #4fd1c5;
+                color: $ascentColor;
             }
         }
     }

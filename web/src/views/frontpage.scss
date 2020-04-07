@@ -1,17 +1,40 @@
+@import '../styles/theme';
+
 .frontpage {
-    &-super {
-        background-color: #dadada;
-        padding: 3rem;
-    }
 
     &-container {
-        margin-left: auto;
-        margin-right: auto;
+        margin: 2rem auto;
         max-width: 1140px;
         padding: 3rem 1rem;
+		background-color: lighten($backgroundColor, 5);
+		-webkit-box-shadow: 2px 4px 6px 0px rgba(0,0,0,0.33);
+		-moz-box-shadow: 2px 4px 6px 0px rgba(0,0,0,0.33);
+		box-shadow: 2px 4px 6px 0px rgba(0,0,0,0.33);
 
         p {
             padding-top: 1rem;
         }
     }
+}
+
+.Title {
+	max-width: 1140px;
+	margin: 0 auto;
+}
+
+.Title_Container {
+	font-family: 'BigNoodleTitling';
+	color: rgba(255, 255, 255, 0.9);
+	letter-spacing: 2px;
+	font-size: 1.25rem;
+	background-color: $primaryColor;
+	padding: 1rem;
+	-webkit-box-shadow: 2px 4px 6px 0px rgba(0,0,0,0.5);
+	-moz-box-shadow: 2px 4px 6px 0px rgba(0,0,0,0.5);
+	box-shadow: 2px 4px 6px 0px rgba(0,0,0,0.5);
+}
+
+.Image {
+	width: 33.33%;
+	margin: 0 auto;
 }

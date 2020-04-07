@@ -43,9 +43,9 @@ const Documentation = () => {
     return (
         <div className="documentation">
             <div className="documentation-menu">
-                <ol>
+                <ol className="scrollbar">
                     <li>
-                        <HashNavLink title="intro" />
+                        <HashNavLink title="Intro" />
                         <ol>
                             <li>
                                 <HashNavLink title="The task at hand" />
@@ -157,7 +157,7 @@ const Documentation = () => {
                 </div>
             </div>
             <div className="documentation-container">
-                <div className="section" id="intro">
+                <div className="Section" id="intro">
                     <h2>1&nbsp;&nbsp;&nbsp;Intro</h2>
                     <div className="admonition warning">
                         <p className="first admonition-title">Warning</p>
@@ -219,7 +219,7 @@ const Documentation = () => {
                     </div>
                 </div>
 
-                <div className="section" id="progress">
+                <div className="Section" id="progress">
                     <h2>2&nbsp;&nbsp;&nbsp;Progress</h2>
                     <div className="section" id="environment">
                         <h3>2.1&nbsp;&nbsp;&nbsp;Environment</h3>
@@ -536,7 +536,7 @@ const Documentation = () => {
                     </div>
                 </div>
 
-                <div className="section" id="reference-documentation">
+                <div className="Section" id="reference-documentation">
                     <h2>3&nbsp;&nbsp;&nbsp;Reference documentation</h2>
                     <div className="section" id="topology">
                         <h3>3.1&nbsp;&nbsp;&nbsp;Topology</h3>
@@ -748,7 +748,7 @@ edge1-d:   10.1.200.8/30
                     </div>
                 </div>
 
-                <div className="section" id="tips-and-tricks">
+                <div className="Section" id="tips-and-tricks">
                     <h2>4&nbsp;&nbsp;&nbsp;Tips and tricks</h2>
                     <div className="section" id="basic-junos-cli">
                         <h3>4.1&nbsp;&nbsp;&nbsp;Basic Junos CLI</h3>
