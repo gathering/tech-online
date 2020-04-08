@@ -1,40 +1,55 @@
 @import '../styles/theme';
 
 .frontpage {
-
     &-container {
         margin: 2rem auto;
         max-width: 1140px;
         padding: 3rem 1rem;
-		background-color: lighten($backgroundColor, 5);
-		-webkit-box-shadow: 2px 4px 6px 0px rgba(0,0,0,0.33);
-		-moz-box-shadow: 2px 4px 6px 0px rgba(0,0,0,0.33);
-		box-shadow: 2px 4px 6px 0px rgba(0,0,0,0.33);
+        background-color: lighten($backgroundColor, 5);
+        -webkit-box-shadow: 2px 4px 6px 0px rgba(0, 0, 0, 0.33);
+        -moz-box-shadow: 2px 4px 6px 0px rgba(0, 0, 0, 0.33);
+        box-shadow: 2px 4px 6px 0px rgba(0, 0, 0, 0.33);
 
         p {
             padding-top: 1rem;
         }
     }
-}
 
-.Title {
-	max-width: 1140px;
-	margin: 0 auto;
-}
+    .title {
+        font-family: 'BigNoodleTitling';
+        color: rgba(255, 255, 255, 0.9);
+        letter-spacing: 2px;
+        font-size: 1.25rem;
+        background-color: $primaryColor;
+        padding: 1rem;
+        -webkit-box-shadow: 2px 4px 6px 0px rgba(0, 0, 0, 0.5);
+        -moz-box-shadow: 2px 4px 6px 0px rgba(0, 0, 0, 0.5);
+        box-shadow: 2px 4px 6px 0px rgba(0, 0, 0, 0.5);
 
-.Title_Container {
-	font-family: 'BigNoodleTitling';
-	color: rgba(255, 255, 255, 0.9);
-	letter-spacing: 2px;
-	font-size: 1.25rem;
-	background-color: $primaryColor;
-	padding: 1rem;
-	-webkit-box-shadow: 2px 4px 6px 0px rgba(0,0,0,0.5);
-	-moz-box-shadow: 2px 4px 6px 0px rgba(0,0,0,0.5);
-	box-shadow: 2px 4px 6px 0px rgba(0,0,0,0.5);
-}
+        h1 {
+            max-width: 1140px;
+            margin: 0 auto;
+        }
+    }
 
-.Image {
-	width: 33.33%;
-	margin: 0 auto;
+    .flex-row {
+        display: flex;
+
+        .flex-item {
+            flex: 1 1 0px;
+            padding: 0 0.5rem;
+
+            &:first-of-type {
+                padding-left: 0;
+            }
+
+            &:last-of-type {
+                padding-right: 0;
+            }
+        }
+    }
+
+    li {
+        padding-bottom: 0.75rem;
+    }
 }

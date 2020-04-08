@@ -540,7 +540,7 @@ const Documentation = () => {
                     <h2>3&nbsp;&nbsp;&nbsp;Reference documentation</h2>
                     <div className="section" id="topology">
                         <h3>3.1&nbsp;&nbsp;&nbsp;Topology</h3>
-                        <object data="http://techo.gathering.org/topology.svg" className="w-80" type="image/svg+xml">
+                        <object data="https://techo.gathering.org/topology.svg" className="w-80" type="image/svg+xml">
                             topology.svg
                         </object>
                     </div>
