@@ -48,6 +48,8 @@ const Frontpage = () => {
                 <div className="flex-row">
                     <div className="flex-item">
                         <h2>Who can participate?</h2>
+                        <hr />
+
                         <p>
                             <strong>Anyone!</strong>
                         </p>
@@ -77,6 +79,7 @@ const Frontpage = () => {
                 </div>
                 <p>
                     <h2>Prizes</h2>
+                    <hr />
 
                     <p>
                         We're handing out 3 tickets for <strong>The Gathering 2021</strong> to a lucky few who impress

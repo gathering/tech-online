@@ -35,10 +35,7 @@ img {
     height: 100vh;
 
     header {
-        padding-left: 30px;
-        padding-right: 30px;
         display: flex;
-        align-items: center;
         font-size: 1.25rem;
         background-color: $ascentColor;
         color: white;
@@ -47,25 +44,22 @@ img {
         a {
             text-decoration: none;
             color: white;
-            transition: color 0.15s ease-in-out;
-            color: rgba(#fff, 0.7);
+            transition: background 0.15s ease-in-out;
 
             &:hover {
-                color: #fff;
                 background: darken($ascentColor, 8);
             }
 
             &.active {
                 background: darken($ascentColor, 7);
-                color: #fff;
             }
         }
 
         .nav-left {
             display: flex;
-            align-items: center;
             font-size: 1rem;
             text-transform: uppercase;
+            margin-left: 2rem;
 
             & > * {
                 padding-top: 15px;
@@ -82,6 +76,7 @@ img {
             justify-content: flex-end;
             text-transform: uppercase;
             font-size: 1rem;
+            margin-right: 2rem;
 
             a {
                 padding: 15px 1rem;
@@ -146,8 +141,9 @@ img {
 
             .nav-right,
             .nav-left {
+                margin: 0;
+
                 & > * {
-                    padding-left: 0 !important;
                     border: none !important;
                 }
             }

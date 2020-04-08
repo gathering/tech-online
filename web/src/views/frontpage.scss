@@ -53,3 +53,21 @@
         padding-bottom: 0.75rem;
     }
 }
+
+@media (max-width: 768px) {
+    .frontpage {
+        &-container {
+            .flex-row {
+                flex-direction: column-reverse;
+                .flex-item {
+                    padding-bottom: 2rem;
+                }
+            }
+        }
+
+        .title,
+        h2 {
+            text-align: center;
+        }
+    }
+}

@@ -37,6 +37,7 @@ const App = () => {
                     <Route path="/" exact component={Views.Frontpage} />
                     <Route path="/login" component={Views.Login} />
                     <Route path="/documentation" component={Views.Documentation} />
+                    <Route path="/participate" component={Views.Participate} />
                 </Switch>
             </main>
             <footer>
