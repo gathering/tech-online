@@ -25,9 +25,20 @@ jobs:
           npm ci
           npm run build
 
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@releases/v3
-        with:
-          ACCESS_TOKEN: ${{ secrets.GH_PAGES_ACCESS_TOKEN }}
-          BRANCH: gh-pages
-          FOLDER: web/dist
+      - name: Deploy
+        shell: bash
+        env:
+          RSYNC_DIR: ${{ secrets.RSYNC_DIR }}
+          RSYNC_HOST: ${{ secrets.RSYNC_HOST }}
+          RSYNC_KEY: ${{ secrets.RSYNC_KEY }}
+          RSYNC_USER: ${{ secrets.RSYNC_USER }}
+        run: |
+          SSH_PATH="~/.ssh"
+          KEY_FILE="$SSH_PATH/deploy_key"
+          mkdir -p "$SSH_PATH"
+          printf '%b\n' "$RSYNC_KEY" > "$KEY_FILE"
+          chmod 600 "$KEY_FILE"
+          eval "$(ssh-agent)"
+          ssh-add "$KEY_FILE"
+          cd web/dist
+          rsync -av --delete -e "ssh -o StrictHostKeyChecking=no" ./ "$RSYNC_USER"@"$RSYNC_HOST":/var/www/html/test
