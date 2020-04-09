@@ -53,7 +53,7 @@ const Frontpage = () => {
                         <p>
                             <strong>Anyone!</strong>
                         </p>
-                        <p>
+                        <div>
                             If you are interested in networking, this is for you. While we want to make this accessible
                             to absolutely everyone, you do need some prior knowledge:
                             <ul>
@@ -71,13 +71,13 @@ const Frontpage = () => {
                                 </li>
                                 <li>Reading</li>
                             </ul>
-                        </p>
+                        </div>
                     </div>
                     <div className="flex-item">
                         <img className="image-header__image" src={pocImage} alt="Switches and a computer" />
                     </div>
                 </div>
-                <p>
+                <div>
                     <h2>Prizes</h2>
                     <hr />
 
@@ -86,7 +86,7 @@ const Frontpage = () => {
                         us in some way or another. And there might be other surprises...
                     </p>
 
-                    <p>
+                    <div>
                         To get a chance to grab a ticket, we have a few categories in mind:
                         <ul>
                             <li>Time to target: Finish in the shortest amount of time</li>
@@ -100,8 +100,8 @@ const Frontpage = () => {
                             Either way, if you do participate, you're invited to a guided tour of the network
                             infrastructure at The Gathering 2021!
                         </strong>
-                    </p>
-                </p>
+                    </div>
+                </div>
 
                 <div className="flex-row">
                     <div className="flex-item">
