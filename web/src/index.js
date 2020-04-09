@@ -8,7 +8,7 @@ import './styles/main.scss';
 import 'flexboxgrid';
 
 render(
-    <Router basename="/tech-online">
+    <Router>
         <UserProvider>
             <App />
         </UserProvider>
