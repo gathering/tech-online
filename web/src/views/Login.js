@@ -37,7 +37,11 @@ const Login = () => {
         return <Redirect to="/" />;
     }
 
-    return <h2 style={{ textAlign: 'center' }}>Logging in</h2>;
+    return (
+        <div className="login">
+            <h1>Logging in</h1>
+        </div>
+    );
 };
 
 export { Login };

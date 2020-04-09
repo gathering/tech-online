@@ -80,6 +80,7 @@ const useLogin = (code) => {
                 {},
                 {
                     host: 'https://oscar.zoodo.io',
+                    eol: '',
                 }
             )
                 .then((data) => {
@@ -96,6 +97,7 @@ const useLogin = (code) => {
 
                     httpGet('api/accounts/myprofile/', {
                         host: 'https://oscar.zoodo.io',
+                        eol: '',
                     }).then((data) => {
                         dispatch({
                             type: actions.LOGIN,
@@ -116,4 +118,6 @@ const useLogin = (code) => {
     return [fetchStatus, fetchResult];
 };
 
-export { UserProvider, useUserState, useUserDispatch, useLogin };
+const userIsAuthed = (user) => !!Object.keys(user).length;
+
+export { UserProvider, useUserState, useUserDispatch, useLogin, userIsAuthed };

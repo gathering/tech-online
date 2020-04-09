@@ -19,17 +19,17 @@ const App = () => {
                     {loggedIn && <NavLink to="/participate">Participate</NavLink>}
                 </div>
                 <div className="nav-right">
-                    {/* {loggedIn ? (
+                    {loggedIn ? (
                         <span className="action" onClick={() => userDispatch({ type: actions.LOGOUT })}>
                             Log out
                         </span>
-                    ) : (
-                        <a
-                            href={`https://oscar.zoodo.io/o/authorize/?client_id=${process.env.CLIENT_ID}&response_type=code&scope=read_userdata_extended%20write_userdata_extended&redirect_uri=${location.origin}/login`}
-                        >
-                            Log in
-                        </a>
-                    )} */}
+                    ) : null
+                    // <a
+                    //     href={`https://oscar.zoodo.io/o/authorize/?client_id=${process.env.CLIENT_ID}&response_type=code&scope=read_userdata_extended%20write_userdata_extended&redirect_uri=${location.origin}/login`}
+                    // >
+                    //     Log in
+                    // </a>
+                    }
                 </div>
             </header>
             <main>

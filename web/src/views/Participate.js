@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
-import { FETCH_STATUS } from '../common/api';
+import React, { useState, useEffect, useContext } from 'react';
+import { Redirect } from 'react-router-dom';
+import { FETCH_STATUS, httpPost, httpPut, httpGet } from '../common/api';
+import { useUserState, userIsAuthed } from '../store/userContext';
 import './participate.scss';
 
 const mock = {
@@ -44,9 +46,57 @@ const mock = {
 // TODO Check if user is logged in
 
 const Participate = () => {
-    const [participationData, setParticipationData] = useState(mock);
+    const [participationData, setParticipationData] = useState();
     const [fetchStatus, setFetchStatus] = useState(FETCH_STATUS.IDLE);
     const [activeHint, setActiveHint] = useState('');
+    const [isParticipant, setIsParticipant] = useState();
+    const user = useUserState();
+    const isAuthed = userIsAuthed(user);
+    console.log(user);
+
+    useEffect(() => {
+        if (isParticipant === undefined && fetchStatus === FETCH_STATUS.IDLE && isAuthed) {
+            setFetchStatus(FETCH_STATUS.PENDING);
+            httpGet('participant/' + user.profile.uuid)
+                .then(() => {
+                    setIsParticipant(true);
+                    setFetchStatus(FETCH_STATUS.RESOLVED);
+                })
+                .catch((err) => {
+                    if (err.status === 404) {
+                        setIsParticipant(false);
+                    }
+
+                    // TODO Handle a case where the user is not not found or something?
+                    setFetchStatus(FETCH_STATUS.REJECTED);
+                });
+        }
+    }, [isParticipant, fetchStatus, isAuthed, user]);
+
+    const signup = () => {
+        const { uuid, first_name, last_name, display_name, email } = user.profile;
+        if (fetchStatus === FETCH_STATUS.PENDING) {
+            return;
+        }
+
+        setFetchStatus(FETCH_STATUS.PENDING);
+
+        httpPost('participant', {
+            uuid,
+            first_name,
+            last_name,
+            display_name,
+            email,
+        })
+            .then(() => {
+                setFetchStatus(FETCH_STATUS.RESOLVED);
+                setIsParticipant(true);
+            })
+            .catch((err) => {
+                setFetchStatus(FETCH_STATUS.REJECTED);
+                console.log(err);
+            });
+    };
 
     const toggleHint = (taskId) => {
         if (activeHint === taskId) {
@@ -56,12 +106,31 @@ const Participate = () => {
         }
     };
 
-    if (!participationData) {
-        return <h2>Sorry, there's currently no available slots.</h2>;
+    if (fetchStatus === FETCH_STATUS.PENDING) {
+        return (
+            <div className="participate-container">
+                <h1>Fetching data...</h1>
+            </div>
+        );
     }
 
-    if (fetchStatus === FETCH_STATUS.PENDING) {
-        return <h2>Fetching data...</h2>;
+    if (!isAuthed) {
+        return <Redirect to="/" />;
+    }
+
+    if (isParticipant === false) {
+        return (
+            <div className="participate-container">
+                <div className="sign-up">
+                    <h1>Want to have a go at configuring switches and winning prizes?</h1>
+                    <button onClick={signup}>Sign up!</button>
+                </div>
+            </div>
+        );
+    }
+
+    if (!participationData) {
+        return null;
     }
 
     return (
