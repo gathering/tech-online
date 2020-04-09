@@ -9,8 +9,6 @@ const Login = () => {
     const searchParams = useMemo(() => new URLSearchParams(params.search), [params]);
     const code = useMemo(() => searchParams.get('code'), [searchParams]);
 
-    console.log(location);
-
     const [fetchStatus, fetchResult] = useLogin(code);
 
     if (!code) {
@@ -18,7 +16,7 @@ const Login = () => {
             <div className="login">
                 <h1>
                     <a
-                        href={`https://oscar.zoodo.io/o/authorize/?client_id=${process.env.CLIENT_ID}&response_type=code&scope=read_userdata_extended%20write_userdata_extended&redirect_uri=${location.origin}/login`}
+                        href={`https://oscar.zoodo.io/o/authorize/?client_id=${process.env.CLIENT_ID}&response_type=code&scope=read_userdata_extended%20write_userdata_extended&redirect_uri=${window.location.origin}/login`}
                     >
                         Log in
                     </a>
