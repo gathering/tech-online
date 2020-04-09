@@ -41,4 +41,4 @@ jobs:
           eval "$(ssh-agent)"
           ssh-add "$KEY_FILE"
           cd web/dist
-          rsync -av --delete -e "ssh -o StrictHostKeyChecking=no" ./ "$RSYNC_USER"@"$RSYNC_HOST":/var/www/html/test
+          rsync -av --delete -e "ssh -o StrictHostKeyChecking=no" ./ "$RSYNC_USER"@"$RSYNC_HOST":"$RSYNC_DIR"
