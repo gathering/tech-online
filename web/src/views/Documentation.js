@@ -61,23 +61,6 @@ const Documentation = () => {
                             <li>
                                 <HashNavLink title="Environment" />
                             </li>
-                            <li>
-                                <HashNavLink title="Suggested Progress" />
-                                <ol>
-                                    <li>
-                                        <HashNavLink title="Phase 1: First linknet" />
-                                    </li>
-                                    <li>
-                                        <HashNavLink title="Phase 2: Establish a link to edge0" />
-                                    </li>
-                                    <li>
-                                        <HashNavLink title="Phase 3: Rinse and repeat for edge1" />
-                                    </li>
-                                    <li>
-                                        <HashNavLink title="Phase 4: Get a client on-line" />
-                                    </li>
-                                </ol>
-                            </li>
                         </ol>
                     </li>
                     <li>
@@ -137,14 +120,6 @@ const Documentation = () => {
                                     </li>
                                     <li>
                                         <HashNavLink title="Routing - practice" />
-                                    </li>
-                                </ol>
-                            </li>
-                            <li>
-                                <HashNavLink title="Leftovers" />
-                                <ol>
-                                    <li>
-                                        <HashNavLink title="Virtual chassis" />
                                     </li>
                                 </ol>
                             </li>
@@ -257,282 +232,6 @@ const Documentation = () => {
                             about locking yourself out: The console access you have is "out of band" and does not
                             require the switches to work (beyond being able to see a login prompt).
                         </p>
-                    </div>
-                    <div className="section" id="suggested-progress">
-                        <h3>2.2&nbsp;&nbsp;&nbsp;Suggested progress</h3>
-                        <p>Typically there are three general strategies when setting up a network:</p>
-                        <ol className="arabic simple">
-                            <li>
-                                <HashNavLink title="Start at the client and work towards the internet/core" />
-                            </li>
-                            <li>
-                                <HashNavLink title="Start at the core and work towards the client" />
-                            </li>
-                            <li>
-                                <HashNavLink title="Random order" />
-                            </li>
-                        </ol>
-                        <p>
-                            Because it makes it much easier to test, we recommend following option number 2.
-                            Specifically:
-                        </p>
-                        <div className="section" id="phase-1-first-linknet">
-                            <h4>2.2.1&nbsp;&nbsp;&nbsp;Phase 1: First linknet</h4>
-                            <ol className="arabic simple" start="0">
-                                <li>
-                                    <HashNavLink title="Skim through this entire document! There is a ton of useful information!" />
-                                </li>
-                                <li>
-                                    <HashNavLink title="Find the distro switch with screen" />
-                                </li>
-                                <li>
-                                    The distribution switch has two cables connected to the core (see the
-                                    <a className="reference internal" href="#reference-documentation">
-                                        Reference documentation
-                                    </a>{' '}
-                                    chapter) and you need to configure them as an aggregated interface.
-                                </li>
-                                <li>
-                                    Set up LACP on distro0, ae0, towards core (see{' '}
-                                    <a className="reference internal" href="#tips-and-tricks">
-                                        Tips and tricks
-                                    </a>
-                                    ). That means setting up an <tt className="docutils literal">interfaces</tt> section
-                                    for both physical devices - or a interfaces-range that cover both.
-                                </li>
-                                <li>
-                                    Set up "unit 0" on ae0 on the distro. It needs to have the link-net IP provided in
-                                    the{' '}
-                                    <a className="reference internal" href="#reference-documentation">
-                                        Reference documentation
-                                    </a>{' '}
-                                    chapter.
-                                </li>
-                                <li>
-                                    Check that your uplink ports (<cite>ge-0/0/46</cite> and <cite>ge-0/0/46</cite>) are
-                                    listed as "up" when you use <tt className="docutils literal">show interfaces</tt>.
-                                </li>
-                                <li>
-                                    If they are, check that <tt className="docutils literal">ae0.0</tt> is up with{' '}
-                                    <tt className="docutils literal">show interfaces ae0.0 extensive</tt>.
-                                </li>
-                                <li>
-                                    If you've done everything right up until now, verify.sh should tell you that
-                                    10.x.200.2 replies to ping from core, but not globally.
-                                </li>
-                                <li>
-                                    Let your distro switch know that <cite>10.x.200.1</cite> is your default route. See
-                                    <a className="reference internal" href="#reference-documentation">
-                                        Reference documentation
-                                    </a>{' '}
-                                    on static routing to accomplish this.
-                                </li>
-                                <li>
-                                    At this point, you should be able to run{' '}
-                                    <tt className="docutils literal">ping 192.168.2.2</tt> from the distro0 switch and
-                                    get a reply, and the verification script should state that <cite>10.x.200.2</cite>{' '}
-                                    replies both from core and globally.
-                                </li>
-                            </ol>
-                            <p>At this point you have a working distro0 switch! Be happy! Take a break.</p>
-                            <p>
-                                Interesting things to try: Try <tt className="docutils literal">ssh 10.x.200.2</tt> from
-                                the jumphost directly. It should let you ssh directly to the switch.
-                            </p>
-                        </div>
-                        <div className="section" id="phase-2-establish-a-link-to-edge0">
-                            <h4>2.2.2&nbsp;&nbsp;&nbsp;Phase 2: Establish a link to edge0</h4>
-                            <p>Now that distro0 is up, we want to get a link to edge0. We start on distro0.</p>
-                            <ol className="arabic simple">
-                                <li>
-                                    Edge0 is connected through ports{' '}
-                                    <tt className="docutils literal">
-                                        <span className="pre">ge-0/0/0</span>
-                                    </tt>{' '}
-                                    and{' '}
-                                    <tt className="docutils literal">
-                                        <span className="pre">ge-1/0/0</span>
-                                    </tt>{' '}
-                                    on distro0. Just as with your core link, you need to configure LACP to bond these to
-                                    interfaces together.
-                                </li>
-                                <li>
-                                    Create an <tt className="docutils literal">interface</tt> section for{' '}
-                                    <tt className="docutils literal">
-                                        <span className="pre">ge-0/0/0</span>
-                                    </tt>{' '}
-                                    and{' '}
-                                    <tt className="docutils literal">
-                                        <span className="pre">ge-1/0/0</span>
-                                    </tt>{' '}
-                                    that enables 802.3ad. Call the ae-interface{' '}
-                                    <tt className="docutils literal">ae100</tt> for convenience.
-                                </li>
-                                <li>
-                                    Set up "unit 0" on ae100. You will find the appropriate link-net IP in the reference
-                                    documentation.
-                                </li>
-                                <li>
-                                    Once this is up, using{' '}
-                                    <tt className="docutils literal">show interfaces ae100 extensive</tt> should show
-                                    the link as DOWN, but it should also show the IP and the physical ports should be
-                                    listed as up. It's time to connect to edge0.
-                                </li>
-                                <li>
-                                    Open a screen session to <tt className="docutils literal">edge0</tt> - log in.
-                                </li>
-                                <li>
-                                    On edge0, it's the same deal, but different interfaces:{' '}
-                                    <tt className="docutils literal">
-                                        <span className="pre">ge-0/0/0</span>
-                                    </tt>{' '}
-                                    and
-                                    <tt className="docutils literal">
-                                        <span className="pre">ge-0/0/1</span>
-                                    </tt>{' '}
-                                    is connected to the distro.
-                                </li>
-                                <li>
-                                    Do the same as step 2 and 3: Set up an{' '}
-                                    <tt className="docutils literal">interface</tt> section for the physical interfaces
-                                    (
-                                    <tt className="docutils literal">
-                                        <span className="pre">ge-0/0/0</span>
-                                    </tt>{' '}
-                                    and{' '}
-                                    <tt className="docutils literal">
-                                        <span className="pre">ge-0/0/1</span>
-                                    </tt>
-                                    ). For this end, use
-                                    <tt className="docutils literal">ae0</tt>.
-                                </li>
-                                <li>
-                                    Set up an <tt className="docutils literal">interface</tt> section for{' '}
-                                    <tt className="docutils literal">ae0</tt> and{' '}
-                                    <tt className="docutils literal">ae0</tt> unit 0, with the other end of the link-net
-                                    IP.
-                                </li>
-                                <li>
-                                    Check <tt className="docutils literal">show interfaces ae0</tt>. It _should_ display
-                                    as UP, and with the correct IP and bandwidth 2Gbps.
-                                </li>
-                                <li>
-                                    Verify: run <tt className="docutils literal">ping 10.x.200.5</tt> on edge0 and{' '}
-                                    <tt className="docutils literal">ping 10.x.200.6</tt> on distro0: it should reply.
-                                </li>
-                                <li>
-                                    The verify-script will still only get a global reply from 10.x.200.5 - the distro
-                                    side of the link.
-                                </li>
-                                <li>
-                                    <HashNavLink title="Back on edge0, set up a static route using 10.x.200.5 as default gateway." />
-                                </li>
-                                <li>
-                                    <HashNavLink title="Verify should now get a global reply from both 10.x.200.5 and 10.x.200.6" />
-                                </li>
-                            </ol>
-                            <p>
-                                If you've gotten this far, you've gotten basic connectivity done! Good work! Take a
-                                break, brag a bit.
-                            </p>
-                            <p>
-                                Things to test: Try disabling an up-link with{' '}
-                                <tt className="docutils literal">
-                                    set interfaces <span className="pre">ge-0/0/0</span>
-                                    disable
-                                </tt>{' '}
-                                (in configure), then check the speed of ae0 with{' '}
-                                <tt className="docutils literal">show interfaces ae0</tt>. Re-enable the uplink-port
-                                with{' '}
-                                <tt className="docutils literal">
-                                    delete interfaces
-                                    <span className="pre">ge-0/0/0</span> disable
-                                </tt>
-                                .
-                            </p>
-                        </div>
-                        <div className="section" id="phase-3-rinse-and-repeat-for-edge1">
-                            <h4>2.2.3&nbsp;&nbsp;&nbsp;Phase 3: Rinse and repeat for edge1</h4>
-                            <p>
-                                There are two edge-switches, so now you get to do phase 2 all over again. Instead of
-                                repeating the instructions, here's a tip:
-                            </p>
-                            <p>
-                                <tt className="docutils literal">show configuration interfaces | display set</tt> can be
-                                used to extract set-statements, edit (in vim/notepad/whatever), and paste it back in.
-                                Just remember to modify the IP addresses!
-                            </p>
-                            <p>
-                                By the end of this phase, all three switches should be fully connected, everything
-                                should verify correctly, except that the client FOO is still not on-line.
-                            </p>
-                        </div>
-                        <div className="section" id="phase-4-get-a-client-on-line">
-                            <h4>2.2.4&nbsp;&nbsp;&nbsp;Phase 4: Get a client on-line!</h4>
-                            <ol className="arabic simple">
-                                <li>
-                                    Connect to edge0, what you want to do is set all client ports to belong to "family
-                                    ethernet-switching". This is probably best done with{' '}
-                                    <tt className="docutils literal">
-                                        set interfaces <span className="pre">interface-range</span> clients{' '}
-                                        <span className="pre">member-range</span> <span className="pre">ge-0/0/2</span>{' '}
-                                        to <span className="pre">ge-0/0/47</span>
-                                    </tt>
-                                    , and then applying any other interface-statements to the{' '}
-                                    <tt className="docutils literal">clients</tt>
-                                    interface range. See{' '}
-                                    <a className="reference internal" href="#reference-documentation">
-                                        Reference documentation
-                                    </a>{' '}
-                                    for examples.
-                                </li>
-                                <li>
-                                    Once this is done, basic switching works, but there's no way for you to know and
-                                    there's no way to test. You have created a LAN with no connection to the outside
-                                    world.
-                                </li>
-                                <li>
-                                    Each such port is connected to a vlan, by default, this is the <cite>default</cite>
-                                    vlan - you can look at it with{' '}
-                                    <tt className="docutils literal">show vlans default</tt>.
-                                </li>
-                                <li>
-                                    Assign a "layer 3" interface to the default vlan, it should be named
-                                    <cite>vlan.0</cite>.
-                                </li>
-                                <li>
-                                    Assign an IP address to the <cite>vlan.0</cite> interface.
-                                </li>
-                                <li>
-                                    Check if vlan.0 is up with{' '}
-                                    <tt className="docutils literal">show interface vlan.0</tt>.
-                                </li>
-                                <li>
-                                    <HashNavLink title="Ping 10.x.100.2 locally from edge0 - it should now reply (locally)." />
-                                </li>
-                                <li>
-                                    To get it working globally, you need to log in to distro0 and create a static route
-                                    for 10.x.100.0/24 via 10.x.200.6 (the edge0 linknet IP).
-                                </li>
-                                <li>
-                                    <HashNavLink title="Check that it works." />
-                                </li>
-                                <li>
-                                    <HashNavLink title="Do the same for edge1 :D" />
-                                </li>
-                            </ol>
-                            <p>
-                                If you made it this far, the verify script should be very happy just about now, and you
-                                should be happy as well!
-                            </p>
-                            <p>
-                                Things to try: You may want to set up OSPF instead of all this static routing. For our
-                                3-switch example, it's not a big deal, but as you can imagine, keeping track of which
-                                network belongs where can get bothersome. Try deleting all the static routing, except
-                                the default route on distr0, and setting up OSPF. It isn't nearly as tricky as it might
-                                sound.
-                            </p>
-                        </div>
                     </div>
                 </div>
 
@@ -1027,84 +726,33 @@ set interfaces ae0 unit 0 family inet address 10.1.200.2/30`}
                                 For edge0 we want to route <tt className="docutils literal">10.1.100.0/24</tt> from
                                 distro0 to edge0's link-net IP, 10.1.200.6. And edge0 needs to have a default route so
                                 all traffic is sent to the distro. That means for every network, all routers must have a
-                                clear idea how to connect to each other. It's possible to set this up manually, using
-                                "static routing", but it quickly gets cumbersome.
+                                clear idea how to connect to each other. 
                             </p>
-                            <p>
-                                This creates two problems, first, the obvious: You need to update a ton of static routes
-                                all over the place. Even with just three devices, it's very easy to make mistakes.
-                                Secondly: If there are multiple routes from A to B, there is no way to handle that.
-                            </p>
-                            <p>
-                                That's where dynamic routing comes into play. Dynamic routing is when two or more
-                                routers use a protocol to communicate their routing information. There are multiple
-                                protocols available, but we will be using OSPF - Open Shortest Path First.
-                            </p>
-                            <p>Core has already been set up with OSPF.</p>
-                            <p>
-                                OSPF can be somewhat complex, but on Junos, getting a simple setup like ours working is
-                                next to trivial.
-                            </p>
+			    <p>
+				For this exercise, we'll be using static
+				routing. It does mean you need to add a
+				good amount of routes, but it also makes it
+				very obvious what's happening.
+			     </p>
                         </div>
                         <div className="section" id="routing-practice">
                             <h4>4.3.3&nbsp;&nbsp;&nbsp;Routing - practice</h4>
                             <p>
-                                Setting up basic OSPF on Junos is pretty straight forward. There are different
-                                mechanisms that you want to use in a production environment, but for Tech:Online, you
-                                just need to set up "area 0.0.0.0" and define what interfaces should participate.
-                            </p>
+				Adding a static route requires two things:
+				The network you want to route and the "next
+				hop" to route it to. Put an other way: what
+				to route and where to route it.</p>
                             <p>The short version is:</p>
-                            <pre className="literal-block">set protocols ospf area 0.0.0.0 interface ae0.0</pre>
+                            <pre className="literal-block">set routing-options static route 10.x.100.0/24 next-hop 10.x.200.6</pre>
                             <p>
-                                {`For distro0, you also need to enable it for "downstream" interfaces to edge0 and edge1:`}
+			    This tells the router that all traffic to 10.x.100.0/24 should be sent to 10.x.200.6.
                             </p>
-                            <pre className="literal-block">
-                                {`set protocols ospf area 0.0.0.0 interface ae100.0
-set protocols ospf area 0.0.0.0 interface ae101.0`}
-                            </pre>
-                            <p>
-                                On edge0 and edge1 you want to enable it on the upstream interface, but you also want to
-                                enable it on the "client vlan", so but we don't need to actually communicate actively
-                                there. This is a bit of a hack, but works well for our use case:
-                            </p>
-                            <pre className="literal-block">
-                                {`set protocols ospf area 0.0.0.0 interface ae0.0
-set protocols ospf area 0.0.0.0 interface vlan.0 passive`}
-                            </pre>
-                            <p>
-                                And that's it! Check out the result after a commit with{' '}
-                                <tt className="docutils literal">show ospf table</tt> after a few seconds.
-                            </p>
-                        </div>
-                    </div>
-                    <div className="section" id="leftovers">
-                        <h3>4.4&nbsp;&nbsp;&nbsp;Leftovers</h3>
-                        <div className="section" id="virtual-chassis">
-                            <h4>4.4.1&nbsp;&nbsp;&nbsp;Virtual chassis</h4>
-                            <p>
-                                Virtual chassis is a Juniper technology for clustering multiple identical(-ish) switches
-                                together into a single logical group. This is done by inter-connecting otherwise
-                                autonomous switches and telling each of this. One single switch will take the role as
-                                "master".
-                            </p>
-                            <p>
-                                You do not have to think too much about this, as this is already taken care of and will
-                                work even if you reset both switches in the distro (which is usually a headache, but
-                                that's an other story).
-                            </p>
-                            <p>
-                                Each individual switch in a virtual chassis is referred to as a "member". There are
-                                three roles for members: a single master and a single backup and one or more "line
-                                card".
-                            </p>
-                            <p>
-                                One thing you may want to do is set{' '}
-                                <tt className="docutils literal">
-                                    set <span className="pre">virtual-chassis</span>
-                                    <span className="pre">no-split-detection</span>
-                                </tt>{' '}
-                                in case of a "power outage" on one "member". Feel free to google what that means.
-                            </p>
+			    <p>
+			    For default routes, you use the network
+			    0.0.0.0/0 - this makes sure that any traffic
+			    that doesn't go to a more specific route at
+			    least goes _somewhere_.
+			    </p>
                         </div>
                     </div>
                 </div>
