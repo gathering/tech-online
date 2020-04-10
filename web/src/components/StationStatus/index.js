@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { FETCH_STATUS, httpGet } from '../../common/api';
 import './station-status.scss';
 
@@ -40,7 +41,8 @@ const StationStatus = ({ id }) => {
             <h2>Station #{id}</h2>
             <div className="station-status__testlist">
                 {stationData.Tests.map((test) => (
-                    <div
+                    <Link
+                        to={'/status/' + id}
                         key={test.Title}
                         className={`station-status__test station-status__test--${test.Status}`}
                         onMouseEnter={() => toggleHover(test.Title)}
@@ -53,7 +55,7 @@ const StationStatus = ({ id }) => {
                         >
                             {test.Title}
                         </div>
-                    </div>
+                    </Link>
                 ))}
             </div>
         </div>

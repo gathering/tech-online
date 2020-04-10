@@ -23,6 +23,7 @@ const App = () => {
                     )}
                 </div>
                 <div className="nav-right">
+                    <NavLink to="/status">Status</NavLink>
                     {loggedIn ? (
                         <span className="action" onClick={() => userDispatch({ type: actions.LOGOUT })}>
                             Log out
@@ -42,6 +43,7 @@ const App = () => {
                     <Route path="/login" component={Views.Login} />
                     <Route path="/documentation" component={Views.Documentation} />
                     <Route path="/participate" component={Views.Participate} />
+                    <Route path="/status/:id?" component={Views.Status} />
                 </Switch>
             </main>
             <footer>
