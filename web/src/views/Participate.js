@@ -4,47 +4,6 @@ import { FETCH_STATUS, httpPost, httpPut, httpGet } from '../common/api';
 import { useUserState, userIsAuthed } from '../store/userContext';
 import './participate.scss';
 
-const mock = {
-    information: {
-        ip: '192.168.1.2',
-        password: "JoMs+kly='JoMskly'",
-    },
-    tests: [
-        {
-            title: 'Ping 192.168.1.20',
-            description: 'I pinged 192.168.1.20',
-            status: 'OK',
-            status_code: 'success',
-        },
-        {
-            title: 'Ping 192.168.1.20',
-            description: 'I pinged 192.168.1.20',
-            status: 'Skipped',
-            status_code: 'warn',
-        },
-        {
-            title: 'Ping 192.168.1.20',
-            description: 'I pinged 192.168.1.20',
-            status: 'Failed',
-            status_code: 'err',
-        },
-    ],
-    tasks: {
-        management: {
-            description: 'This is a description!',
-            hint: 'This is a hint!',
-            tests: [0, 1, 2],
-        },
-        ping: {
-            description: 'This is a description!',
-            hint: '',
-            tests: [0, 2],
-        },
-    },
-};
-
-// TODO Check if user is logged in
-
 const Participate = () => {
     const [participationData, setParticipationData] = useState();
     const [fetchStatus, setFetchStatus] = useState(FETCH_STATUS.IDLE);
@@ -52,7 +11,6 @@ const Participate = () => {
     const [isParticipant, setIsParticipant] = useState();
     const user = useUserState();
     const isAuthed = userIsAuthed(user);
-    console.log(user);
 
     useEffect(() => {
         if (isParticipant === undefined && fetchStatus === FETCH_STATUS.IDLE && isAuthed) {
@@ -235,7 +193,6 @@ const Participate = () => {
                                         <div className="task__description">{Description}</div>
                                         <div className="task__tests">
                                             {Tests.map((test) => (
-                                                // {Title: "Ping of 10.101.200.1 core-distro: core global", Description: "", Status: "fail", Task: "Linknet"}
                                                 <div
                                                     className={`row task__test task__test--${test.Status}`}
                                                     key={test.Title}
@@ -245,18 +202,6 @@ const Participate = () => {
                                                     <div className="col-xs">{test.Description}</div>
                                                 </div>
                                             ))}
-                                            {/* {task.tests.map((test) => (
-                                                <div
-                                                    className={`row task__test task__test--${participationData.tests[test].status_code}`}
-                                                    key={test}
-                                                >
-                                                    <div className="col-xs">{participationData.tests[test].status}</div>
-                                                    <div className="col-xs">{participationData.tests[test].title}</div>
-                                                    <div className="col-xs">
-                                                        {participationData.tests[test].description}
-                                                    </div>
-                                                </div>
-                                            ))} */}
                                         </div>
                                     </div>
                                 </div>
