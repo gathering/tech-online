@@ -39,12 +39,10 @@ const Participate = () => {
                 .then((data) => {
                     setFetchStatus(FETCH_STATUS.RESOLVED);
                     setParticipationData(data);
-                    console.log(data);
                 })
                 .catch((err) => {
                     setFetchStatus(FETCH_STATUS.REJECTED);
                     setParticipationData(false);
-                    console.log(err);
                 });
         }
     }, [isParticipant, participationData, fetchStatus, user]);
@@ -70,7 +68,6 @@ const Participate = () => {
             })
             .catch((err) => {
                 setFetchStatus(FETCH_STATUS.REJECTED);
-                console.log(err);
             });
     };
 
@@ -109,13 +106,11 @@ const Participate = () => {
         return null;
     }
 
-    console.log(participationData);
-
     return (
         <div className="participate-container">
             {participationData.Message && (
                 <section>
-                    <div classNam="row">
+                    <div className="row">
                         <div className="col-xs">
                             <div className="admonition admonition--warning">
                                 <div className="admonition__title">PSA</div>
