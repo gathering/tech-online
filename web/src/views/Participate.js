@@ -9,6 +9,7 @@ const Participate = () => {
     const [participationData, setParticipationData] = useState();
     const [fetchStatus, setFetchStatus] = useState(FETCH_STATUS.IDLE);
     const [activeHint, setActiveHint] = useState('');
+    const [activeTestDescription, setActiveTestDescription] = useState();
     const [isParticipant, setIsParticipant] = useState();
     const user = useUserState();
     const isAuthed = userIsAuthed(user);
@@ -76,6 +77,14 @@ const Participate = () => {
             setActiveHint('');
         } else {
             setActiveHint(taskId);
+        }
+    };
+
+    const toggleActiveTestDescription = (testId) => {
+        if (activeTestDescription === testId) {
+            setActiveTestDescription('');
+        } else {
+            setActiveTestDescription(testId);
         }
     };
 
@@ -202,15 +211,36 @@ const Participate = () => {
                                             <ReactMarkdown source={Description} />
                                         </div>
                                         <div className="task__tests">
-                                            {Tests.map((test) => (
-                                                <div
-                                                    className={`row task__test task__test--${test.Status}`}
-                                                    key={test.Title}
-                                                >
-                                                    <div className="col-xs">{test.Status}</div>
-                                                    <div className="col-xs">{test.Title}</div>
-                                                    <div className="col-xs">{test.Description}</div>
-                                                </div>
+                                            {Tests.map((test, i) => (
+                                                <>
+                                                    <div
+                                                        className={`row task__test task__test--${test.Status} ${
+                                                            activeTestDescription === test.Task + i
+                                                                ? 'task__test--expanded'
+                                                                : ''
+                                                        }`}
+                                                        key={test.Title}
+                                                        onClick={() => toggleActiveTestDescription(test.Task + i)}
+                                                    >
+                                                        <div className="col-xs-2">{test.Status}</div>
+                                                        <div className="col-xs">{test.Title}</div>
+                                                    </div>
+                                                    <div
+                                                        className={`row task__test-description ${
+                                                            activeTestDescription === test.Task + i
+                                                                ? 'row task__test-description--active'
+                                                                : ''
+                                                        }`}
+                                                    >
+                                                        <div className="col-xs">
+                                                            {test.Description ? (
+                                                                <ReactMarkdown source={test.Description} />
+                                                            ) : (
+                                                                <strong>No extra description for this test</strong>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                </>
                                             ))}
                                         </div>
                                     </div>

@@ -126,6 +126,23 @@
                 padding: 0.5rem;
                 margin-bottom: 0.25rem;
                 border-radius: 3px;
+                position: relative;
+                cursor: pointer;
+
+                &:after {
+                    content: '<';
+                    position: absolute;
+                    right: 1rem;
+                    transform: rotate(90deg);
+                    transition: transform 0.1s ease-in-out;
+                    font-weight: bold;
+                }
+
+                &--expanded {
+                    &:after {
+                        transform: rotate(270deg);
+                    }
+                }
 
                 & > *:first-child {
                     text-transform: capitalize;
@@ -144,6 +161,16 @@
                 &--fail {
                     background: #dd2c32;
                     color: #3d3d3d;
+                }
+
+                &-description {
+                    padding-bottom: 2rem;
+
+                    display: none;
+
+                    &--active {
+                        display: block;
+                    }
                 }
             }
         }
