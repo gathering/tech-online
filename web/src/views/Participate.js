@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Redirect } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { FETCH_STATUS, httpPost, httpGet } from '../common/api';
 import { useUserState, userIsAuthed } from '../store/userContext';
 import './participate.scss';
+import { useInterval } from '../common/useInterval';
 
 const Participate = () => {
     const [participationData, setParticipationData] = useState();
@@ -33,20 +34,30 @@ const Participate = () => {
         }
     }, [isParticipant, fetchStatus, isAuthed, user]);
 
+    const fetchParticipationData = useCallback(() => {
+        setFetchStatus(FETCH_STATUS.PENDING);
+        httpGet('status/user/' + user.profile.uuid)
+            .then((data) => {
+                setFetchStatus(FETCH_STATUS.RESOLVED);
+                setParticipationData(data);
+            })
+            .catch((err) => {
+                setFetchStatus(FETCH_STATUS.REJECTED);
+                setParticipationData(false);
+            });
+    }, [user]);
+
     useEffect(() => {
         if (isParticipant && participationData === undefined && fetchStatus !== FETCH_STATUS.IDLE) {
-            setFetchStatus(FETCH_STATUS.PENDING);
-            httpGet('status/user/' + user.profile.uuid)
-                .then((data) => {
-                    setFetchStatus(FETCH_STATUS.RESOLVED);
-                    setParticipationData(data);
-                })
-                .catch((err) => {
-                    setFetchStatus(FETCH_STATUS.REJECTED);
-                    setParticipationData(false);
-                });
+            fetchParticipationData();
         }
-    }, [isParticipant, participationData, fetchStatus, user]);
+    }, [isParticipant, participationData, fetchStatus, fetchParticipationData]);
+
+    useInterval(() => {
+        if (isParticipant && participationData && fetchStatus !== FETCH_STATUS.IDLE) {
+            fetchParticipationData();
+        }
+    }, 10000);
 
     const signup = () => {
         const { uuid, first_name, last_name, display_name, email } = user.profile;
@@ -88,7 +99,7 @@ const Participate = () => {
         }
     };
 
-    if (fetchStatus === FETCH_STATUS.PENDING) {
+    if (fetchStatus === FETCH_STATUS.PENDING && !participationData) {
         return (
             <div className="participate-container">
                 <h1>Fetching data...</h1>
