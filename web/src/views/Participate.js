@@ -190,7 +190,9 @@ const Participate = () => {
                                         >
                                             <pre>{Hint}</pre>
                                         </div>
-                                        <div className="task__description">{Description}</div>
+                                        <div className="task__description">
+                                            <pre>{Description}</pre>
+                                        </div>
                                         <div className="task__tests">
                                             {Tests.map((test) => (
                                                 <div
