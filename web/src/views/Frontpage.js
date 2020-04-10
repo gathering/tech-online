@@ -105,15 +105,15 @@ const Frontpage = () => {
 
                 <div className="flex-row" style={{ paddingTop: '2rem' }}>
                     <div className="flex-item">
-                        <img src="http://techo.gathering.org/pics/left000M.jpg" />
+                        <img src="//techo.gathering.org/pics/left000M.jpg" />
                     </div>
 
                     <div className="flex-item">
-                        <img src="http://techo.gathering.org/pics/center000M.jpg" />
+                        <img src="//techo.gathering.org/pics/center000M.jpg" />
                     </div>
 
                     <div className="flex-item">
-                        <img src="http://techo.gathering.org/pics/right000M.jpg" />
+                        <img src="//techo.gathering.org/pics/right000M.jpg" />
                     </div>
                 </div>
 
