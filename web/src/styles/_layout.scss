@@ -36,8 +36,7 @@ img {
 #root {
     display: flex;
     flex-direction: column;
-    height: 100vh;
-
+    min-height: 100vh;
     header {
         display: flex;
         font-size: 1.25rem;
