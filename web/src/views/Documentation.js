@@ -53,11 +53,6 @@ const Documentation = () => {
                             <li>
                                 <HashNavLink title="End result" />
                             </li>
-                        </ol>
-                    </li>
-                    <li>
-                        <HashNavLink title="Progress" />
-                        <ol>
                             <li>
                                 <HashNavLink title="Environment" />
                             </li>
@@ -145,24 +140,26 @@ const Documentation = () => {
                             configure the Juniper-switches to get FOO online. There are varying degrees of guidance
                             throughout the event.
                         </p>
-                        <p>The rest of this document is split in three:</p>
+                        <p>The rest of this document is split in two:</p>
                         <ol className="arabic simple">
-                            <li>
-                                A suggested progression which should allow you to get things gradually up and running
-                                and see actual progress. You do not have to follow this, but it is strongly recommended.
-                            </li>
                             <li>
                                 Facts about both the hardware configuration and expected IP plan. You need this. Parts
                                 of the IP plan is mandatory, the rest is strongly recommended.
                             </li>
                             <li>
-                                <HashNavLink title="Intro to junos, networking and general tips and tricks which are highly relevant." />
+                                Intro to junos, networking and general tips and tricks which are highly relevant.
                             </li>
                         </ol>
                         <p>
                             You should also watch the verification tool, which provide generous hints to get you going
                             and will refer you back to this document.
                         </p>
+			<p>
+			    The specific tasks and the status is all
+			    collected together on the participant page,
+			    along with login credentials and IP range
+			    assigned to you.
+			</p>
                         <p>If in doubt: Ask for help or hints on Discord!</p>
                     </div>
                     <div className="section" id="end-result">
@@ -185,12 +182,8 @@ const Documentation = () => {
                             </li>
                         </ol>
                     </div>
-                </div>
-
-                <div className="Section" id="progress">
-                    <h2>2&nbsp;&nbsp;&nbsp;Progress</h2>
-                    <div className="section" id="environment">
-                        <h3>2.1&nbsp;&nbsp;&nbsp;Environment</h3>
+		    <div className="section" id="environment">
+                        <h3>1.3&nbsp;&nbsp;&nbsp;Environment</h3>
                         <p>You need an SSH client, if you are on windows "PuTTy" is recommended.</p>
                         <p>
                             You will be provided an IP address, port and a username and password to SSH to, this is
@@ -229,9 +222,9 @@ const Documentation = () => {
                 </div>
 
                 <div className="Section" id="reference-documentation">
-                    <h2>3&nbsp;&nbsp;&nbsp;Reference documentation</h2>
+                    <h2>2&nbsp;&nbsp;&nbsp;Reference documentation</h2>
                     <div className="section" id="topology">
-                        <h3>3.1&nbsp;&nbsp;&nbsp;Topology</h3>
+                        <h3>2.1&nbsp;&nbsp;&nbsp;Topology</h3>
                         <object
                             data="https://techo.gathering.org/pics/topology.svg"
                             className="w-80"
@@ -241,7 +234,7 @@ const Documentation = () => {
                         </object>
                     </div>
                     <div className="section" id="hardware">
-                        <h3>3.2&nbsp;&nbsp;&nbsp;Hardware</h3>
+                        <h3>2.2&nbsp;&nbsp;&nbsp;Hardware</h3>
                         <img alt="overview.jpg" src="http://techo.gathering.org/pics/overview.jpg" className="w-80" />
                         <p>Two edge switches, EX2200.</p>
                         <p>Two distro-switches, EX3300, already configured for virtual-chassis.</p>
@@ -304,7 +297,7 @@ ge-1/0/47.0        ae0.0             44:f4:77:ff:9d:00   ge-0/0/23    klycore
                         </p>
                     </div>
                     <div className="section" id="console">
-                        <h3>3.3&nbsp;&nbsp;&nbsp;Console</h3>
+                        <h3>2.3&nbsp;&nbsp;&nbsp;Console</h3>
                         <p>
                             Console access is achieved by ssh'ing to the jumphost (access provided separately). Please
                             do not miss-use this trust.
@@ -326,7 +319,7 @@ ge-1/0/47.0        ae0.0             44:f4:77:ff:9d:00   ge-0/0/23    klycore
                         </p>
                     </div>
                     <div className="section" id="pre-configured">
-                        <h3>3.4&nbsp;&nbsp;&nbsp;Pre-configured</h3>
+                        <h3>2.4&nbsp;&nbsp;&nbsp;Pre-configured</h3>
                         <p>For convenience, the following is set up:</p>
                         <ol className="arabic simple">
                             <li>
@@ -353,23 +346,23 @@ ge-1/0/47.0        ae0.0             44:f4:77:ff:9d:00   ge-0/0/23    klycore
                         </p>
                     </div>
                     <div className="section" id="core">
-                        <h3>3.5&nbsp;&nbsp;&nbsp;Core</h3>
+                        <h3>2.5&nbsp;&nbsp;&nbsp;Core</h3>
                         <p>
                             The core - which the distro0 is connected to - is a EX4300 and is outside the scope of this
-                            exercise. For your convenience it provides a link-net (see below for IPs) and ospf, area
-                            0.0.0.0, and a default route is exported. It should be trivial to utilize.
+			    exercise. For your convenience it provides a link-net (see below for IPs) and has routed
+			    your entire /16 prefix over the linknet.
                         </p>
                         <p>It is set up with 802.3ad / lacp for the uplinks.</p>
                     </div>
                     <div className="section" id="pictures">
-                        <h3>3.6&nbsp;&nbsp;&nbsp;Pictures</h3>
+                        <h3>2.6&nbsp;&nbsp;&nbsp;Pictures</h3>
                         <img alt="overview.jpg" src="http://techo.gathering.org/pics/overview.jpg" className="w-80" />
                         <img alt="ports1.jpg" src="http://techo.gathering.org/pics/ports1.jpg" className="w-80" />
                         <img alt="ports2.jpg" src="http://techo.gathering.org/pics/ports2.jpg" className="w-80" />
                         <img alt="overview2.jpg" src="http://techo.gathering.org/pics/overview2.jpg" className="w-80" />
                     </div>
                     <div className="section" id="credentials">
-                        <h3>3.7&nbsp;&nbsp;&nbsp;Credentials</h3>
+                        <h3>2.7&nbsp;&nbsp;&nbsp;Credentials</h3>
                         <p>SSH to the provided IP using the provided username and password (FIXME).</p>
                         <p>
                             Switches are set up with a user called "tech", password "Juniperftw!". You are welcome to
@@ -393,61 +386,59 @@ pass: Juniperftw!`}</pre>
                         </ul>
                     </div>
                     <div className="section" id="ip-plan">
-                        <h3>3.8&nbsp;&nbsp;&nbsp;IP-plan</h3>
+                        <h3>2.8&nbsp;&nbsp;&nbsp;IP-plan</h3>
                         <p>
                             This IP-plan is semi-fixed: The outer boundaries are set (uplink to core and "down-link" to
                             participant-laptop) and the exercise is designed with this in mind.
                         </p>
                         <p>
-                            All IP's are in the 10.1.0.0/16 range. This is to accommodate multiple stations in parallel
-                            in the future.
+			    All IP's are in the 10.x.0.0/16 range. This is
+			    to accommodate multiple stations in parallel.
+			    The x varies. You can see the exact range on
+			    your participant page.
                         </p>
                         <p>
-                            Management is at 10.1.99.0/24, routed normally. You are welcome to use an other approach or
-                            ignore management address entirely. It is up to you.
-                        </p>
-                        <p>
-                            Linknets are /30 wide (net, peer 1, peer 2, broadcast), and are in the 10.1.200.0/24 prefix.
+                            Linknets are /30 wide (net, peer 1, peer 2, broadcast), and are in the 10.x.200.0/24 prefix.
                             The more central peer should have the lower number. But you're welcome to do what you please
                             with this. It's of little consequence.
                         </p>
                         <p>
-                            There are two client networks defined. For edge0, it is 10.1.100.0/24, for edge1 it is
-                            10.1.101.0/24. Terminating the client vlans at the edge is recommended for simplicity, but
+                            There are two client networks defined. For edge0, it is 10.x.100.0/24, for edge1 it is
+                            10.x.101.0/24. Terminating the client vlans at the edge is recommended for simplicity, but
                             you are also welcome to terminate them at the distribution switch.
                         </p>
                     </div>
                     <div className="section" id="table">
-                        <h3>3.9&nbsp;&nbsp;&nbsp;Table</h3>
+                        <h3>2.9&nbsp;&nbsp;&nbsp;Table</h3>
                         <p>(ok, not technically a table)</p>
                         <pre className="literal-block">
-                            {`Top prefix: 10.1.0.0/16
+                            {`Top prefix: 10.x.0.0/16
 
-Linknet: 10.1.200.0/24
-edge0 clients: 10.1.100.0/24
-edge1 clients: 10.1.101.0/24
+Linknet: 10.x.200.0/24
+edge0 clients: 10.x.100.0/24
+edge1 clients: 10.x.101.0/24
 
 Linknets
 
-Core-link: 10.1.200.0/30
-           10.1.200.1 - core
-           10.1.200.2 - distro - ae0.0
+Core-link: 10.x.200.0/30
+           10.x.200.1 - core
+           10.x.200.2 - distro - ae0.0
 
-edge0-d:   10.1.200.4/30
-           10.1.200.5 - distro - ae100.0
-           10.1.200.6 - edge0 - ae0.0
+edge0-d:   10.x.200.4/30
+           10.x.200.5 - distro - ae100.0
+           10.x.200.6 - edge0 - ae0.0
 
-edge1-d:   10.1.200.8/30
-           10.1.200.9 - distro - ae101.0
-           10.1.200.10 - edge1 - ae0.0`}
+edge1-d:   10.x.200.8/30
+           10.x.200.9 - distro - ae101.0
+           10.x.200.10 - edge1 - ae0.0`}
                         </pre>
                     </div>
                 </div>
 
                 <div className="Section" id="tips-and-tricks">
-                    <h2>4&nbsp;&nbsp;&nbsp;Tips and tricks</h2>
+                    <h2>2&nbsp;&nbsp;&nbsp;Tips and tricks</h2>
                     <div className="section" id="basic-junos-cli">
-                        <h3>4.1&nbsp;&nbsp;&nbsp;Basic Junos CLI</h3>
+                        <h3>3.1&nbsp;&nbsp;&nbsp;Basic Junos CLI</h3>
                         <p>First: Junos is Juniper's OS.</p>
                         <p>
                             Junos CLI is a command-line interface to configure and review Juniper hardware. This isn't a
@@ -545,11 +536,11 @@ show | compare | display set
 commit
 
 # You can use "edit" to focus on a single section, so this:
-set interfaces ae0 unit 0 family inet 10.1.200.2/30
+set interfaces ae0 unit 0 family inet 10.1x200.2/30
 
 # is the same as:
 edit interfaces ae0
-set family inet 10.1.200.2/30
+set family inet 10.x.200.2/30
 
 # To get to the top again, use "top".
 top
@@ -559,7 +550,7 @@ exit`}
                         </pre>
                     </div>
                     <div className="section" id="aggregated-interfaces">
-                        <h3>4.2&nbsp;&nbsp;&nbsp;Aggregated interfaces</h3>
+                        <h3>3.2&nbsp;&nbsp;&nbsp;Aggregated interfaces</h3>
                         <p>
                             This is were terminology is annoying, because there are about fifty different words that
                             describe roughly the same thing. "Bonding", "trunk", "link aggregate groups", "aggregated
@@ -614,14 +605,14 @@ set interfaces interface-range uplink ether-options 802.3ad ae0`}
                         <pre className="literal-block">
                             {`set interfaces ae0 description uplink
 set interfaces ae0 aggregated-ether-options lacp active
-set interfaces ae0 unit 0 family inet address 10.1.200.2/30`}
+set interfaces ae0 unit 0 family inet address 10.x.200.2/30`}
                         </pre>
                         <p>
                             To review this, commit it, exit config mode and see{' '}
                             <tt className="docutils literal">show interfaces ae0 extensive</tt>.
                         </p>
                         <div className="section" id="lacp">
-                            <h4>4.2.1&nbsp;&nbsp;&nbsp;LACP?</h4>
+                            <h4>3.2.1&nbsp;&nbsp;&nbsp;LACP?</h4>
                             <p>
                                 LACP is the Link Aggregation Control Protocol. It is used explicitly to connect devices
                                 with multiple ports, but most importantly, it is the protocol that figures out exactly
@@ -633,7 +624,7 @@ set interfaces ae0 unit 0 family inet address 10.1.200.2/30`}
                         </div>
                     </div>
                     <div className="section" id="linknets-theory-and-practice">
-                        <h3>4.3&nbsp;&nbsp;&nbsp;Linknets - theory and practice</h3>
+                        <h3>3.3&nbsp;&nbsp;&nbsp;Linknets - theory and practice</h3>
                         <p>
                             A link-net is a tiny IP network that works as an interconnect between two routers. A linknet
                             has two IP addresses assigned to it, one belonging to each of the interconnected devices. A
@@ -668,19 +659,19 @@ set interfaces ae0 unit 0 family inet address 10.1.200.2/30`}
                         </p>
                         <pre className="literal-block">
                             {`set interfaces ae101 description edge0
-set interfaces ae101 unit 0 family inet address 10.1.200.9/30
+set interfaces ae101 unit 0 family inet address 10.x.200.9/30
 commit`}
                         </pre>
                         <p>On the edge1 side, you match it up:</p>
                         <pre className="literal-block">
                             {`set interfaces ae0 description distro
-set interfaces ae0 unit 0 family inet address 10.1.200.10/30
+set interfaces ae0 unit 0 family inet address 10.x.200.10/30
 commit`}
                         </pre>
-                        <p>After this, both sides should be able to ping 10.1.200.10 and 10.1.200.9.</p>
+                        <p>After this, both sides should be able to ping 10.x.200.10 and 10.x.200.9.</p>
                         <p>And that's really all there is to it.</p>
                         <div className="section" id="lacp-and-linknets">
-                            <h4>4.3.1&nbsp;&nbsp;&nbsp;LACP and linknets</h4>
+                            <h4>3.3.1&nbsp;&nbsp;&nbsp;LACP and linknets</h4>
                             <p>
                                 To get a linknet that relies on LACP up and running you need to combine the LACP-example
                                 and the linknet-ip.
@@ -694,10 +685,10 @@ set interfaces ge-1/0/47 ether-options 802.3ad ae0`}
                             <pre className="literal-block">
                                 {`set interfaces ae0 description uplink
 set interfaces ae0 aggregated-ether-options lacp active
-set interfaces ae0 unit 0 family inet address 10.1.200.2/30`}
+set interfaces ae0 unit 0 family inet address 10.x.200.2/30`}
                             </pre>
                             <p>Then commit and test.</p>
-                            <p>To get routing working, you also need to enable OSPF on the interface.</p>
+                            <p>To get routing working, you need to review static routing and configure that.</p>
                             <p>
                                 For the other linknets, you need to find the correct{' '}
                                 <tt className="docutils literal">ge-</tt>-interfaces that are uplink and set the
@@ -705,7 +696,7 @@ set interfaces ae0 unit 0 family inet address 10.1.200.2/30`}
                             </p>
                         </div>
                         <div className="section" id="routing-theory">
-                            <h4>4.3.2&nbsp;&nbsp;&nbsp;Routing - theory</h4>
+                            <h4>3.3.2&nbsp;&nbsp;&nbsp;Routing - theory</h4>
                             <p>
                                 Without routing, the router just knows about the IP networks it is directly attached to.
                                 That means your distro-switch can ping the linknet IP of its peers, but nothing that is
@@ -716,8 +707,8 @@ set interfaces ae0 unit 0 family inet address 10.1.200.2/30`}
                                 For actual routers, it's slightly more complicated.
                             </p>
                             <p>
-                                For edge0 we want to route <tt className="docutils literal">10.1.100.0/24</tt> from
-                                distro0 to edge0's link-net IP, 10.1.200.6. And edge0 needs to have a default route so
+                                For edge0 we want to route <tt className="docutils literal">10.x.100.0/24</tt> from
+                                distro0 to edge0's link-net IP, 10.x.200.6. And edge0 needs to have a default route so
                                 all traffic is sent to the distro. That means for every network, all routers must have a
                                 clear idea how to connect to each other. 
                             </p>
@@ -729,7 +720,7 @@ set interfaces ae0 unit 0 family inet address 10.1.200.2/30`}
 			     </p>
                         </div>
                         <div className="section" id="routing-practice">
-                            <h4>4.3.3&nbsp;&nbsp;&nbsp;Routing - practice</h4>
+                            <h4>3.3.3&nbsp;&nbsp;&nbsp;Routing - practice</h4>
                             <p>
 				Adding a static route requires two things:
 				The network you want to route and the "next
