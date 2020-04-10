@@ -175,10 +175,10 @@ const Documentation = () => {
                                 switch.
                             </li>
                             <li>
-                                <HashNavLink title="Likewise: linknets need to work." />
+                                Likewise: linknets need to work.
                             </li>
                             <li>
-                                <HashNavLink title="The systems should reply to ssh (they do already if brought on-line)." />
+                                The systems should reply to ssh (they do already if brought on-line).
                             </li>
                         </ol>
                     </div>
@@ -331,13 +331,13 @@ ge-1/0/47.0        ae0.0             44:f4:77:ff:9d:00   ge-0/0/23    klycore
                                 "credentials" section for credentials.
                             </li>
                             <li>
-                                <HashNavLink title="Each switch has a host-name set." />
+                                Each switch has a host-name set.
                             </li>
                             <li>
-                                <HashNavLink title="Each switch has ntp set up - but you wont notice that unless you get it running." />
+                                Each switch has ntp set up - but you wont notice that unless you get it running.
                             </li>
                             <li>
-                                <HashNavLink title="No other configuration is present." />
+                                No other configuration is present.
                             </li>
                         </ol>
                         <p>
@@ -377,7 +377,7 @@ pass: Juniperftw!`}</pre>
                                 USB1, USB2, USB3 for the other devices).
                             </li>
                             <li>
-                                <HashNavLink title="When in screen, exit with ctrl a+" />
+                                When in screen, exit with ctrl a+
                             </li>
                             <li>
                                 You can also detach with ctrl a+d, but then you need to re-attach with "screen -r" to
@@ -567,7 +567,7 @@ exit`}
                                 ALL THE TIME at The Gathering, specially on day 1)
                             </li>
                             <li>
-                                <HashNavLink title="Increased bandwidth." />
+                                Increased bandwidth.
                             </li>
                         </ol>
                         <p>
@@ -633,13 +633,13 @@ set interfaces ae0 unit 0 family inet address 10.x.200.2/30`}
                         <p>In our example, there are exactly three linknets:</p>
                         <ol className="arabic simple">
                             <li>
-                                <HashNavLink title="A linknet between distro0 and core - you only have to configure one side of it." />
+                                A linknet between distro0 and core - you only have to configure one side of it.
                             </li>
                             <li>
-                                <HashNavLink title="A linknet between distro0 and edge0" />
+                                A linknet between distro0 and edge0
                             </li>
                             <li>
-                                <HashNavLink title="A linknet between distro0 and edge1" />
+                                A linknet between distro0 and edge1
                             </li>
                         </ol>
                         <p>
