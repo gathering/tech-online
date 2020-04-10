@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { useParams } from 'react-router-dom';
 import { httpGet, FETCH_STATUS } from '../common/api';
 import './status.scss';
+import { useInterval } from '../common/useInterval';
 
 const stations = ['1', '2', '3', '4'];
 
@@ -13,24 +14,37 @@ const Status = () => {
     const [fetchStatus, setFetchStatus] = useState(FETCH_STATUS.IDLE);
     const [fetchedStation, setFetchedStation] = useState();
     const [activeTestDescription, setActiveTestDescription] = useState();
+    const [lastUpdated, setLastUpdated] = useState();
+
+    const fetchStationData = useCallback(() => {
+        setFetchStatus(FETCH_STATUS.PENDING);
+
+        httpGet('status/station/' + stationId)
+            .then((data) => {
+                setFetchStatus(FETCH_STATUS.RESOLVED);
+                setFetchedStation(stationId);
+                setStationData(data);
+                setLastUpdated(Date.now());
+            })
+            .catch((err) => {
+                setFetchStatus(FETCH_STATUS.REJECTED);
+                setFetchedStation(stationId);
+                setStationData(false);
+                setLastUpdated(Date.now());
+            });
+    }, [stationId]);
 
     useEffect(() => {
         if (fetchedStation !== stationId && fetchStatus !== FETCH_STATUS.PENDING && stationId) {
-            setFetchStatus(FETCH_STATUS.PENDING);
-
-            httpGet('status/station/' + stationId)
-                .then((data) => {
-                    setFetchStatus(FETCH_STATUS.RESOLVED);
-                    setFetchedStation(stationId);
-                    setStationData(data);
-                })
-                .catch((err) => {
-                    setFetchStatus(FETCH_STATUS.REJECTED);
-                    setFetchedStation(stationId);
-                    setStationData(false);
-                });
+            fetchStationData();
         }
-    }, [stationData, stationId, fetchStatus, fetchedStation]);
+    }, [stationData, stationId, fetchStatus, fetchedStation, fetchStationData]);
+
+    useInterval(() => {
+        if (stationId && fetchStatus !== FETCH_STATUS.PENDING) {
+            fetchStationData();
+        }
+    }, 10000);
 
     const toggleActiveTestDescription = (testId) => {
         if (activeTestDescription === testId) {
@@ -39,6 +53,16 @@ const Status = () => {
             setActiveTestDescription(testId);
         }
     };
+
+    const fLastUpdated = useMemo(() => {
+        if (!lastUpdated) {
+            return null;
+        }
+
+        const d = new Date(lastUpdated);
+        const dtf = new Intl.DateTimeFormat('nb-no', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        return dtf.format(d);
+    }, [lastUpdated]);
 
     return (
         <div className="status-container">
@@ -57,6 +81,13 @@ const Status = () => {
                     </div>
                 ))}
             </div>
+            {fLastUpdated && (
+                <div className="row">
+                    <div className="col-xs" style={{ paddingTop: '2rem' }}>
+                        <strong>Last updated: {fLastUpdated}</strong>
+                    </div>
+                </div>
+            )}
             {stationData && (
                 <div className="testlist">
                     {stationData.Tests.map((test, i) => (

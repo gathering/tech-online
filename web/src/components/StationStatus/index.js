@@ -1,12 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { FETCH_STATUS, httpGet } from '../../common/api';
 import './station-status.scss';
+import { useInterval } from '../../common/useInterval';
 
 const StationStatus = ({ id }) => {
     const [fetchStatus, setFetchStatus] = useState(FETCH_STATUS.IDLE);
     const [stationData, setStationData] = useState();
     const [hover, setHover] = useState();
+
+    const fetchStationData = useCallback(() => {
+        setFetchStatus(FETCH_STATUS.PENDING);
+
+        httpGet('status/station/' + id)
+            .then((data) => {
+                setFetchStatus(FETCH_STATUS.RESOLVED);
+                setStationData(data);
+            })
+            .catch((err) => {
+                setFetchStatus(FETCH_STATUS.REJECTED);
+                setStationData(false);
+            });
+    }, [id]);
 
     const toggleHover = (id) => {
         if (hover === id) {
@@ -18,21 +33,17 @@ const StationStatus = ({ id }) => {
 
     useEffect(() => {
         if (stationData === undefined && fetchStatus !== FETCH_STATUS.PENDING && id) {
-            setFetchStatus(FETCH_STATUS.PENDING);
-
-            httpGet('status/station/' + id)
-                .then((data) => {
-                    setFetchStatus(FETCH_STATUS.RESOLVED);
-                    setStationData(data);
-                })
-                .catch((err) => {
-                    setFetchStatus(FETCH_STATUS.REJECTED);
-                    setStationData(false);
-                });
+            fetchStationData();
         }
-    }, [id, stationData, fetchStatus]);
+    }, [id, stationData, fetchStatus, fetchStationData]);
 
-    if (fetchStatus === FETCH_STATUS.PENDING || !stationData) {
+    useInterval(() => {
+        if (id && fetchStatus !== FETCH_STATUS.PENDING) {
+            fetchStationData();
+        }
+    }, 10000);
+
+    if (!stationData) {
         return null;
     }
 
