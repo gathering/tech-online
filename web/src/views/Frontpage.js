@@ -4,6 +4,7 @@ import './frontpage.scss';
 import pocImage from '../assets/poc.jpg';
 import { useUserState, userIsAuthed } from '../store/userContext';
 import { Link } from 'react-router-dom';
+import StationStatus from '../components/StationStatus';
 
 const Frontpage = () => {
     const user = useUserState();
@@ -16,6 +17,21 @@ const Frontpage = () => {
             </div>
 
             <div className="frontpage-container">
+                <div className="row">
+                    <div className="col-md-3">
+                        <StationStatus id={1} />
+                    </div>
+                    <div className="col-md-3">
+                        <StationStatus id={2} />
+                    </div>
+                    <div className="col-md-3">
+                        <StationStatus id={3} />
+                    </div>
+                    <div className="col-md-3">
+                        <StationStatus id={4} />
+                    </div>
+                </div>
+
                 <h2>What is Tech:Online?</h2>
                 <hr />
                 <p>

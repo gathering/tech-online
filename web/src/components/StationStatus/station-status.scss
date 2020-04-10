@@ -1,0 +1,57 @@
+@import '../../styles/theme';
+
+.station-status {
+    padding: 0.5rem;
+    padding-bottom: 2rem;
+
+    &__testlist {
+        display: grid;
+        grid-template-columns: repeat(5, 2rem);
+        grid-auto-rows: minmax(2rem, auto);
+        grid-gap: 0.5rem;
+        height: auto;
+        border-radius: 3px;
+        padding: 0.5rem;
+        justify-content: space-evenly;
+        background: lighten($foregroundColor, 25%);
+    }
+
+    &__test {
+        cursor: pointer;
+        position: relative;
+        transition: transform 0.2s ease-in-out;
+        border-radius: 3px;
+
+        &__description {
+            position: absolute;
+            top: 2.75rem;
+            left: -3.25rem;
+            z-index: 2;
+            background-color: $foregroundColor;
+            width: 300px;
+            padding: 1rem;
+            border-radius: 3px;
+            display: none;
+            color: white;
+
+            &--active {
+                display: block;
+            }
+        }
+
+        &--ok {
+            background: #39dd6d;
+            color: #39dd6d;
+        }
+
+        &--fail {
+            background: #dd2c32;
+            color: #dd2c32;
+        }
+
+        &--skipped {
+            color: #f7b538;
+            background: #f7b538;
+        }
+    }
+}
