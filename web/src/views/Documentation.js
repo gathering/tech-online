@@ -225,14 +225,15 @@ const Documentation = () => {
                     <h2>2&nbsp;&nbsp;&nbsp;Reference documentation</h2>
                     <div className="section" id="topology">
                         <h3>2.1&nbsp;&nbsp;&nbsp;Topology</h3>
-                        <object
-                            data="https://techo.gathering.org/pics/topology.svg"
-                            className="w-80"
-                            type="image/svg+xml"
-                        >
-                            topology.svg
-                        </object>
+			<p>
+			Please note that the IP range 10.1.0.0/16 must be
+			replaced with your individual IP range, and the IP
+			for your jumphost/rpi is not relevant or accurately
+				represented.
+			</p>
+			<a href="https://techo.gathering.org/pics/topology.svg">
 			<img src="https://techo.gathering.org/pics/topology.svg" className="w-80" />
+			</a>
                     </div>
                     <div className="section" id="hardware">
                         <h3>2.2&nbsp;&nbsp;&nbsp;Hardware</h3>
