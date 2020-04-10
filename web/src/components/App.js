@@ -16,20 +16,24 @@ const App = () => {
                         TG: Tech Online
                     </NavLink>
                     <NavLink to="/documentation">Reference documentation</NavLink>
-                    {loggedIn && <NavLink to="/participate">Participate</NavLink>}
+                    {loggedIn && (
+                        <NavLink to="/participate" className="participate-link">
+                            Participate
+                        </NavLink>
+                    )}
                 </div>
                 <div className="nav-right">
                     {loggedIn ? (
                         <span className="action" onClick={() => userDispatch({ type: actions.LOGOUT })}>
                             Log out
                         </span>
-                    ) : null
-                    // <a
-                    //     href={`https://oscar.zoodo.io/o/authorize/?client_id=${process.env.CLIENT_ID}&response_type=code&scope=read_userdata_extended%20write_userdata_extended&redirect_uri=${location.origin}/login`}
-                    // >
-                    //     Log in
-                    // </a>
-                    }
+                    ) : (
+                        <a
+                            href={`https://oscar.zoodo.io/o/authorize/?client_id=${process.env.CLIENT_ID}&response_type=code&scope=read_userdata_extended%20write_userdata_extended&redirect_uri=${location.origin}/login`}
+                        >
+                            Log in
+                        </a>
+                    )}
                 </div>
             </header>
             <main>

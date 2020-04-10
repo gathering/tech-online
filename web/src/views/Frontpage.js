@@ -116,6 +116,16 @@ const Frontpage = () => {
                         <img src="http://techo.gathering.org/pics/right000M.jpg" />
                     </div>
                 </div>
+
+                <hr />
+
+                <div className="signup-row">
+                    <a
+                        href={`https://oscar.zoodo.io/o/authorize/?client_id=${process.env.CLIENT_ID}&response_type=code&scope=read_userdata_extended%20write_userdata_extended&redirect_uri=${window.location.origin}/login`}
+                    >
+                        <h2>Click here to log in and participate</h2>
+                    </a>
+                </div>
             </div>
         </div>
     );

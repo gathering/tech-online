@@ -98,22 +98,6 @@
                 text-decoration: underline;
             }
         }
-
-        .admonition {
-            margin-top: 2rem;
-            &.warning {
-                padding: 1rem;
-                color: rgba(#fff, 0.9);
-                background-color: lighten(red, 20);
-                border-left: 5px solid darken(red, 3);
-            }
-
-            &-title {
-                font-weight: bold;
-                font-size: 1.2rem;
-                letter-spacing: 0.1rem;
-            }
-        }
     }
 
     h2 {
