@@ -1,0 +1,19 @@
+#!/bin/bash
+
+task() {
+	seq=$1
+	sname=$2
+	name=$3
+	fil=$sname.rst
+	{
+		echo -n "{\"sequence\": $seq, \"shortname\": \"$sname\", \"name\": \"$name\", \"description\":\""
+		cat $fil | sed 's/"/\\"/g' | sed -z 's/\n/\\n/g'
+		echo "\"}";
+	} | lwp-request -m PUT https://techo.gathering.org/api/task/$sname
+}
+
+task 1 task1 "Task 1: Get your distro talking to the core"
+task 2 task2 "Task 2: Link up distro and edge0"
+task 3 task3 "Task 3: Rinse and repeat for edge1"
+task 4 task4 "Task 4: Crowd pleaser: Get the client online"
+task 5 management "Management access"

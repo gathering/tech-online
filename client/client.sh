@@ -1,6 +1,8 @@
 #!/bin/bash
+
+target=8.8.8.8
 check() {
-	ping -c1 -W1 10.1.99.1 > /dev/null 2>&1
+	ping -c1 -W1 ${target} > /dev/null 2>&1
 }
 
 fig="figlet -W -w $COLUMNS -c "
