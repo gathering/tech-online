@@ -113,6 +113,18 @@ const Participate = () => {
 
     return (
         <div className="participate-container">
+            {participationData.Message && (
+                <section>
+                    <div classNam="row">
+                        <div className="col-xs">
+                            <div className="admonition admonition--warning">
+                                <div className="admonition__title">PSA</div>
+                                {participationData.Message}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            )}
             <section>
                 <div className="row">
                     <div className="col-xs">
@@ -160,18 +172,6 @@ const Participate = () => {
                     </div>
                 </div>
             </section>
-            {participationData.Message && (
-                <section>
-                    <div classNam="row">
-                        <div className="col-xs">
-                            <div className="admonition admonition--warning">
-                                <div className="admonition__title">PSA</div>
-                                {participationData.Message}
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            )}
             <section>
                 <div className="row">
                     <div className="col-xs">
