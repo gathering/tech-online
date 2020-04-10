@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import { FETCH_STATUS, httpPost, httpPut, httpGet } from '../common/api';
+import ReactMarkdown from 'react-markdown';
+import { FETCH_STATUS, httpPost, httpGet } from '../common/api';
 import { useUserState, userIsAuthed } from '../store/userContext';
 import './participate.scss';
 
@@ -191,7 +192,7 @@ const Participate = () => {
                                             <pre>{Hint}</pre>
                                         </div>
                                         <div className="task__description">
-                                            <pre>{Description}</pre>
+                                            <ReactMarkdown source={Description} />
                                         </div>
                                         <div className="task__tests">
                                             {Tests.map((test) => (
