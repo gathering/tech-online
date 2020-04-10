@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import './frontpage.scss';
 
 import pocImage from '../assets/poc.jpg';
+import { useUserState, userIsAuthed } from '../store/userContext';
+import { Link } from 'react-router-dom';
 
 const Frontpage = () => {
+    const user = useUserState();
+    const loggedIn = userIsAuthed(user);
+
     return (
         <div className="frontpage">
             <div className="title">
@@ -120,11 +125,15 @@ const Frontpage = () => {
                 <hr />
 
                 <div className="signup-row">
-                    <a
-                        href={`https://oscar.zoodo.io/o/authorize/?client_id=${process.env.CLIENT_ID}&response_type=code&scope=read_userdata_extended%20write_userdata_extended&redirect_uri=${window.location.origin}/login`}
-                    >
-                        <h2>Click here to log in and participate</h2>
-                    </a>
+                    {loggedIn ? (
+                        <Link to="/participate">Participate!</Link>
+                    ) : (
+                        <a
+                            href={`https://oscar.zoodo.io/o/authorize/?client_id=${process.env.CLIENT_ID}&response_type=code&scope=read_userdata_extended%20write_userdata_extended&redirect_uri=${window.location.origin}/login`}
+                        >
+                            <h2>Click here to log in and participate</h2>
+                        </a>
+                    )}
                 </div>
             </div>
         </div>
