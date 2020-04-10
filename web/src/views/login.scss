@@ -1,0 +1,17 @@
+.login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+
+    h1 {
+        a {
+            color: white;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}

@@ -5,9 +5,10 @@ import App from './components/App';
 import { UserProvider } from './store/userContext';
 import 'regenerator/runtime';
 import './styles/main.scss';
+import 'flexboxgrid';
 
 render(
-    <Router basename="/tech-online">
+    <Router>
         <UserProvider>
             <App />
         </UserProvider>

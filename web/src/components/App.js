@@ -23,13 +23,13 @@ const App = () => {
                         <span className="action" onClick={() => userDispatch({ type: actions.LOGOUT })}>
                             Log out
                         </span>
-                    ) : (
-                        <a
-                            href={`https://oscar.zoodo.io/o/authorize/?client_id=${process.env.CLIENT_ID}&response_type=code&scope=read_userdata_extended%20write_userdata_extended&redirect_uri=http://localhost:1234/login`}
-                        >
-                            Log in
-                        </a>
-                    )}
+                    ) : null
+                    // <a
+                    //     href={`https://oscar.zoodo.io/o/authorize/?client_id=${process.env.CLIENT_ID}&response_type=code&scope=read_userdata_extended%20write_userdata_extended&redirect_uri=${location.origin}/login`}
+                    // >
+                    //     Log in
+                    // </a>
+                    }
                 </div>
             </header>
             <main>
@@ -37,6 +37,7 @@ const App = () => {
                     <Route path="/" exact component={Views.Frontpage} />
                     <Route path="/login" component={Views.Login} />
                     <Route path="/documentation" component={Views.Documentation} />
+                    <Route path="/participate" component={Views.Participate} />
                 </Switch>
             </main>
             <footer>

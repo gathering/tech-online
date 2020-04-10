@@ -8,12 +8,12 @@
         "build": "parcel build public/index.html --public-url ."
     },
     "dependencies": {
+        "flexboxgrid": "^6.3.1",
         "jwt-decode": "^2.2.0",
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
         "react-router-dom": "^5.1.2",
-        "regenerator": "^0.14.4",
-        "yarn": "^1.22.4"
+        "regenerator": "^0.14.4"
     },
     "devDependencies": {
         "@babel/core": "^7.9.0",

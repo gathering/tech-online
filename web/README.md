@@ -7,13 +7,12 @@ This is the frontend for documentation and handling the competition.
 ## Prerequisites
 
 - Node v12 or something close
-- Yarn
 
 ## Run me!!
 
 ```
-yarn
-yarn build
+npm install
+npm run start
 ```
 
 # Build me
@@ -21,13 +20,12 @@ yarn build
 ## Prerequisites
 
 - Node v12 or something close
-- Yarn
 
 ## Build me!!
 
 ```
-yarn
-yarn build
+npm install
+npm run build
 ```
 
 # Deploy me

@@ -540,13 +540,17 @@ const Documentation = () => {
                     <h2>3&nbsp;&nbsp;&nbsp;Reference documentation</h2>
                     <div className="section" id="topology">
                         <h3>3.1&nbsp;&nbsp;&nbsp;Topology</h3>
-                        <object data="http://techo.gathering.org/topology.svg" className="w-80" type="image/svg+xml">
+                        <object
+                            data="https://techo.gathering.org/pics/topology.svg"
+                            className="w-80"
+                            type="image/svg+xml"
+                        >
                             topology.svg
                         </object>
                     </div>
                     <div className="section" id="hardware">
                         <h3>3.2&nbsp;&nbsp;&nbsp;Hardware</h3>
-                        <img alt="overview.jpg" src="http://techo.gathering.org/overview.jpg" className="w-80" />
+                        <img alt="overview.jpg" src="http://techo.gathering.org/pics/overview.jpg" className="w-80" />
                         <p>Two edge switches, EX2200.</p>
                         <p>Two distro-switches, EX3300, already configured for virtual-chassis.</p>
                         <p>The bottom-most EX4300 is the core, and excluded from the event.</p>
@@ -667,10 +671,10 @@ ge-1/0/47.0        ae0.0             44:f4:77:ff:9d:00   ge-0/0/23    klycore
                     </div>
                     <div className="section" id="pictures">
                         <h3>3.6&nbsp;&nbsp;&nbsp;Pictures</h3>
-                        <img alt="overview.jpg" src="http://techo.gathering.org/overview.jpg" className="w-80" />
-                        <img alt="ports1.jpg" src="http://techo.gathering.org/ports1.jpg" className="w-80" />
-                        <img alt="ports2.jpg" src="http://techo.gathering.org/ports2.jpg" className="w-80" />
-                        <img alt="overview2.jpg" src="http://techo.gathering.org/overview2.jpg" className="w-80" />
+                        <img alt="overview.jpg" src="http://techo.gathering.org/pics/overview.jpg" className="w-80" />
+                        <img alt="ports1.jpg" src="http://techo.gathering.org/pics/ports1.jpg" className="w-80" />
+                        <img alt="ports2.jpg" src="http://techo.gathering.org/pics/ports2.jpg" className="w-80" />
+                        <img alt="overview2.jpg" src="http://techo.gathering.org/pics/overview2.jpg" className="w-80" />
                     </div>
                     <div className="section" id="credentials">
                         <h3>3.7&nbsp;&nbsp;&nbsp;Credentials</h3>

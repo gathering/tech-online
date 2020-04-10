@@ -12,7 +12,7 @@ export const httpGet = (endpoint, config = {}) => {
 };
 
 export const httpPost = (url, data = {}, config = {}) => {
-    return client(url, { body: data, ...config });
+    return client(url, { body: data, method: 'POST', ...config });
 };
 
 export const httpPut = (url, data, config) =>
@@ -22,12 +22,13 @@ export const httpPut = (url, data, config) =>
         ...config,
     });
 
-const client = (endpoint, { body, host = process.env.API_URL, ...customConfig } = {}) => {
+const client = (endpoint, { body, host = process.env.API_URL, forceBlankEol = false, ...customConfig } = {}) => {
     const token = window.localStorage.getItem(localStorageTokenKey);
-    const headers = { 'content-type': 'application/json' };
+    const headers = { 'Content-Type': 'application/json', Accept: 'application/json' };
     if (token) {
         headers.Authorization = `JWT ${token}`;
     }
+
     const config = {
         method: body ? 'POST' : 'GET',
         ...customConfig,
@@ -36,20 +37,24 @@ const client = (endpoint, { body, host = process.env.API_URL, ...customConfig } 
             ...customConfig.headers,
         },
     };
+
     if (body) {
         config.body = JSON.stringify(body);
     }
-    return window.fetch(`${host}/${endpoint}`, config).then(async (response) => {
-        if (response.status === 401) {
-            // TODO logout();
-            // window.location.assign(window.location);
-            // return;
-        }
+
+    if (config.method === 'POST') {
+        endpoint += forceBlankEol ? '' : '/';
+    }
+
+    return fetch(`${host}/${endpoint}`, config).then(async (response) => {
         const data = await response.json();
         if (response.ok) {
             return data;
         } else {
-            return Promise.reject(data);
+            return Promise.reject({
+                status: response.status,
+                data,
+            });
         }
     });
 };

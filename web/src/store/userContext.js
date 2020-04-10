@@ -76,10 +76,11 @@ const useLogin = (code) => {
         if (fetchStatus === FETCH_STATUS.IDLE) {
             setFetchStatus(FETCH_STATUS.PENDING);
             httpPost(
-                `o/token/?code=${code}&client_secret=${process.env.CLIENT_SECRET}&client_id=${process.env.CLIENT_ID}&grant_type=authorization_code&redirect_uri=http://localhost:1234/login`,
+                `o/token/?code=${code}&client_secret=${process.env.CLIENT_SECRET}&client_id=${process.env.CLIENT_ID}&grant_type=authorization_code&redirect_uri=${window.location.origin}/login`,
                 {},
                 {
                     host: 'https://oscar.zoodo.io',
+                    forceBlankEol: true,
                 }
             )
                 .then((data) => {
@@ -116,4 +117,6 @@ const useLogin = (code) => {
     return [fetchStatus, fetchResult];
 };
 
-export { UserProvider, useUserState, useUserDispatch, useLogin };
+const userIsAuthed = (user) => !!Object.keys(user).length;
+
+export { UserProvider, useUserState, useUserDispatch, useLogin, userIsAuthed };
