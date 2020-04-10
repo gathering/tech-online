@@ -103,7 +103,7 @@ const Frontpage = () => {
                     </div>
                 </div>
 
-                <div className="flex-row">
+                <div className="flex-row" style={{ paddingTop: '2rem' }}>
                     <div className="flex-item">
                         <img src="http://techo.gathering.org/pics/left000M.jpg" />
                     </div>
