@@ -232,6 +232,7 @@ const Documentation = () => {
                         >
                             topology.svg
                         </object>
+			<img src="https://techo.gathering.org/pics/topology.svg" className="w-80" />
                     </div>
                     <div className="section" id="hardware">
                         <h3>2.2&nbsp;&nbsp;&nbsp;Hardware</h3>
