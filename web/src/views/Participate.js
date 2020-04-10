@@ -171,7 +171,10 @@ const Participate = () => {
                                 </div>
                             </div>
                         ) : (
-                            <h2>No access</h2>
+                            <>
+                                <h2>You are currently not assigned to a station</h2>
+                                <strong>Feel free to hang out in Discord while you wait</strong>
+                            </>
                         )}
                     </div>
                 </div>
