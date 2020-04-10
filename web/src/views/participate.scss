@@ -26,6 +26,19 @@
             }
         }
 
+        .station {
+            @media (max-width: 768px) {
+                .row {
+                    flex-direction: column;
+                }
+            }
+
+            &__header {
+                margin-bottom: 2rem;
+                color: #ff8d33;
+            }
+        }
+
         .sign-up {
             text-align: center;
 
@@ -95,18 +108,22 @@
                 margin-bottom: 0.25rem;
                 border-radius: 3px;
 
-                &--success {
-                    background: #05ccff;
+                & > *:first-child {
+                    text-transform: capitalize;
+                }
+
+                &--ok {
+                    background: $ascentColor;
                     color: #3d3d3d;
                 }
 
-                &--warn {
+                &--skipped {
                     background: #f7b538;
                     color: #3d3d3d;
                 }
 
-                &--err {
-                    background: #c32f27;
+                &--fail {
+                    background: $primaryColor;
                     color: #3d3d3d;
                 }
             }

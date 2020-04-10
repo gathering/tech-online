@@ -80,7 +80,7 @@ const useLogin = (code) => {
                 {},
                 {
                     host: 'https://oscar.zoodo.io',
-                    eol: '',
+                    forceBlankEol: true,
                 }
             )
                 .then((data) => {
@@ -97,7 +97,6 @@ const useLogin = (code) => {
 
                     httpGet('api/accounts/myprofile/', {
                         host: 'https://oscar.zoodo.io',
-                        eol: '',
                     }).then((data) => {
                         dispatch({
                             type: actions.LOGIN,

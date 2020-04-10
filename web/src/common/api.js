@@ -22,7 +22,7 @@ export const httpPut = (url, data, config) =>
         ...config,
     });
 
-const client = (endpoint, { body, host = process.env.API_URL, eol = '/', ...customConfig } = {}) => {
+const client = (endpoint, { body, host = process.env.API_URL, forceBlankEol = false, ...customConfig } = {}) => {
     const token = window.localStorage.getItem(localStorageTokenKey);
     const headers = { 'Content-Type': 'application/json', Accept: 'application/json' };
     if (token) {
@@ -42,7 +42,11 @@ const client = (endpoint, { body, host = process.env.API_URL, eol = '/', ...cust
         config.body = JSON.stringify(body);
     }
 
-    return fetch(`${host}/${endpoint}${eol}`, config).then(async (response) => {
+    if (config.method === 'POST') {
+        endpoint += forceBlankEol ? '' : '/';
+    }
+
+    return fetch(`${host}/${endpoint}`, config).then(async (response) => {
         const data = await response.json();
         if (response.ok) {
             return data;
