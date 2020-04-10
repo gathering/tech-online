@@ -134,13 +134,6 @@ const Documentation = () => {
             <div className="documentation-container">
                 <div className="Section" id="intro">
                     <h2>1&nbsp;&nbsp;&nbsp;Intro</h2>
-                    <div className="admonition warning">
-                        <p className="first admonition-title">Warning</p>
-                        <p className="last">
-                            This is a WORK IN PROGRESS and is currently the first iteration of a _pilot_. It WILL
-                            change.
-                        </p>
-                    </div>
                     <div className="section" id="the-task-at-hand">
                         <h3>1.1&nbsp;&nbsp;&nbsp;The task at hand</h3>
                         <p>
