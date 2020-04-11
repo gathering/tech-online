@@ -152,7 +152,7 @@ const Participate = () => {
                 <section>
                     <div className="row">
                         <div className="col-xs">
-                            <div className="admonition admonition--warning">
+                            <div className="admonition admonition--danger">
                                 <div className="admonition__title">PSA</div>
                                 {participationData.Message}
                             </div>
@@ -187,7 +187,7 @@ const Participate = () => {
                                     <div className="col-xs col-md-3">
                                         <strong>User</strong>
                                     </div>
-                                    <div className="col-xs">{participationData.Station.User}</div>
+                                    <div className="col-xs">techo</div>
                                 </div>
                                 <div className="row between-xs station__row">
                                     <div className="col-xs col-md-3">
@@ -201,6 +201,17 @@ const Participate = () => {
                                     </div>
                                     <div className="col-xs">{participationData.Station.Net}</div>
                                 </div>
+
+                                {participationData.Station.Notes && (
+                                    <div className="row between-xs station__row">
+                                        <div className="col-xs">
+                                            <div className="admonition admonition--warning">
+                                                <div className="admonition__title">Station specific notes</div>
+                                                {participationData.Station.Notes}
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         ) : (
                             <>
@@ -215,7 +226,6 @@ const Participate = () => {
                 <div className="row">
                     <div className="col-xs">
                         <h1>Tasks</h1>
-                        <hr />
 
                         {participationData.Tasks.map(({ Name, Description, Hint, Tests }) => (
                             <div className="row" key={Name}>
@@ -223,6 +233,7 @@ const Participate = () => {
                                     <div className="task">
                                         <h3 className="task__header">
                                             {Name}
+                                            <hr />
                                             {!!Hint && (
                                                 <span
                                                     className={`task__header--hint task__header--hint--${
