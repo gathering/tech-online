@@ -207,7 +207,7 @@ const Participate = () => {
                                         <div className="col-xs">
                                             <div className="admonition admonition--warning">
                                                 <div className="admonition__title">Station specific notes</div>
-                                                {participationData.Station.Notes}
+                                                <ReactMarkdown source={participationData.Station.Notes} />
                                             </div>
                                         </div>
                                     </div>
