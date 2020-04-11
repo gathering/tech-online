@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Redirect } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { FETCH_STATUS, httpPost, httpGet } from '../common/api';
@@ -99,6 +99,26 @@ const Participate = () => {
         }
     };
 
+    const timeSlot = useMemo(() => {
+        if (!participationData || !participationData.TimeSlot) {
+            return null;
+        }
+
+        const { From, To } = participationData.TimeSlot;
+        const from = Date.parse(From);
+        const to = Date.parse(To);
+        const dtf = new Intl.DateTimeFormat('nb-no', {
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+        });
+
+        const str = `You have been assigned a timeslot from ${dtf.format(from)} to ${dtf.format(to)}`;
+
+        return str;
+    }, [participationData]);
+
     if (fetchStatus === FETCH_STATUS.PENDING && !participationData) {
         return (
             <div className="participate-container">
@@ -144,6 +164,7 @@ const Participate = () => {
                 <div className="row">
                     <div className="col-xs">
                         <h1>Connection information</h1>
+                        {timeSlot && <strong>{timeSlot}</strong>}
                         <hr />
                     </div>
                 </div>
