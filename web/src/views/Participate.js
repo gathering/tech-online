@@ -104,9 +104,9 @@ const Participate = () => {
             return null;
         }
 
-        const { From, To } = participationData.TimeSlot;
-        const from = Date.parse(From);
-        const to = Date.parse(To);
+        const { Start, End } = participationData.TimeSlot;
+        const from = Date.parse(Start);
+        const to = Date.parse(End);
         const dtf = new Intl.DateTimeFormat('nb-no', {
             month: 'long',
             day: 'numeric',
