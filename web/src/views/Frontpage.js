@@ -35,7 +35,11 @@ const Frontpage = () => {
                         </div>
                     </div>
                 </div>
-
+		<hr />
+		<h2>Winners will be announced tonight at 21:00!</h2>
+		<p>Tech:Online saw somewhere around 20 participants go through our network challenge, and the "jury" has had a difficult time determining the lucky three to win a ticket for The Gathering 2021.</p>
+		<p>But we will reveal the winners tonight at 21:00, during a live stream where we also do a speedrun of the challenge and discuss some of the unforseen challenges we had and how it all relates to real-life network administration.</p>
+		<p>Find your way to discord, and the stream will be at <a href="https://twitch.tv/klyklyno">Kristian's twitch channel</a>. The winners will of course be announced here as well.</p>
                 <h2>What is Tech:Online?</h2>
                 <hr />
                 <p>

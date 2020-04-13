@@ -70,11 +70,17 @@
 
         .admonition {
             margin-top: 2rem;
-            &--warning {
-                padding: 1rem;
-                color: rgba(#fff, 0.9);
+            padding: 1rem;
+            color: rgba(#fff, 0.9);
+
+            &--danger {
                 background-color: lighten(red, 20);
                 border-left: 5px solid darken(red, 3);
+            }
+
+            &--warning {
+                background-color: lighten($primaryColor, 15);
+                border-left: 5px solid darken($primaryColor, 3);
             }
 
             &__title {
