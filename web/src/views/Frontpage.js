@@ -17,18 +17,22 @@ const Frontpage = () => {
             </div>
 
             <div className="frontpage-container">
-                <div className="row">
-                    <div className="col-md-3">
-                        <StationStatus id={1} />
-                    </div>
-                    <div className="col-md-3">
-                        <StationStatus id={2} />
-                    </div>
-                    <div className="col-md-3">
-                        <StationStatus id={3} />
-                    </div>
-                    <div className="col-md-3">
-                        <StationStatus id={4} />
+                <div className="winners">
+                    <h2 className="winners__header">Winners</h2>
+
+                    <div className="winners__list">
+                        <div className="winners__list-item">
+                            <div className="winners__list-item--place">1st place</div>
+                            <div className="winners__list-item--nick">CafSneak</div>
+                        </div>
+                        <div className="winners__list-item">
+                            <div className="winners__list-item--place">2nd place</div>
+                            <div className="winners__list-item--nick">ent3r_</div>
+                        </div>
+                        <div className="winners__list-item">
+                            <div className="winners__list-item--place">3rd place</div>
+                            <div className="winners__list-item--nick">Total_Ecl1ps3</div>
+                        </div>
                     </div>
                 </div>
 
@@ -136,20 +140,6 @@ const Frontpage = () => {
                     <div className="flex-item">
                         <img src="//techo.gathering.org/pics/right000M.jpg" />
                     </div>
-                </div>
-
-                <hr />
-
-                <div className="signup-row">
-                    {loggedIn ? (
-                        <Link to="/participate">Participate!</Link>
-                    ) : (
-                        <a
-                            href={`https://oscar.zoodo.io/o/authorize/?client_id=${process.env.CLIENT_ID}&response_type=code&scope=read_userdata_extended%20write_userdata_extended&redirect_uri=${window.location.origin}/login`}
-                        >
-                            <h2>Click here to log in and participate</h2>
-                        </a>
-                    )}
                 </div>
             </div>
         </div>
