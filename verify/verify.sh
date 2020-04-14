@@ -13,6 +13,7 @@ mgmt_ip[edge1]=${prefix}200.10
 mgmt_ok=""
 mgmt_bad=""
 
+put_TARGET="https://techo.gathering.org/api/status/station/${station}"
 declare -A linknets
 linknets[distro-core]="${prefix}200.1 core ${prefix}200.2 distro"
 linknets[distro-edge0]="${prefix}200.5 distro ${prefix}200.6 edge0"
@@ -42,7 +43,7 @@ cleanup() {
 	if [ $ferdig = "yup" ]; then
 		cp ${json_out} ${prefix}$(date --iso-8601=minute).json
 		cp ${json_out} ${prefix}latest.json
-		lwp-request -m PUT https://techo.gathering.org/api/status/station/${station} < ${prefix}latest.json
+		lwp-request -m PUT ${put_TARGET} < ${prefix}latest.json
 		echo -n 'data = ' > ${prefix}jsonp
 		cat ${json_out} >> ${prefix}jsonp
 	fi
