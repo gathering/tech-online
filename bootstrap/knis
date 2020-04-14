@@ -1,0 +1,210 @@
+#!/usr/bin/expect
+
+set timeout 60
+set conf 1
+set zeroize 1
+set slave 0
+set delay 300
+
+set send_slow {10 .01}
+log_user 0
+set tt [lrange $argv 0 0]
+
+log_file -a [file tail $tt]
+spawn cu -f -l $tt
+send "\r\n"
+expect_after {
+	"Logging to master" {
+		puts "got slave!"
+		set slave 1
+		exp_continue
+	}
+}
+expect {
+	-re "login:.*" {
+		puts "Got login: prompt! Awright."
+	}
+	"> " {
+		puts "Already logged in to cli? Logging out..."
+		send "exit\n"
+		expect -re ".*:.%" {
+			puts "And exiting shell"
+			send "exit\n"
+		} timeout {
+			puts "timed out waiting for cli-exit... giving up."
+			exit
+		}
+	}
+	"# " {
+		puts "Possibly in config-mode?"
+		send "exit\n"
+		expect -timeout 5 "yes" {
+				send "yes\n"
+		}
+		expect -timeout 10 "> " {
+				puts "seems like it, backing out"
+				send "exit\n"
+				expect "% " {
+					send "exit\n"
+				}
+		}
+	}
+		
+				
+	-re ".*:.% " {
+		puts "Already logged in, logging out."
+		send "exit\n"
+	}
+	timeout 60 {
+		puts "Timeout waiting for login or prompt. FIX IT."
+		exit
+	}
+}
+
+send "\n"
+expect {
+	"login:" {
+		send "root\n"
+	}
+
+}
+expect {
+	"assword:" {
+		send "IAmGroot\n"
+	}
+	-re "root.*:.%" {
+		send "\n"
+	}
+	timeout 60 {
+		puts "Failed to get prompt"
+		exit
+	}
+}
+
+expect -re "root.*:.%" {
+	send "cli\n"
+} timeout {
+	puts "Failed to get root shell. Giving up."
+	exit
+}
+
+expect -re "> " {
+	puts "CLI acquired."
+} timeout {
+	puts "Timed out waiting for shell. Giving up."
+	exit
+}
+
+send "set cli screen-length 0\n"
+expect -re "> " {
+	send "show chassis hardware\n" 
+} timeout abort
+
+set target "no"
+
+expect {
+	"EX2200" {
+		puts "Detected EX2200 - investigating interfaces"
+		send "show interfaces terse | match \"ge-0/0/.*up.*up\" | except \"/(0|0.0|1|1.0) \" | count \n"
+		expect {
+			-re "Count: 0 lines" {
+				puts "$tt is probably edge1"
+				set target "edge1"
+			}
+			-re "Count: 2 lines" {
+				puts "$tt is probably edge0"
+				set target "edge0"
+			}
+		}
+	}
+	"EX3300" {
+		puts "Detected EX3300"
+		puts "$tt is probably distro0"
+		set target "distro"
+	}
+}
+
+expect "> "
+if {$zeroize} {
+	set timeout 600 
+	log_user 0
+	if {$target == "distro"} {
+		puts "Zeroize on distro must be done roughly at the same time on both members"
+		if {$slave} {
+			puts "You are probably logged in on the slave, that means you'll be disconnected"
+			puts "Re-run with the exact same command to cover the slave"
+		} else {
+			puts "You are probably connected to the master."
+			puts "So while this is running, find the slave and start zeroize there as well"
+		}
+	}
+	send "request system zeroize\n"
+	expect "Erase all data, including configuration and log files" {
+		send "yes\n"
+	}
+	expect -timeout 120 "Rebooting" {
+		puts "Reboot detected..."
+	}
+	expect -timeout 600 "Amnesiac" {
+		puts "Got Amnesiac! Probably login! Waiting $delay seconds, though."
+		sleep $delay
+		puts "Continuing now"
+	}
+	puts "\n"
+	expect "login:" {
+		send "root\n"
+	} timeout {
+		puts "no login?"
+		exit
+	}
+	expect -re "root.*:.%" {
+		puts "Got shell, starting cli"
+		send "cli\n"
+	} timeout {
+		puts "no shell"
+		exit
+	}
+	expect "> " {
+		puts "Got cli"
+		send "set cli screen-length 0\n"
+		expect "> "
+	} timeout {
+		puts "No cli"
+		exit
+	}
+}
+if {$conf} {
+	set timeout 120
+	if {$target != "na"} {
+		set fp [open $target r]
+		send -- "configure\n"
+		expect "Entering configuration mode" {} timeout {
+			puts "failed to enter configuration mode. what now?"
+			exit
+		}
+		expect "# " {} timeout {
+			puts "failed to enter configuration mode. what now?"
+			exit
+		}
+		while {1} {
+			if {-1 == [gets $fp buf]} break
+			send -s -- "$buf\n"
+			expect "# "
+		}
+		send -- "show | compare\n"
+		expect "# "
+		send -- "commit and-quit\n"
+		expect "commit complete" {
+			puts "Commit complete"
+		} timeout {
+			puts "Timed out waiting for commit..."
+		}
+		expect "> "
+	}
+}
+
+send "exit\n"
+
+expect -re "root.*:.%" {
+	send "exit\n"
+} 

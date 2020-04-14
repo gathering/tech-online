@@ -1,0 +1,4 @@
+
+tmux split-window ./knis /dev/ttyUSB0
+tmux split-window ./knis /dev/ttyUSB1
+tmux split-window ./knis /dev/ttyUSB2
