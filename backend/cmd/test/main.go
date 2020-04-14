@@ -20,11 +20,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 package main
 
 import (
-	_ "github.com/gathering/gondulapi/db"
+	"github.com/gathering/gondulapi/db"
 	"github.com/gathering/gondulapi/receiver"
 	_ "github.com/gathering/tech-online/backend"
 )
 
 func main() {
+	db.Connect()
 	receiver.Start()
 }
