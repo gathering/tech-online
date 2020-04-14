@@ -1,3 +1,0 @@
-set system host-name distro0
-set system commit synchronize
-set virtual-chassis no-split-detection

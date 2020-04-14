@@ -7,11 +7,25 @@ including POC, so it's _very_ rough around the edges.
 
 Some explanations are needed.
 
+backend/
+--------
+
+This is the Go-based backend. The majority of the code exists in the
+gondulapi repo, which is VERY much a prototype/alpha, but was readily
+available.
+
+Note that Gondul doesn't really require fine-grained authentication and
+authorization. During the actual event, a minor modification was made to
+require authentication to POST/PUT/DELETE, except for participation signup.
+
+It's far from perfect, but I think it's pretty neat regardless.
+
+
 bootstrap/
 ----------
 
 This was used to reset/bootstrap a "stack". It includes basic
-configuration copied from configs/ sort of.
+configuration.
 
 The "knis" script is an expect-script that targets a console tty and tries
 to auto-detect which switch/router it's talking to, then issues a zeroize
@@ -43,12 +57,6 @@ The client should've also had a bit for static IPs from the start, but it
 didn't. I ended up writing a small script for that as well that just forced
 the correct IP and gateway up, but that's not included (it never left the
 pis)
-
-configs/
---------
-
-Config dumps. Not sure this is actually needed since it's all in bootstrap/
-anyway.
 
 doc/
 ----
