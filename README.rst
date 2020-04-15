@@ -161,3 +161,40 @@ It did do a bit of integration with "oscar" to get signups working.
 I think it uses some sort "hypertext markup language" of some sort,
 possibly enhanced by the European Computer Manufacturers Association
 international successor and their scripting language.
+
+Contributors and license
+........................
+
+The work in this repository is created by and copyright by:
+
+- Kristian Lyngstøl
+- Jo Emil Holen
+- Kathrine Hoel
+
+It is licensed under GPLv2 or newer.
+
+In addition to that, a number of other people were involved that did not
+provide code represented in this repository, but still provided
+indispensable services, and Tech:Online would not have been possible
+without them. They are:
+
+- Espen Henriksen, testing and extensive help with all the on-site work
+  (we're talking at least three full days of work).
+- Ole Mathias Aa. Heggem, various sysadmin tasks and some on-site support
+- Martin T. D'Alessandro, dug up and retrieved our console cables in Hamar
+  and brought them to Oslo.
+- Karl Fredrik Haugland, provided plush Tux and more... And helped with
+  on-site networking at Frivillighetshuset.
+- Marius Fylling, minor sysadmin-things for FTP/picture uploads
+- Fredrik Angell Moe, set up a decent camera and a live-stream
+- Tor Helge Lyngstøl (my dad!), logistics during the early POC
+- Martin Grytbak, testing
+- Mia Marie Bråthen and various others under her command assisted with the
+  streaming on TGTV, and also provided the tickets for TG21 as a prize
+- The mods on TG's Discord!
+
+Know that if you are not on this list, but feel like you should be, it is
+not because I feel you're undeserving. It is simply because there have been
+a great deal of people involved, and some of you I quite honestly have
+gotten so used to relying on that it's sort of like remembering to thank
+the sun for shining. You're the sunshine - of course you're appreciated.
