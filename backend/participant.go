@@ -42,7 +42,7 @@ type Participant struct {
 }
 
 func init() {
-	receiver.AddHandler("/api/participant/", func() interface{} { return &Participant{} })
+	receiver.AddHandler("/participant/", func() interface{} { return &Participant{} })
 }
 
 // Get is called on GET. b will be an empty thing. Fill it out, using the

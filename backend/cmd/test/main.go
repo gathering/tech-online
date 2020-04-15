@@ -22,10 +22,16 @@ package main
 import (
 	"github.com/gathering/gondulapi/db"
 	"github.com/gathering/gondulapi/receiver"
+	gapi "github.com/gathering/gondulapi"
 	_ "github.com/gathering/tech-online/backend"
 )
 
 func main() {
-	db.Connect()
+	if err := gapi.ParseConfig("backend.json"); err != nil {
+		panic(err)
+	}
+	if err := db.Connect(); err != nil {
+		panic(err)
+	}
 	receiver.Start()
 }

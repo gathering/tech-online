@@ -86,13 +86,13 @@ type StatusStation struct {
 }
 
 func init() {
-	receiver.AddHandler("/api/status/station/", func() interface{} { return &StatusStation{} })
-	receiver.AddHandler("/api/status/user/", func() interface{} { return &StatusUser{} })
-	receiver.AddHandler("/api/station/user/", func() interface{} { return &StationUser{} })
-	receiver.AddHandler("/api/station/id/", func() interface{} { return &Station{} })
-	receiver.AddHandler("/api/task/", func() interface{} { return &Task{} })
-	receiver.AddHandler("/api/tasks/", func() interface{} { return &Tasks{} })
-	receiver.AddHandler("/api/timeslot/", func() interface{} { return &TimeSlot{} })
+	receiver.AddHandler("/status/station/", func() interface{} { return &StatusStation{} })
+	receiver.AddHandler("/status/user/", func() interface{} { return &StatusUser{} })
+	receiver.AddHandler("/station/user/", func() interface{} { return &StationUser{} })
+	receiver.AddHandler("/station/id/", func() interface{} { return &Station{} })
+	receiver.AddHandler("/task/", func() interface{} { return &Task{} })
+	receiver.AddHandler("/tasks/", func() interface{} { return &Tasks{} })
+	receiver.AddHandler("/timeslot/", func() interface{} { return &TimeSlot{} })
 }
 
 func (ts *TimeSlot) Get(element string) error {
