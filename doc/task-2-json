@@ -11,7 +11,7 @@ task() {
 		echo -n "{\"sequence\": $seq, \"shortname\": \"$sname\", \"name\": \"$name\", \"description\":\""
 		cat $fil | sed 's/"/\\"/g' | sed -z 's/\n/\\n/g'
 		echo "\"}";
-	} | lwp-request -m PUT https://${USERPASS}techo.gathering.org/api/task/$sname
+	} | lwp-request -m PUT http://${USERPASS}localhost:8080/api/task/$sname
 }
 
 task 1 task1 "Task 1: Get your distro talking to the core"

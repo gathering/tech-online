@@ -52,11 +52,11 @@ type StationUser Station
 // used by the verify-script and matches the Test object's "task" field
 // (not ideal, but it works).
 type Task struct {
-	Sequence    int
-	ShortName   string
-	Name        string
-	Description string
-	Tests       []Test
+	Sequence    *int `column:"seq"`
+	ShortName   *string
+	Name        *string
+	Description *string
+	Tests       []Test `column:"-"`
 }
 
 // TimeSlot represents a slot a user has allocated.
@@ -191,7 +191,7 @@ func (su *StatusUser) Get(element string) error {
 	su.Tasks.Get("")
 	tasks := make(map[string]*Task)
 	for _, t := range su.Tasks {
-		tasks[t.ShortName] = t
+		tasks[*t.ShortName] = t
 	}
 	for {
 		ok := rows.Next()
@@ -205,10 +205,10 @@ func (su *StatusUser) Get(element string) error {
 		}
 		if tasks[t.Task] == nil {
 			nt := &Task{}
-			nt.ShortName = t.Task
-			nt.Sequence = 99
-			nt.Name = t.Task
-			nt.Description = "unknown task"
+			nt.ShortName = &t.Task
+			seq := 99
+			nt.Sequence = &seq
+			nt.Name = &t.Task
 			nt.Tests = make([]Test, 0)
 			tasks[t.Task] = nt
 			su.Tasks = append(su.Tasks, nt)
@@ -334,21 +334,33 @@ func (task Task) Delete(element string) error {
 	return nil
 }
 
+func (task Task) exists(element string) bool {
+	var existing Task
+	err := existing.Get(element)
+	exists := true
+	if err != nil {
+		gerr, ok := err.(gondulapi.Error)
+		if ok && gerr.Code == 404 {
+			exists = false
+		}
+	}
+	return exists
+}
 func (task Task) Put(element string) error {
-	if task.ShortName == "" {
-		task.ShortName = element
+	if task.ShortName == nil || *task.ShortName == "" {
+		task.ShortName = &element
 	}
 	if element == "" {
 		return gondulapi.Errorf(400, "PUT requires an element path to put")
 	}
-	if element != task.ShortName {
+	if element != *task.ShortName {
 		return gondulapi.Errorf(400, "PUT where path element (%s) doesn't match shortname (%s) - pick one", element, task.ShortName)
 	}
 
-	task.Delete(element)
-	_, err := db.DB.Exec("INSERT INTO tasks (seq,shortname,name,description) VALUES($1,$2,$3,$4)", task.Sequence, task.ShortName, task.Name, task.Description)
-	if err != nil {
-		return gondulapi.Errorf(500, "Insert failed: %v", err)
+	if task.exists(element) {
+		return db.Update("tasks","shortname",task.ShortName, task)
+	} else {
+		return db.Insert("tasks",task)
 	}
 	return nil
 }

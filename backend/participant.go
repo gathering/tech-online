@@ -35,10 +35,10 @@ import (
 // is somewhat irrelevant.
 type Participant struct {
 	Uuid         string
-	First_name   string
-	Last_name    string
-	Display_name string
-	Email        string
+	First_name   string `column:"fname"`
+	Last_name    string `column:"lname"`
+	Display_name string `column:"dname"`
+	Email        string `column:"mail"`
 }
 
 func init() {
@@ -112,13 +112,11 @@ func (p Participant) exists(element string) bool {
 }
 
 func (p Participant) save() error {
-	_, err := db.DB.Exec("INSERT INTO participants (uuid,fname,lname,dname,mail) VALUES($1,$2,$3,$4,$5)", p.Uuid, p.First_name, p.Last_name, p.Display_name, p.Email)
-	return err
+	return db.Insert("participants", p)
 }
 
 func (p Participant) update() error {
-	_, err := db.DB.Exec("UPDATE participants SET fname = $1,lname = $2,dname = $3,mail = $4 WHERE uuid = $5", p.First_name, p.Last_name, p.Display_name, p.Email, p.Uuid)
-	return err
+	return db.Update("participants", "uuid", p.Uuid, p)
 }
 
 // Post stores the provided object. It's bugged. I know.

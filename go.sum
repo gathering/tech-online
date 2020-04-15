@@ -1,11 +1,7 @@
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
-github.com/gathering/gondulapi v0.0.0-20200414235020-072984f3c7c3 h1:J6jV5tf/iJXAK6l/Z6Zhh6KzWHmAjuewKTEApZdLbO4=
-github.com/gathering/gondulapi v0.0.0-20200414235020-072984f3c7c3/go.mod h1:wvAJXc2IdG0lU0sQI/FOqMKcnJVkzSoO16YQccxW4U4=
-github.com/gathering/gondulapi v0.0.0-20200415174728-0ee1f3a23e2e h1:e8Av95ybbZSiDaKVpLxjHhlFNHB3R1auKFbS9RLEXAk=
-github.com/gathering/gondulapi v0.0.0-20200415174728-0ee1f3a23e2e/go.mod h1:wvAJXc2IdG0lU0sQI/FOqMKcnJVkzSoO16YQccxW4U4=
-github.com/gathering/gondulapi v0.0.1 h1:Q1H5xxzxZoHHAsKqbu3IYOcLisNqS6rB6oGR8GAp91E=
-github.com/gathering/gondulapi v0.0.1/go.mod h1:wvAJXc2IdG0lU0sQI/FOqMKcnJVkzSoO16YQccxW4U4=
+github.com/gathering/gondulapi v0.0.3 h1:9myMIU3CSqiZJNx8IdfAj7MyeLim7nHcYZ+dm5dPyno=
+github.com/gathering/gondulapi v0.0.3/go.mod h1:wvAJXc2IdG0lU0sQI/FOqMKcnJVkzSoO16YQccxW4U4=
 github.com/konsorten/go-windows-terminal-sequences v1.0.1 h1:mweAR1A6xJ3oS2pRaGiHgQ4OO8tzTaLawm8vnODuwDk=
 github.com/konsorten/go-windows-terminal-sequences v1.0.1/go.mod h1:T0+1ngSBFLxvqU3pZ+m/2kptfBszLMUkC4ZK/EgS/cQ=
 github.com/konsorten/go-windows-terminal-sequences v1.0.2 h1:DB17ag19krx9CFsz4o3enTrPXyIXCl+2iCXH/aMAp9s=
