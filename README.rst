@@ -36,7 +36,8 @@ It looked something like this:
 
 .. image:: doc/pics/techo.png
 
-With a close-up more like this:
+With a close-up more like this (from the POC in my (kly) living room prior
+to the event):
 
 .. image:: doc/poc.jpg
 
