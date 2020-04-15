@@ -20,11 +20,11 @@ const Frontpage = () => {
                             <div className="winners__list-item--nick">CafSneak</div>
                         </div>
                         <div className="winners__list-item">
-                            <div className="winners__list-item--place">2nd place</div>
+                            <div className="winners__list-item--place">Also 1st place</div>
                             <div className="winners__list-item--nick">ent3r_</div>
                         </div>
                         <div className="winners__list-item">
-                            <div className="winners__list-item--place">3rd place</div>
+                            <div className="winners__list-item--place">Also 1st place</div>
                             <div className="winners__list-item--nick">Total_Ecl1ps3</div>
                         </div>
                     </div>
@@ -33,6 +33,7 @@ const Frontpage = () => {
                     Tech:Online saw somewhere around 20 participants go through our network challenge, and the "jury"
                     has had a difficult time determining the lucky three to win a ticket for The Gathering 2021.
                 </p>
+		<p>Read more at the <a href="https://tech.gathering.org/blog/482/techonline-vinnere-og-oppsummering">Tech Blog</a></p>
                 <h2>What is Tech:Online?</h2>
                 <hr />
                 <p>
