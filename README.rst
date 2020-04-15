@@ -7,6 +7,39 @@ including POC, so it's _very_ rough around the edges.
 
 Some explanations are needed.
 
+What is Tech:Online?
+....................
+
+Tech:Online was a respone to The Gathering 2020 (gathering.org) being
+cancelled. "Gathering:Online" was established where various online events
+would be held to sooth the pain.
+
+Tech:Online was an ambitious/ludicrous idea to let The Gathering
+participants (and others) configure the network hardware that would usually
+make up our network. Each participant in the event got access to a raspbian
+pi with 4 USB-to-serial adapters hooked up to 4 switches, 3 logical (2x
+Juniper EX2200 and 2x EX3300 in Virtual Chassis). They were already wired
+similar to how The Gathering is wired. In addition to their "jump station",
+a second Raspberry Pi was hooked up to one of the edge switches with a
+fixed IP, simulating a participant. This was all visible on IP
+camera/streamed during the event.
+
+The participants were guided through the event both through extensive
+documentation and through constantly updating status scripts/pages telling
+them how they were doing and hopefully making it interesting.
+
+Since this was all thrown together in a REALLY short time, the work is best
+described as "patchwork", but I do believe the participants were provided a
+fairly good experience, and the feedback of the event was great.
+
+It looked something like this:
+
+.. image:: doc/pics/techo.png
+
+
+Inventory
+.........
+
 backend/
 --------
 
