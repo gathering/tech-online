@@ -36,6 +36,9 @@ It looked something like this:
 
 .. image:: doc/pics/techo.png
 
+With a close-up more like this:
+
+.. image:: doc/poc.jpg
 
 Inventory
 .........
