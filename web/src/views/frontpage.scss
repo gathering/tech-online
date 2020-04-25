@@ -34,13 +34,12 @@
         &__list {
             &-item {
                 display: flex;
-                justify-content: space-between;
+                justify-content: center;
                 padding-bottom: 1rem;
+                font-size: 1.1rem;
 
-                &--nick {
-                    color: $primaryColor;
-                    font-weight: bold;
-                }
+                color: $primaryColor;
+                font-weight: bold;
             }
         }
     }
@@ -70,7 +69,6 @@
             padding: 0 0.5rem;
 
             &:first-of-type {
-                padding-left: 0;
             }
 
             &:last-of-type {

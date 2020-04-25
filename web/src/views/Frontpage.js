@@ -2,6 +2,7 @@ import React from 'react';
 import './frontpage.scss';
 
 import pocImage from '../assets/poc.jpg';
+import { Link } from 'react-router-dom';
 
 const Frontpage = () => {
     return (
@@ -15,25 +16,19 @@ const Frontpage = () => {
                     <h2 className="winners__header">Winners</h2>
 
                     <div className="winners__list">
-                        <div className="winners__list-item">
-                            <div className="winners__list-item--place">1st place</div>
-                            <div className="winners__list-item--nick">CafSneak</div>
-                        </div>
-                        <div className="winners__list-item">
-                            <div className="winners__list-item--place">Also 1st place</div>
-                            <div className="winners__list-item--nick">ent3r_</div>
-                        </div>
-                        <div className="winners__list-item">
-                            <div className="winners__list-item--place">Also 1st place</div>
-                            <div className="winners__list-item--nick">Total_Ecl1ps3</div>
-                        </div>
+                        <div className="winners__list-item">CafSneak</div>
+                        <div className="winners__list-item">ent3r_</div>
+                        <div className="winners__list-item">Total_Ecl1ps3</div>
                     </div>
                 </div>
                 <p style={{ paddingBottom: '2rem' }}>
                     Tech:Online saw somewhere around 20 participants go through our network challenge, and the "jury"
                     has had a difficult time determining the lucky three to win a ticket for The Gathering 2021.
                 </p>
-		<p>Read more at the <a href="https://tech.gathering.org/blog/482/techonline-vinnere-og-oppsummering">Tech Blog</a></p>
+                <p>
+                    Read more at the{' '}
+                    <a href="https://tech.gathering.org/blog/482/techonline-vinnere-og-oppsummering">Tech Blog</a>
+                </p>
                 <h2>What is Tech:Online?</h2>
                 <hr />
                 <p>
@@ -129,6 +124,17 @@ const Frontpage = () => {
                 <div className="flex-row" style={{ paddingTop: '2rem' }}>
                     <div className="flex-item">
                         <img src="//techo.gathering.org/pics/techo.png" />
+                    </div>
+                </div>
+
+                <div className="row" style={{ paddingTop: '2rem' }}>
+                    <div className="col-xs">
+                        <h1>Curious?</h1>
+                        <hr />
+
+                        <p>
+                            Want to know how it looked like being a participant? Click <Link to="/demo">here</Link>!
+                        </p>
                     </div>
                 </div>
             </div>

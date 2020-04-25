@@ -1,11 +1,10 @@
 import React, { useMemo } from 'react';
 import { Switch, Route, NavLink } from 'react-router-dom';
 import * as Views from '../views';
-import { useUserState, useUserDispatch, actions } from '../store/userContext';
+import { useUserState } from '../store/userContext';
 
 const App = () => {
     const user = useUserState();
-    const userDispatch = useUserDispatch();
 
     const loggedIn = useMemo(() => !!user.access_token, [user]);
     return (
@@ -23,18 +22,8 @@ const App = () => {
                     )}
                 </div>
                 <div className="nav-right">
+                    <NavLink to="/demo">Demo</NavLink>
                     <NavLink to="/status">Status</NavLink>
-                    {loggedIn ? (
-                        <span className="action" onClick={() => userDispatch({ type: actions.LOGOUT })}>
-                            Log out
-                        </span>
-                    ) : (
-                        <a
-                            href={`https://oscar.zoodo.io/o/authorize/?client_id=${process.env.CLIENT_ID}&response_type=code&scope=read_userdata_extended%20write_userdata_extended&redirect_uri=${location.origin}/login`}
-                        >
-                            Log in
-                        </a>
-                    )}
                 </div>
             </header>
             <main>
@@ -44,6 +33,7 @@ const App = () => {
                     <Route path="/documentation" component={Views.Documentation} />
                     <Route path="/participate" component={Views.Participate} />
                     <Route path="/status/:id?" component={Views.Status} />
+                    <Route path="/demo" component={Views.Demo} />
                 </Switch>
             </main>
             <footer>

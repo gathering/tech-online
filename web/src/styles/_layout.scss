@@ -37,6 +37,7 @@ img {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+
     header {
         display: flex;
         font-size: 1.25rem;
@@ -100,6 +101,14 @@ img {
 
     main {
         flex-grow: 1;
+
+        a {
+            color: $primaryColor;
+
+            &:visited {
+                color: $primaryColor;
+            }
+        }
     }
 
     footer {
