@@ -12,15 +12,6 @@ const Frontpage = () => {
             </div>
 
             <div className="frontpage-container">
-                <div className="winners">
-                    <h2 className="winners__header">Winners</h2>
-
-                    <div className="winners__list">
-                        <div className="winners__list-item">CafSneak</div>
-                        <div className="winners__list-item">ent3r_</div>
-                        <div className="winners__list-item">Total_Ecl1ps3</div>
-                    </div>
-                </div>
                 <p style={{ paddingBottom: '2rem' }}>
                     Tech:Online saw somewhere around 20 participants go through our network challenge, and the "jury"
                     has had a difficult time determining the lucky three to win a ticket for The Gathering 2021.
