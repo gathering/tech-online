@@ -31,7 +31,7 @@ const UserProvider = ({ children }) => {
     let initialData = localStorage.getItem(localStorageDataKey);
     if (initialData) {
         initialData = JSON.parse(initialData);
-        if (initialData && initialData.meta && initialData.meta.exp < Date.now() / 1000) {
+        if (initialData?.meta?.exp < Date.now() / 1000) {
             initialData = {};
         }
     }

@@ -146,20 +146,16 @@ const Documentation = () => {
                                 Facts about both the hardware configuration and expected IP plan. You need this. Parts
                                 of the IP plan is mandatory, the rest is strongly recommended.
                             </li>
-                            <li>
-                                Intro to junos, networking and general tips and tricks which are highly relevant.
-                            </li>
+                            <li>Intro to junos, networking and general tips and tricks which are highly relevant.</li>
                         </ol>
                         <p>
                             You should also watch the verification tool, which provide generous hints to get you going
                             and will refer you back to this document.
                         </p>
-			<p>
-			    The specific tasks and the status is all
-			    collected together on the participant page,
-			    along with login credentials and IP range
-			    assigned to you.
-			</p>
+                        <p>
+                            The specific tasks and the status is all collected together on the participant page, along
+                            with login credentials and IP range assigned to you.
+                        </p>
                         <p>If in doubt: Ask for help or hints on Discord!</p>
                     </div>
                     <div className="section" id="end-result">
@@ -174,15 +170,11 @@ const Documentation = () => {
                                 LACP needs to be configured between the distro and core and between distro and each edge
                                 switch.
                             </li>
-                            <li>
-                                Likewise: linknets need to work.
-                            </li>
-                            <li>
-                                The systems should reply to ssh (they do already if brought on-line).
-                            </li>
+                            <li>Likewise: linknets need to work.</li>
+                            <li>The systems should reply to ssh (they do already if brought on-line).</li>
                         </ol>
                     </div>
-		    <div className="section" id="environment">
+                    <div className="section" id="environment">
                         <h3>1.3&nbsp;&nbsp;&nbsp;Environment</h3>
                         <p>You need an SSH client, if you are on windows "PuTTy" is recommended.</p>
                         <p>
@@ -225,15 +217,13 @@ const Documentation = () => {
                     <h2>2&nbsp;&nbsp;&nbsp;Reference documentation</h2>
                     <div className="section" id="topology">
                         <h3>2.1&nbsp;&nbsp;&nbsp;Topology</h3>
-			<p>
-			Please note that the IP range 10.1.0.0/16 must be
-			replaced with your individual IP range, and the IP
-			for your jumphost/rpi is not relevant or accurately
-				represented.
-			</p>
-			<a href="https://techo.gathering.org/pics/topology.svg">
-			<img src="https://techo.gathering.org/pics/topology.svg" className="w-80" />
-			</a>
+                        <p>
+                            Please note that the IP range 10.1.0.0/16 must be replaced with your individual IP range,
+                            and the IP for your jumphost/rpi is not relevant or accurately represented.
+                        </p>
+                        <a href="https://techo.gathering.org/pics/topology.svg">
+                            <img src="https://techo.gathering.org/pics/topology.svg" className="w-80" />
+                        </a>
                     </div>
                     <div className="section" id="hardware">
                         <h3>2.2&nbsp;&nbsp;&nbsp;Hardware</h3>
@@ -332,15 +322,9 @@ ge-1/0/47.0        ae0.0             44:f4:77:ff:9d:00   ge-0/0/23    klycore
                                 Each switch has a "tech" user set up. It currently has super-user className. See the
                                 "credentials" section for credentials.
                             </li>
-                            <li>
-                                Each switch has a host-name set.
-                            </li>
-                            <li>
-                                Each switch has ntp set up - but you wont notice that unless you get it running.
-                            </li>
-                            <li>
-                                No other configuration is present.
-                            </li>
+                            <li>Each switch has a host-name set.</li>
+                            <li>Each switch has ntp set up - but you wont notice that unless you get it running.</li>
+                            <li>No other configuration is present.</li>
                         </ol>
                         <p>
                             You are free to use 'request system zeroize' if you like. The base configuration is present
@@ -351,8 +335,8 @@ ge-1/0/47.0        ae0.0             44:f4:77:ff:9d:00   ge-0/0/23    klycore
                         <h3>2.5&nbsp;&nbsp;&nbsp;Core</h3>
                         <p>
                             The core - which the distro0 is connected to - is a EX4300 and is outside the scope of this
-			    exercise. For your convenience it provides a link-net (see below for IPs) and has routed
-			    your entire /16 prefix over the linknet.
+                            exercise. For your convenience it provides a link-net (see below for IPs) and has routed
+                            your entire /16 prefix over the linknet.
                         </p>
                         <p>It is set up with 802.3ad / lacp for the uplinks.</p>
                     </div>
@@ -378,9 +362,7 @@ pass: Juniperftw!`}</pre>
                                 <tt className="docutils literal">screen /dev/ttyUSB0</tt> - attach to console 0 (use
                                 USB1, USB2, USB3 for the other devices).
                             </li>
-                            <li>
-                                When in screen, exit with ctrl a+
-                            </li>
+                            <li>When in screen, exit with ctrl a+</li>
                             <li>
                                 You can also detach with ctrl a+d, but then you need to re-attach with "screen -r" to
                                 open the same console again.
@@ -394,10 +376,8 @@ pass: Juniperftw!`}</pre>
                             participant-laptop) and the exercise is designed with this in mind.
                         </p>
                         <p>
-			    All IP's are in the 10.x.0.0/16 range. This is
-			    to accommodate multiple stations in parallel.
-			    The x varies. You can see the exact range on
-			    your participant page.
+                            All IP's are in the 10.x.0.0/16 range. This is to accommodate multiple stations in parallel.
+                            The x varies. You can see the exact range on your participant page.
                         </p>
                         <p>
                             Linknets are /30 wide (net, peer 1, peer 2, broadcast), and are in the 10.x.200.0/24 prefix.
@@ -568,9 +548,7 @@ exit`}
                                 If someone accidentally unplugs a cable, the switch will still be on-line (this happens
                                 ALL THE TIME at The Gathering, specially on day 1)
                             </li>
-                            <li>
-                                Increased bandwidth.
-                            </li>
+                            <li>Increased bandwidth.</li>
                         </ol>
                         <p>
                             On Juniper, aggregated interfaces are named "aeX", where X is an arbitrary number you assign
@@ -634,15 +612,9 @@ set interfaces ae0 unit 0 family inet address 10.x.200.2/30`}
                         </p>
                         <p>In our example, there are exactly three linknets:</p>
                         <ol className="arabic simple">
-                            <li>
-                                A linknet between distro0 and core - you only have to configure one side of it.
-                            </li>
-                            <li>
-                                A linknet between distro0 and edge0
-                            </li>
-                            <li>
-                                A linknet between distro0 and edge1
-                            </li>
+                            <li>A linknet between distro0 and core - you only have to configure one side of it.</li>
+                            <li>A linknet between distro0 and edge0</li>
+                            <li>A linknet between distro0 and edge1</li>
                         </ol>
                         <p>
                             Since it only requires two IP addresses, the netmask is 255.255.255.252, or more commonly
@@ -712,33 +684,28 @@ set interfaces ae0 unit 0 family inet address 10.x.200.2/30`}
                                 For edge0 we want to route <tt className="docutils literal">10.x.100.0/24</tt> from
                                 distro0 to edge0's link-net IP, 10.x.200.6. And edge0 needs to have a default route so
                                 all traffic is sent to the distro. That means for every network, all routers must have a
-                                clear idea how to connect to each other. 
+                                clear idea how to connect to each other.
                             </p>
-			    <p>
-				For this exercise, we'll be using static
-				routing. It does mean you need to add a
-				good amount of routes, but it also makes it
-				very obvious what's happening.
-			     </p>
+                            <p>
+                                For this exercise, we'll be using static routing. It does mean you need to add a good
+                                amount of routes, but it also makes it very obvious what's happening.
+                            </p>
                         </div>
                         <div className="section" id="routing-practice">
                             <h4>3.3.3&nbsp;&nbsp;&nbsp;Routing - practice</h4>
                             <p>
-				Adding a static route requires two things:
-				The network you want to route and the "next
-				hop" to route it to. Put an other way: what
-				to route and where to route it.</p>
-                            <p>The short version is:</p>
-                            <pre className="literal-block">set routing-options static route 10.x.100.0/24 next-hop 10.x.200.6</pre>
-                            <p>
-			    This tells the router that all traffic to 10.x.100.0/24 should be sent to 10.x.200.6.
+                                Adding a static route requires two things: The network you want to route and the "next
+                                hop" to route it to. Put an other way: what to route and where to route it.
                             </p>
-			    <p>
-			    For default routes, you use the network
-			    0.0.0.0/0 - this makes sure that any traffic
-			    that doesn't go to a more specific route at
-			    least goes _somewhere_.
-			    </p>
+                            <p>The short version is:</p>
+                            <pre className="literal-block">
+                                set routing-options static route 10.x.100.0/24 next-hop 10.x.200.6
+                            </pre>
+                            <p>This tells the router that all traffic to 10.x.100.0/24 should be sent to 10.x.200.6.</p>
+                            <p>
+                                For default routes, you use the network 0.0.0.0/0 - this makes sure that any traffic
+                                that doesn't go to a more specific route at least goes _somewhere_.
+                            </p>
                         </div>
                     </div>
                 </div>
