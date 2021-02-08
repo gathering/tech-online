@@ -12,6 +12,27 @@ const Frontpage = () => {
             </div>
 
             <div className="frontpage-container">
+                <p>
+                    Tech:Online 2020 saw somewhere around 20 participants go through the network challenge.... Stay
+                    tuned and stay sharp - for Tech:Online 2021 we are brewing up even more fun...
+                </p>
+                <p>
+                    Read more at the{' '}
+                    <a href="https://tech.gathering.org/blog/482/techonline-vinnere-og-oppsummering">Tech Blog</a>
+                </p>
+            </div>
+        </div>
+    );
+};
+
+const oldFrontpage = () => {
+    return (
+        <div className="frontpage">
+            <div className="title">
+                <h1>Welcome to the Tech:Online hub!</h1>
+            </div>
+
+            <div className="frontpage-container">
                 <p style={{ paddingBottom: '2rem' }}>
                     Tech:Online saw somewhere around 20 participants go through our network challenge, and the "jury"
                     has had a difficult time determining the lucky three to win a ticket for The Gathering 2021.

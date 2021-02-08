@@ -4,6 +4,26 @@ import * as Views from '../views';
 import { useUserState } from '../store/userContext';
 
 const App = () => {
+    return (
+        <>
+            <main>
+                <Switch>
+                    <Route path="/" exact component={Views.Frontpage} />
+                </Switch>
+            </main>
+            <footer>
+                <a href="https://gathering.org" target="_blank" rel="noopener noreferrer">
+                    Gathering.org
+                </a>
+                <a href="https://friday.horse" target="_blank" rel="noopener noreferrer">
+                    Horses
+                </a>
+            </footer>
+        </>
+    );
+};
+
+const oldApp = () => {
     const user = useUserState();
 
     const loggedIn = useMemo(() => !!user.access_token, [user]);
