@@ -15,13 +15,14 @@ const App = () => {
                         TG: Tech Online
                     </NavLink>
                     <NavLink to="/documentation">Reference documentation</NavLink>
-                </div>
-                <div className="nav-right">
                     {loggedIn && (
                         <NavLink to="/participate" className="participate-link">
                             Participate
                         </NavLink>
                     )}
+                </div>
+                <div className="nav-right">
+                    {loggedIn && <NavLink to="/logout">Log out</NavLink>}
                     {!loggedIn && (
                         <NavLink to="/login" className="participate-link">
                             Login
@@ -38,6 +39,7 @@ const App = () => {
                     <Route path="/documentation" component={Views.Documentation} />
                     <Route path="/participate" component={Views.Participate} />
                     <Route path="/status/:id?" component={Views.Status} />
+                    <Route path="/logout" component={Views.Logout} />
                     {/* <Route path="/demo" component={Views.Demo} /> */}
                 </Switch>
             </main>
