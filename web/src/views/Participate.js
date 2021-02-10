@@ -18,7 +18,7 @@ const Participate = () => {
     useEffect(() => {
         if (isParticipant === undefined && fetchStatus === FETCH_STATUS.IDLE && isAuthed) {
             setFetchStatus(FETCH_STATUS.PENDING);
-            httpGet('api/accounts/users/@me/', { host: 'https://unicorn.zoodo.io'})
+            httpGet('api/accounts/users/@me/', { host: 'https://unicorn.zoodo.io' })
                 .then(() => {
                     setIsParticipant(true);
                     setFetchStatus(FETCH_STATUS.RESOLVED);
@@ -132,7 +132,7 @@ const Participate = () => {
             <div className="participate-container">
                 <h1>Failed to fetch data</h1>
             </div>
-        )
+        );
     }
 
     if (!isAuthed) {

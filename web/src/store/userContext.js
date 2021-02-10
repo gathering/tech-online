@@ -106,7 +106,7 @@ const useLogin = (code) => {
                             });
                             setFetchResult(data);
                             setFetchStatus(FETCH_STATUS.RESOLVED);
-                        }); 
+                        });
                     })
                     .catch((error) => {
                         dispatch({ type: actions.LOGOUT });
