@@ -18,7 +18,7 @@ const Participate = () => {
     useEffect(() => {
         if (isParticipant === undefined && fetchStatus === FETCH_STATUS.IDLE && isAuthed) {
             setFetchStatus(FETCH_STATUS.PENDING);
-            httpGet('participant/' + user.profile.uuid)
+            httpGet('api/accounts/users/@me/', { host: 'https://unicorn.zoodo.io'})
                 .then(() => {
                     setIsParticipant(true);
                     setFetchStatus(FETCH_STATUS.RESOLVED);
@@ -127,8 +127,16 @@ const Participate = () => {
         );
     }
 
+    if (fetchStatus === FETCH_STATUS.REJECTED) {
+        return (
+            <div className="participate-container">
+                <h1>Failed to fetch data</h1>
+            </div>
+        )
+    }
+
     if (!isAuthed) {
-        return <Redirect to="/" />;
+        return <Redirect to="/login" />;
     }
 
     if (isParticipant === false) {

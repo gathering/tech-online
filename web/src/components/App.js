@@ -15,13 +15,18 @@ const App = () => {
                         TG: Tech Online
                     </NavLink>
                     <NavLink to="/documentation">Reference documentation</NavLink>
+                </div>
+                <div className="nav-right">
                     {loggedIn && (
                         <NavLink to="/participate" className="participate-link">
                             Participate
                         </NavLink>
                     )}
-                </div>
-                <div className="nav-right">
+                    {!loggedIn && (
+                        <NavLink to="/login" className="participate-link">
+                            Login
+                        </NavLink>
+                    )}
                     {/* <NavLink to="/demo">Demo</NavLink> */}
                     <NavLink to="/status">Status</NavLink>
                 </div>
