@@ -15,6 +15,7 @@ const Status = () => {
     const [fetchedStation, setFetchedStation] = useState();
     const [activeTestDescription, setActiveTestDescription] = useState();
     const [lastUpdated, setLastUpdated] = useState();
+    const fetchFailed = useMemo(() => fetchStatus === FETCH_STATUS.REJECTED, [fetchStatus]);
 
     const fetchStationData = useCallback(() => {
         setFetchStatus(FETCH_STATUS.PENDING);
@@ -66,6 +67,11 @@ const Status = () => {
 
     return (
         <div className="status-container">
+            {fetchFailed && (
+                <div style={{ fontWeight: 'bold', color: 'red', paddingBottom: '1rem' }}>
+                    The request for this station's status failed on the last request. Data may not be accurate.{' '}
+                </div>
+            )}
             <h2>Station status</h2>
             <hr />
 
