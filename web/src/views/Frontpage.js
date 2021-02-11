@@ -20,27 +20,6 @@ const Frontpage = () => {
                     Read more at the{' '}
                     <a href="https://tech.gathering.org/blog/482/techonline-vinnere-og-oppsummering">Tech Blog</a>
                 </p>
-            </div>
-        </div>
-    );
-};
-
-const oldFrontpage = () => {
-    return (
-        <div className="frontpage">
-            <div className="title">
-                <h1>Welcome to the Tech:Online hub!</h1>
-            </div>
-
-            <div className="frontpage-container">
-                <p style={{ paddingBottom: '2rem' }}>
-                    Tech:Online saw somewhere around 20 participants go through our network challenge, and the "jury"
-                    has had a difficult time determining the lucky three to win a ticket for The Gathering 2021.
-                </p>
-                <p>
-                    Read more at the{' '}
-                    <a href="https://tech.gathering.org/blog/482/techonline-vinnere-og-oppsummering">Tech Blog</a>
-                </p>
                 <h2>What is Tech:Online?</h2>
                 <hr />
                 <p>
@@ -66,7 +45,7 @@ const oldFrontpage = () => {
                     operating a professional network? Tech:Online is for you.
                 </p>
                 <p>
-                    The event takes place during the Easter holiday. The target date is Friday the 10th of April. It
+                    The event takes place during the Easter holiday. The target date is <strong>TBD</strong>. It
                     will be preceded by a introduction to basic LAN networking the day before (probably), and mentors
                     will be available throughout the event to help you and guide you.
                     <br />
@@ -112,7 +91,7 @@ const oldFrontpage = () => {
                     <hr />
 
                     <p>
-                        We're handing out 3 tickets for <strong>The Gathering 2021</strong> to a lucky few who impress
+                        We're handing out 3 tickets for <strong>The Gathering 2022</strong> to a lucky few who impress
                         us in some way or another. And there might be other surprises...
                     </p>
 
@@ -128,7 +107,7 @@ const oldFrontpage = () => {
                         </ul>
                         <strong>
                             Either way, if you do participate, you're invited to a guided tour of the network
-                            infrastructure at The Gathering 2021!
+                            infrastructure at The Gathering 2022!
                         </strong>
                     </div>
                 </div>
@@ -139,16 +118,16 @@ const oldFrontpage = () => {
                     </div>
                 </div>
 
-                <div className="row" style={{ paddingTop: '2rem' }}>
+                {/* <div className="row" style={{ paddingTop: '2rem' }}>
                     <div className="col-xs">
                         <h1>Curious?</h1>
                         <hr />
 
                         <p>
-                            Want to know how it looked like being a participant? Click <Link to="/demo">here</Link>!
+                            Want to know what it looked like being a participant? Click <Link to="/demo">here</Link>!
                         </p>
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
     );
