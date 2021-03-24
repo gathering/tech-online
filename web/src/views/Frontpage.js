@@ -27,13 +27,17 @@ const Frontpage = () => {
                 </p>
 
                 <p>
-                    We had to cancel The Gathering, but would otherwise have gathered over 5000 people under the same
-                    roof for some digital hilarities. For many of us, The Gathering is an amazing opportunity to learn
+		    We have had to cancel The Gathering twice, but would
+		    otherwise have gathered over 5000 people under the same
+		    roof for some digital hilarities. For many of us, The
+		    Gathering is an amazing opportunity to learn
                     and experiment.
                 </p>
                 <p>
-                    To soften the pain, The Gathering:Online is being arranged. But what can Tech-side of The Gathering
-                    contribute now that there isn't a large, temporary network to build?
+		    To soften the pain, The Gathering:Online is being
+		    arranged for the second year running. But what can
+		    Tech-side of The Gathering contribute now that there
+		    isn't a large, temporary network to build?
                 </p>
                 <p>
                     <strong>Enter: Tech:Online.</strong>
@@ -45,7 +49,7 @@ const Frontpage = () => {
                     operating a professional network? Tech:Online is for you.
                 </p>
                 <p>
-                    The event takes place during the Easter holiday. The target date is Friday the 10th of April. It
+                    The event takes place during the Easter holiday. The target date is Thursday the 1st of April. It
                     will be preceded by a introduction to basic LAN networking the day before (probably), and mentors
                     will be available throughout the event to help you and guide you.
                     <br />
@@ -54,6 +58,15 @@ const Frontpage = () => {
                     similar to how we would do things at The Gathering, and your task is to get the "participant"
                     online.
                 </p>
+		<h2>What's new for 2021?</h2>
+		<hr />
+		<p>
+		   For Tech:Online 2021 we will repeat the success of the
+		   network exercise, but also add a new dimension: How to
+		   configure a DNS stack and DHCP server. This will be a
+		   separate track, so you can choose to participate in one
+		   or the other, or both!
+		</p>
                 <div className="flex-row">
                     <div className="flex-item">
                         <h2>Who can participate?</h2>
@@ -86,31 +99,6 @@ const Frontpage = () => {
                         <img className="image-header__image" src={pocImage} alt="Switches and a computer" />
                     </div>
                 </div>
-                <div>
-                    <h2>Prizes</h2>
-                    <hr />
-
-                    <p>
-                        We're handing out 3 tickets for <strong>The Gathering 2021</strong> to a lucky few who impress
-                        us in some way or another. And there might be other surprises...
-                    </p>
-
-                    <div>
-                        To get a chance to grab a ticket, we have a few categories in mind:
-                        <ul>
-                            <li>Time to target: Finish in the shortest amount of time</li>
-                            <li>Rookie of the year: The youngest and/or least experienced participant to finish</li>
-                            <li>
-                                Wildcard: Impress us! Set up something cool, be super/helpful to others, or just plain
-                                impress us in some way
-                            </li>
-                        </ul>
-                        <strong>
-                            Either way, if you do participate, you're invited to a guided tour of the network
-                            infrastructure at The Gathering 2021!
-                        </strong>
-                    </div>
-                </div>
 
                 <div className="flex-row" style={{ paddingTop: '2rem' }}>
                     <div className="flex-item">
@@ -118,16 +106,6 @@ const Frontpage = () => {
                     </div>
                 </div>
 
-                <div className="row" style={{ paddingTop: '2rem' }}>
-                    <div className="col-xs">
-                        <h1>Curious?</h1>
-                        <hr />
-
-                        <p>
-                            Want to know how it looked like being a participant? Click <Link to="/demo">here</Link>!
-                        </p>
-                    </div>
-                </div>
             </div>
         </div>
     );
