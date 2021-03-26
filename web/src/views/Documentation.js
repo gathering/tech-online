@@ -227,7 +227,7 @@ const Documentation = () => {
                     </div>
                     <div className="section" id="hardware">
                         <h3>2.2&nbsp;&nbsp;&nbsp;Hardware</h3>
-                        <img alt="overview.jpg" src="http://techo.gathering.org/pics/overview.jpg" className="w-80" />
+                        <img alt="overview.jpg" src="https://techo.gathering.org/pics/overview.jpg" className="w-80" />
                         <p>Two edge switches, EX2200.</p>
                         <p>Two distro-switches, EX3300, already configured for virtual-chassis.</p>
                         <p>The bottom-most EX4300 is the core, and excluded from the event.</p>
@@ -342,10 +342,10 @@ ge-1/0/47.0        ae0.0             44:f4:77:ff:9d:00   ge-0/0/23    klycore
                     </div>
                     <div className="section" id="pictures">
                         <h3>2.6&nbsp;&nbsp;&nbsp;Pictures</h3>
-                        <img alt="overview.jpg" src="http://techo.gathering.org/pics/overview.jpg" className="w-80" />
-                        <img alt="ports1.jpg" src="http://techo.gathering.org/pics/ports1.jpg" className="w-80" />
-                        <img alt="ports2.jpg" src="http://techo.gathering.org/pics/ports2.jpg" className="w-80" />
-                        <img alt="overview2.jpg" src="http://techo.gathering.org/pics/overview2.jpg" className="w-80" />
+                        <img alt="overview.jpg" src="https://techo.gathering.org/pics/overview.jpg" className="w-80" />
+                        <img alt="ports1.jpg" src="https://techo.gathering.org/pics/ports1.jpg" className="w-80" />
+                        <img alt="ports2.jpg" src="https://techo.gathering.org/pics/ports2.jpg" className="w-80" />
+                        <img alt="overview2.jpg" src="https://techo.gathering.org/pics/overview2.jpg" className="w-80" />
                     </div>
                     <div className="section" id="credentials">
                         <h3>2.7&nbsp;&nbsp;&nbsp;Credentials</h3>
