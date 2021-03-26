@@ -97,9 +97,14 @@ const useLogin = (code) => {
                         await httpGet('api/accounts/users/@me/', {
                             host: 'https://unicorn.zoodo.io',
                         }).then((profile) => {
+                            let isAdmin = false;
+                            if (profile.role.value === "crew") {
+                                isAdmin = true
+                            }
                             dispatch({
                                 type: actions.LOGIN,
                                 payload: {
+                                    admin: isAdmin,
                                     profile,
                                     ...data,
                                 },
