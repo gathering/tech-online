@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
-import { httpGet, FETCH_STATUS } from '../common/api';
+import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { Docs } from '../components/admin/Docs';
+import { Users } from '../components/admin/Users';
 import './admin.scss';
 
 const tabs = ['users', 'docs'];
@@ -9,19 +10,6 @@ export function Admin() {
     let { hash } = useLocation();
     hash = hash.slice(1);
     const [activeTab, setActiveTab] = useState(hash || tabs[0]);
-
-    const [loadingState, setLoadingState] = useState(FETCH_STATUS.IDLE);
-
-    useEffect(() => {
-        if (loadingState === FETCH_STATUS.IDLE) {
-            setLoadingState(FETCH_STATUS.PENDING);
-            httpGet('document-families').then((families) => {
-                families.forEach((family) => {
-                    httpGet(`documents/?family=${family.id}`);
-                });
-            });
-        }
-    });
 
     return (
         <div className="admin">
@@ -33,7 +21,10 @@ export function Admin() {
                     {tabs.map((tab) => (
                         <div key={tab} className="col-xs">
                             <h2
-                                onClick={() => setActiveTab(tab)}
+                                onClick={() => {
+                                    setActiveTab(tab);
+                                    window.location.hash = tab;
+                                }}
                                 className={`tabs__item ${activeTab === tab ? 'tabs__item--active' : ''}`}
                             >
                                 {tab}
@@ -41,6 +32,8 @@ export function Admin() {
                         </div>
                     ))}
                 </div>
+                {activeTab === 'docs' && <Docs />}
+                {activeTab === 'users' && <Users />}
             </div>
         </div>
     );
