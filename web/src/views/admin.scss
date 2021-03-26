@@ -1,0 +1,17 @@
+@import "../styles/theme";
+
+.admin {
+    &-container {
+        margin: 2rem auto;
+        max-width: 1140px;
+        padding: 3rem 1rem;
+        background-color: lighten($backgroundColor, 5);
+        -webkit-box-shadow: 2px 4px 6px 0px rgba(0, 0, 0, 0.33);
+        -moz-box-shadow: 2px 4px 6px 0px rgba(0, 0, 0, 0.33);
+        box-shadow: 2px 4px 6px 0px rgba(0, 0, 0, 0.33);
+
+        p {
+            padding-top: 1rem;
+        }
+    }
+}
