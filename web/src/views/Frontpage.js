@@ -13,8 +13,8 @@ const Frontpage = () => {
 
             <div className="frontpage-container">
                 <p style={{ paddingBottom: '2rem' }}>
-                    Tech:Online saw somewhere around 20 participants go through our network challenge, and the "jury"
-                    has had a difficult time determining the lucky three to win a ticket for The Gathering 2021.
+                    Tech:Online 2020 saw somewhere around 20 participants go through the network challenge.... Stay
+                    tuned and stay sharp - for Tech:Online 2021 we are brewing up even more fun...
                 </p>
                 <p>
                     Read more at the{' '}

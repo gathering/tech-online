@@ -9,32 +9,35 @@ const Login = () => {
     const searchParams = useMemo(() => new URLSearchParams(params.search), [params]);
     const code = useMemo(() => searchParams.get('code'), [searchParams]);
 
-    const [fetchStatus, fetchResult] = useLogin(code);
+    let fetchStatus, fetchResult;
 
     if (!code) {
         return (
             <div className="login">
                 <h1>
                     <a
-                        href={`https://oscar.zoodo.io/o/authorize/?client_id=${process.env.CLIENT_ID}&response_type=code&scope=read_userdata_extended%20write_userdata_extended&redirect_uri=${window.location.origin}/login`}
+                        href={`https://unicorn.zoodo.io/oauth/authorize/?client_id=${process.env.CLIENT_ID}&response_type=code&redirect_uri=${window.location.origin}/login`}
                     >
                         Log in
                     </a>
                 </h1>
             </div>
         );
+    } else {
+        [fetchStatus, fetchResult] = useLogin(code);
     }
 
     if (fetchStatus === FETCH_STATUS.REJECTED) {
         return (
             <div className="login">
-                <h1>Failed: {fetchResult.error}</h1>
+                <h1>Failed.</h1>
+                <h3>{fetchResult.message ? fetchResult.message : fetchResult.error}</h3>
             </div>
         );
     }
 
     if (fetchStatus === FETCH_STATUS.RESOLVED) {
-        return <Redirect to="/" />;
+        return <Redirect to="/participate" />;
     }
 
     return (

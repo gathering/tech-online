@@ -22,11 +22,14 @@ export const httpPut = (url, data, config) =>
         ...config,
     });
 
-const client = (endpoint, { body, host = process.env.API_URL, forceBlankEol = false, ...customConfig } = {}) => {
+const client = (
+    endpoint,
+    { body, host = process.env.API_URL, forceBlankEol = false, contentType = 'application/json', ...customConfig } = {}
+) => {
     const token = window.localStorage.getItem(localStorageTokenKey);
-    const headers = { 'Content-Type': 'application/json', Accept: 'application/json' };
+    const headers = { 'Content-Type': contentType, Accept: 'application/json' };
     if (token) {
-        headers.Authorization = `JWT ${token}`;
+        headers.Authorization = `Bearer ${token}`;
     }
 
     const config = {
@@ -40,6 +43,12 @@ const client = (endpoint, { body, host = process.env.API_URL, forceBlankEol = fa
 
     if (body) {
         config.body = JSON.stringify(body);
+    }
+
+    if (contentType === 'application/x-www-form-urlencoded') {
+        config.body = Object.entries(body)
+            .map(([key, value]) => encodeURIComponent(key) + '=' + encodeURIComponent(value))
+            .join('&');
     }
 
     if (config.method === 'POST') {

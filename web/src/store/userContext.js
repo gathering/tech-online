@@ -73,45 +73,53 @@ const useLogin = (code) => {
     const [fetchResult, setFetchResult] = useState();
 
     useEffect(() => {
-        if (fetchStatus === FETCH_STATUS.IDLE) {
-            setFetchStatus(FETCH_STATUS.PENDING);
-            httpPost(
-                `o/token/?code=${code}&client_secret=${process.env.CLIENT_SECRET}&client_id=${process.env.CLIENT_ID}&grant_type=authorization_code&redirect_uri=${window.location.origin}/login`,
-                {},
-                {
-                    host: 'https://oscar.zoodo.io',
-                    forceBlankEol: true,
-                }
-            )
-                .then((data) => {
-                    dispatch({
-                        type: actions.LOGIN,
-                        payload: {
-                            ...data,
-                            meta: jwtDecode(data.access_token),
-                        },
-                    });
-                    window.localStorage.setItem(localStorageTokenKey, data.access_token);
-                    setFetchResult(data);
-                    setFetchStatus(FETCH_STATUS.RESOLVED);
+        (async () => {
+            if (fetchStatus === FETCH_STATUS.IDLE) {
+                setFetchStatus(FETCH_STATUS.PENDING);
+                await httpPost(
+                    'oauth/token/',
+                    {
+                        code: code,
+                        redirect_uri: `${window.location.origin}/login`,
+                        grant_type: 'authorization_code',
+                        client_secret: process.env.CLIENT_SECRET,
+                        client_id: process.env.CLIENT_ID,
+                    },
+                    {
+                        host: 'https://unicorn.zoodo.io',
+                        forceBlankEol: true,
+                        contentType: 'application/x-www-form-urlencoded',
+                    }
+                )
+                    .then(async (data) => {
+                        window.localStorage.setItem(localStorageTokenKey, data.access_token);
 
-                    httpGet('api/accounts/myprofile/', {
-                        host: 'https://oscar.zoodo.io',
-                    }).then((data) => {
-                        dispatch({
-                            type: actions.LOGIN,
-                            payload: {
-                                profile: data,
-                            },
+                        await httpGet('api/accounts/users/@me/', {
+                            host: 'https://unicorn.zoodo.io',
+                        }).then((profile) => {
+                            let isAdmin = false;
+                            if (profile.role.value === "crew") {
+                                isAdmin = true
+                            }
+                            dispatch({
+                                type: actions.LOGIN,
+                                payload: {
+                                    admin: isAdmin,
+                                    profile,
+                                    ...data,
+                                },
+                            });
+                            setFetchResult(data);
+                            setFetchStatus(FETCH_STATUS.RESOLVED);
                         });
+                    })
+                    .catch((error) => {
+                        dispatch({ type: actions.LOGOUT });
+                        setFetchResult(error);
+                        setFetchStatus(FETCH_STATUS.REJECTED);
                     });
-                })
-                .catch((error) => {
-                    dispatch({ type: actions.LOGOUT });
-                    setFetchResult(error);
-                    setFetchStatus(FETCH_STATUS.REJECTED);
-                });
-        }
+            }
+        })();
     }, [code, dispatch, fetchStatus]);
 
     return [fetchStatus, fetchResult];
