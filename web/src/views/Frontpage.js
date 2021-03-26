@@ -24,8 +24,8 @@ const Frontpage = () => {
                 <hr />
                 <p>
                     <strong>Tech:Online is a network-hacking event and experiment!</strong>
-                </p>
-		<p>Participants (you?) will be given an opportunity to configure real network hardware, with lots of assistance. This is a realistic simulation of how real network engineers work, on real hardware. You get feedback through a series of verification scripts that simulate how actual monitoring software work, and ultimately, you will see a real physical end-user-pc go from off-line to on-line over a video stream. </p>
+		    <br />
+		Participants (you?) will be given an opportunity to configure real network hardware, with lots of assistance. This is a realistic simulation of how real network engineers work, on real hardware. You get feedback through a series of verification scripts that simulate how actual monitoring software work, and ultimately, you will see a real physical end-user-pc go from off-line to on-line over a video stream. </p>
 		<p>The exercise takes somewhere between an hour (for the experienced) and 5-6 hours. You get access to our great mentors along the way, which will answer any questions you have.</p>
 		<p>Tech:Online first took place during the easter of 2020, and saw about 20 participants go through the challenge, which was far more than we had dared to expect.</p>
 		<h2>Why?</h2>
@@ -51,15 +51,21 @@ const Frontpage = () => {
                     similar to how we would do things at The Gathering, and your task is to get the "participant"
                     online.
                 </p>
-		<h2>NEW for 2021: Two different tracks!</h2>
+		<h2>NEW in 2021: Two different tracks!</h2>
                 <hr />
 		<p>There will be two tracks (exercises) available. You can choose to participate in either or both.</p>
+		<p>
 		<strong>Tech:Net</strong>
-		<p>In the network track you will configure two access switches and a distribution switch to get a participant on-line. This is the same exercise we ran last year, but hopefully even more stream lined. You will learn how basic routing works, how networks become more robust (and faster) by using multiple cables to connect switches, and of course how switches are configured in general. This is an exercise anyone with an SSH client can participate in.</p>
+		<br />
+		In the network track you will configure two access switches and a distribution switch to get a participant on-line. This is the same exercise we ran last year, but hopefully even more stream lined. You will learn how basic routing works, how networks become more robust (and faster) by using multiple cables to connect switches, and of course how switches are configured in general. This is an exercise anyone with an SSH client can participate in.</p>
+		<p>
 		<strong>Tech:Server</strong>
-		<p>New as of 2021 is the chance to configure two cruciual services for any network: DHCP and DNS. A network without DNS and DHCP is not very functional. You will learn what happens when you plug your PC into a switch and how DHCP is used to auto-configure network settings for clients (e.g.: your laptop, phone, etc). You will also learn how a domain name is converted to an IP address using DNS and the difference between a recursive DNS server and an authoitative one. These are absolutely crucial components on the Internet, and while the jargon might seem dense, they are in many respects remarkably simple when you get down to it.</p>
+		<br />
+		New as of 2021 is the chance to configure two cruciual services for any network: DHCP and DNS. A network without DNS and DHCP is not very functional. You will learn what happens when you plug your PC into a switch and how DHCP is used to auto-configure network settings for clients (e.g.: your laptop, phone, etc). You will also learn how a domain name is converted to an IP address using DNS and the difference between a recursive DNS server and an authoitative one. These are absolutely crucial components on the Internet, and while the jargon might seem dense, they are in many respects remarkably simple when you get down to it.</p>
+		<p>
 		<strong>Combined: How to run any-size network!</strong>
-		<p>Well, almost...</p>
+		<br />
+		Well, almost...</p>
 		<p>If you complete both of these exercises, you will know almost everything there is to know about the fundamental building blocks of the internet. The same principles are used for your local network at home as is used for large ISPs with hundereds of thousands of customers.</p>
                 <div className="flex-row">
                     <div className="flex-item">
