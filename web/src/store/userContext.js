@@ -1,5 +1,4 @@
 import React, { createContext, useReducer, useState, useEffect } from 'react';
-import jwtDecode from 'jwt-decode';
 import { httpPost, FETCH_STATUS, httpGet } from '../common/api';
 
 export const localStorageTokenKey = '__tgo_token__';
