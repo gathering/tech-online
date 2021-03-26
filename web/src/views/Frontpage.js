@@ -54,7 +54,7 @@ const Frontpage = () => {
 		<p>There will be two tracks (exercises) available. You can choose to participate in either or both.</p>
 		<strong>Tech:Net</strong>
 		<p>In the network track you will configure two access switches and a distribution switch to get a participant on-line. This is the same exercise we ran last year, but hopefully even more stream lined. You will learn how basic routing works, how networks become more robust (and faster) by using multiple cables to connect switches, and of course how switches are configured in general. This is an exercise anyone with an SSH client can participate in.</p>
-		<string>Tech:Server</strong>
+		<strong>Tech:Server</strong>
 		<p>New as of 2021 is the chance to configure two cruciual services for any network: DHCP and DNS. A network without DNS and DHCP is not very functional. You will learn what happens when you plug your PC into a switch and how DHCP is used to auto-configure network settings for clients (e.g.: your laptop, phone, etc). You will also learn how a domain name is converted to an IP address using DNS and the difference between a recursive DNS server and an authoitative one. These are absolutely crucial components on the Internet, and while the jargon might seem dense, they are in many respects remarkably simple when you get down to it.</p>
 		<strong>Combined: How to run any-size network!</strong>
 		<p>Well, almost...</p>
