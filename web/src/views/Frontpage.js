@@ -29,6 +29,7 @@ const Frontpage = () => {
 		<p>The exercise takes somewhere between an hour (for the experienced) and 5-6 hours. You get access to our great mentors along the way, which will answer any questions you have.</p>
 		<p>Tech:Online first took place during the easter of 2020, and saw about 20 participants go through the challenge, which was far more than we had dared to expect.</p>
 		<h2>Why?</h2>
+                <hr />
 		<p>Every year during easter, The Gathering takes place and somewhere between 5000 and 10 000 people visit the venue to participate in an amazing digital festival. But for obvious reasons, we've had to cancel this event twice in a row now.</p>
 		<p>But some of us know that The Gathering lets us experiment with things we otherwise never get to touch, and we wanted to see if we could simulate some of that on-line, and while we're at it, invite even more people to participate!</p>
                 <p>
@@ -51,6 +52,7 @@ const Frontpage = () => {
                     online.
                 </p>
 		<h2>NEW for 2021: Two different tracks!</h2>
+                <hr />
 		<p>There will be two tracks (exercises) available. You can choose to participate in either or both.</p>
 		<strong>Tech:Net</strong>
 		<p>In the network track you will configure two access switches and a distribution switch to get a participant on-line. This is the same exercise we ran last year, but hopefully even more stream lined. You will learn how basic routing works, how networks become more robust (and faster) by using multiple cables to connect switches, and of course how switches are configured in general. This is an exercise anyone with an SSH client can participate in.</p>
@@ -59,15 +61,6 @@ const Frontpage = () => {
 		<strong>Combined: How to run any-size network!</strong>
 		<p>Well, almost...</p>
 		<p>If you complete both of these exercises, you will know almost everything there is to know about the fundamental building blocks of the internet. The same principles are used for your local network at home as is used for large ISPs with hundereds of thousands of customers.</p>
-		<h2>What's new for 2021?</h2>
-		<hr />
-		<p>
-		   For Tech:Online 2021 we will repeat the success of the
-		   network exercise, but also add a new dimension: How to
-		   configure a DNS stack and DHCP server. This will be a
-		   separate track, so you can choose to participate in one
-		   or the other, or both!
-		</p>
                 <div className="flex-row">
                     <div className="flex-item">
                         <h2>Who can participate?</h2>
