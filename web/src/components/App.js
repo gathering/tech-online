@@ -44,7 +44,7 @@ const App = () => {
                     <Route path="/participate" component={Views.Participate} />
                     <Route path="/status/:id?" component={Views.Status} />
                     <Route path="/logout" component={Views.Logout} />
-                    <Route path="/admin" component={Views.Admin} />
+                    <Route path="/admin/:tab?" component={Views.Admin} />
                     {/* <Route path="/demo" component={Views.Demo} /> */}
                 </Switch>
             </main>
