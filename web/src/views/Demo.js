@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useUserDispatch, actions } from '../store/userContext';
-import jwtDecode from 'jwt-decode';
+// import jwtDecode from 'jwt-decode';
 import { Participate } from './Participate';
 
 const tokenData = {
@@ -33,7 +33,7 @@ const Demo = () => {
             type: actions.LOGIN,
             payload: {
                 ...tokenData,
-                meta: jwtDecode(tokenData.access_token),
+                // meta: jwtDecode(tokenData.access_token),
                 profile: profileData,
             },
         });
