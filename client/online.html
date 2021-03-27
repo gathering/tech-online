@@ -1,60 +1,95 @@
+<!DOCTYPE html>
 <html>
-<body id="kropp" align=center>
-
-<br />
-<br />
-<br />
-<br />
-<h1>ER NETTET NEDE!?</h1>
-<div id="nei">
-<h2>Internett sier:  NEI NEI NEI VIL IKKE!</h2>
-</div>
-<div id="ja" >
-<h2> MMMMM SWEET INTERNETT!</h2>
-</div>
-
-
-
-
-
-
-
-
-<script>
-ja = document.getElementById("ja")
-nei = document.getElementById("nei")
-kropp = document.getElementById("kropp")
-function jadda() {
-  kropp.style.backgroundColor = "green"
-  ja.style.display = ""
-  nei.style.display = "none"
-}
-function neida() {
-  kropp.style.backgroundColor = "red"
-  ja.style.display = "none"
-  nei.style.display = ""
-}
-
-function sjekk() {
-  try {
-   foobar = fetch("https://techo.gathering.org/ping",{cache: "no-cache", mode: "cors"}).then(r => { if (!r.ok) {
-     neida()
-       console.log(r)
-      } else {
-        jadda()
+  <head>
+    <style>
+      * {
+        font-family: -apple-system, BlinkMacSystemFont, sans-serif,
+          "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
       }
-      return r;
-    }, r => { neida(); console.log(r); return r;})
-   
-  } catch(e) {
-   console.log(e)
-   neida()
-  }
-}
-sjekk()
-setInterval(sjekk,1000)
 
+      html,
+      body {
+        height: 100%;
+        width: 100%;
+      }
 
-</script>
-</body>
+      #kropp {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: red;
+        margin: 0;
+        padding: 0;
+      }
+
+      #ja {
+        display: none;
+      }
+
+      #kropp.success {
+        background-color: green;
+      }
+
+      #kropp.success > #container > #ja {
+        display: block;
+      }
+
+      #kropp.success > #container > #nei {
+        display: none;
+      }
+
+      #container {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body id="kropp">
+    <div id="container">
+      <h1>ER NETTET NEDE!?</h1>
+      <div id="nei">
+        <h2>Internett sier: NEI NEI NEI VIL IKKE!</h2>
+      </div>
+      <div id="ja">
+        <h2>MMMMM SWEET INTERNETT!</h2>
+      </div>
+    </div>
+    <script>
+      let ja = document.getElementById("ja");
+      let nei = document.getElementById("nei");
+      let kropp = document.getElementById("kropp");
+      function jadda() {
+        kropp.classList = ["success"];
+      }
+      function neida() {
+        kropp.classList = [""];
+      }
+
+      function sjekk() {
+        try {
+          foobar = fetch("https://techo.gathering.org/ping", {
+            cache: "no-cache",
+            mode: "cors",
+          }).then(
+            (response) => {
+              if (!response.ok) {
+                neida();
+              } else {
+                jadda();
+              }
+              return response;
+            },
+            (r) => {
+              neida();
+              return r;
+            }
+          );
+        } catch (err) {
+          console.error(err);
+          neida();
+        }
+      }
+      sjekk();
+      setInterval(sjekk, 1000);
+    </script>
+  </body>
 </html>
