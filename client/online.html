@@ -54,39 +54,31 @@
       </div>
     </div>
     <script>
-      let ja = document.getElementById("ja");
-      let nei = document.getElementById("nei");
-      let kropp = document.getElementById("kropp");
+      const kropp = document.getElementById("kropp");
+
       function jadda() {
-        kropp.classList.add("success")
+        kropp.classList.add("success");
       }
       function neida() {
         kropp.classList.remove("success");
       }
 
       function sjekk() {
-        try {
-          foobar = fetch("https://techo.gathering.org/ping", {
-            cache: "no-cache",
-            mode: "cors",
-          }).then(
-            (response) => {
-              if (!response.ok) {
-                neida();
-              } else {
-                jadda();
-              }
-              return response;
-            },
-            (r) => {
+        fetch("https://techo.gathering.org/ping", {
+          cache: "no-cache",
+          mode: "cors",
+        })
+          .then((response) => {
+            if (response.ok) {
+              jadda();
+            } else {
               neida();
-              return r;
             }
-          );
-        } catch (err) {
-          console.error(err);
-          neida();
-        }
+          })
+          .catch((err) => {
+            neida();
+            console.warn(err);
+          });
       }
       sjekk();
       setInterval(sjekk, 1000);
