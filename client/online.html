@@ -1,0 +1,60 @@
+<html>
+<body id="kropp" align=center>
+
+<br />
+<br />
+<br />
+<br />
+<h1>ER NETTET NEDE!?</h1>
+<div id="nei">
+<h2>Internett sier:  NEI NEI NEI VIL IKKE!</h2>
+</div>
+<div id="ja" >
+<h2> MMMMM SWEET INTERNETT!</h2>
+</div>
+
+
+
+
+
+
+
+
+<script>
+ja = document.getElementById("ja")
+nei = document.getElementById("nei")
+kropp = document.getElementById("kropp")
+function jadda() {
+  kropp.style.backgroundColor = "green"
+  ja.style.display = ""
+  nei.style.display = "none"
+}
+function neida() {
+  kropp.style.backgroundColor = "red"
+  ja.style.display = "none"
+  nei.style.display = ""
+}
+
+function sjekk() {
+  try {
+   foobar = fetch("https://techo.gathering.org/ping",{cache: "no-cache", mode: "cors"}).then(r => { if (!r.ok) {
+     neida()
+       console.log(r)
+      } else {
+        jadda()
+      }
+      return r;
+    }, r => { neida(); console.log(r); return r;})
+   
+  } catch(e) {
+   console.log(e)
+   neida()
+  }
+}
+sjekk()
+setInterval(sjekk,1000)
+
+
+</script>
+</body>
+</html>
