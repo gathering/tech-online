@@ -358,11 +358,15 @@
             console.warn(err);
           });
       }
+      function pad(thing) {
+        return thing.toString().padStart(2, 0);    
+      }
 
       function setDate() {
         const date = new Date();
 
-        dato.innerText = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+        dato.innerText =
+        `${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
       }
 
       sjekk();
