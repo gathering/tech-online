@@ -5,7 +5,6 @@
       * {
         font-family: -apple-system, BlinkMacSystemFont, sans-serif,
           "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-        font-size: 2rem;
       }
 
       html,
@@ -46,16 +45,17 @@
   </head>
   <body id="kropp">
     <div id="container">
-      <h1>ER NETTET NEDE!?</h1>
       <div id="nei">
-        <h2>Internett sier: NEI NEI NEI VIL IKKE!</h2>
+        <h1>Internett sier: NEI NEI NEI VIL IKKE!</h1>
       </div>
       <div id="ja">
-        <h2>MMMMM SWEET INTERNETT!</h2>
+        <h1>MMMMM SWEET INTERNETT!</h1>
       </div>
+      <h2 id="dato">DATO</h2>
     </div>
     <script>
       const kropp = document.getElementById("kropp");
+      const dato = document.getElementById("dato");
 
       function jadda() {
         kropp.classList.add("success");
@@ -81,8 +81,18 @@
             console.warn(err);
           });
       }
+
+      function setDate() {
+        const date = new Date();
+
+        dato.innerText = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+      }
+
       sjekk();
+      setDate();
+
       setInterval(sjekk, 1000);
+      setInterval(setDate, 970);
     </script>
   </body>
 </html>
