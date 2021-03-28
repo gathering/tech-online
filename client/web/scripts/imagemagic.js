@@ -86,10 +86,12 @@ const createImageMagic = ({
   }
 
   function getCreditMarkup(image) {
-    return `<div class="title">
+    return `<a class="title" target="_blank" href="${
+      image.source || image.url
+    }">
       <strong>${image.title || image.url.split("/").pop()}</strong>
       <br />${image.creator || ""}
-    </div>`;
+    </a>`;
   }
 
   function getElementWithClass(classname) {
