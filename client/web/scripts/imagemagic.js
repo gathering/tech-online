@@ -45,7 +45,9 @@ const createImageMagic = ({
   }
 
   function setRandomActiveImage() {
-    activeImage = Math.floor(Math.random() * images.length);
+    const candidate = Math.floor(Math.random() * images.length);
+    activeImage =
+      candidate !== activeImage ? candidate : (candidate + 1) % images.length;
   }
 
   async function changeImage() {
