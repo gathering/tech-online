@@ -44,7 +44,7 @@ body {
   padding: 2em;
 }
 
-.imageMagic .container,
+.imageMagic.container,
 .imageMagic.image {
   position: absolute;
   top: 0;
@@ -58,6 +58,12 @@ body {
   z-index: -2;
   transition: opacity 2s ease-in;
 }
+.imageMagic video {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+}
 .imageMagic .title {
   position: absolute;
   bottom: 0;
@@ -67,7 +73,7 @@ body {
   padding: 1em;
   opacity: 0.8;
 }
-.imageMagic .container,
+.imageMagic.container.active,
 .imageMagic.image.active {
   z-index: -1;
   opacity: 1;
