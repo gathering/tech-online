@@ -11,7 +11,6 @@ const createImageMagic = ({
     container: undefined,
     active: undefined,
     inactive: undefined,
-    title: undefined,
   };
   let visible = false;
   let looping = true;
@@ -58,10 +57,13 @@ const createImageMagic = ({
 
       if (isVideo) {
         elements.inactive.style = "";
-        elements.inactive.innerHTML = `<video loop muted playsinline autoplay src="${image.url}" />`;
+        elements.inactive.innerHTML = `
+          ${getCreditMarkup(image)}
+          <video loop muted playsinline autoplay src="${image.url}" />
+        `;
       } else {
         elements.inactive.style = `background-image: url(${image.url})`;
-        elements.inactive.innerHTML = "";
+        elements.inactive.innerHTML = getCreditMarkup(image);
       }
 
       // Wait for image to load. For now we just a assume X time
@@ -71,15 +73,8 @@ const createImageMagic = ({
         elements.inactive = elements.active;
         elements.active = inactive;
 
-        const inactiveTitle = elements.inactiveTitle;
-        elements.inactiveTitle = elements.activeTitle;
-        elements.activeTitle = inactiveTitle;
-
         elements.active.classList.add("active");
         elements.inactive.classList.remove("active");
-        elements.activeTitle.innerHTML = `<strong>${
-          image.title || image.url.split("/").pop()
-        }</strong><br />${image.creator || ""}`;
 
         resolve();
 
@@ -88,6 +83,13 @@ const createImageMagic = ({
         }
       }, loadDelay);
     });
+  }
+
+  function getCreditMarkup(image) {
+    return `<div class="title">
+      <strong>${image.title || image.url.split("/").pop()}</strong>
+      <br />${image.creator || ""}
+    </div>`;
   }
 
   function getElementWithClass(classname) {
@@ -116,12 +118,8 @@ const createImageMagic = ({
   async function init() {
     elements.container = getElementWithClass("container");
     elements.active = getElementWithClass("image");
-    elements.activeTitle = getElementWithClass("title");
     elements.inactive = getElementWithClass("image");
-    elements.inactiveTitle = getElementWithClass("title");
 
-    elements.active.appendChild(elements.activeTitle);
-    elements.inactive.appendChild(elements.inactiveTitle);
     elements.container.appendChild(elements.active);
     elements.container.appendChild(elements.inactive);
     document.querySelector(target).appendChild(elements.container);
