@@ -24,7 +24,7 @@ const createImageMagic = ({
   }
 
   function hide() {
-    elements.container?.classList.add("active");
+    elements.container?.classList.remove("active");
     visible = false;
   }
 
