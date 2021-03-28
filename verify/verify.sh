@@ -13,7 +13,8 @@ mgmt_ip[edge1]=${prefix}200.10
 mgmt_ok=""
 mgmt_bad=""
 
-put_TARGET="https://techo.gathering.org/api/status/station/${station}"
+password=$(cat ~/password)
+put_TARGET="https://${password}@techo.gathering.org/api/test"
 declare -A linknets
 linknets[distro-core]="${prefix}200.1 core ${prefix}200.2 distro"
 linknets[distro-edge0]="${prefix}200.5 distro ${prefix}200.6 edge0"
@@ -25,34 +26,15 @@ ferdig=nope
 t_header=""
 
 s_n=0
+seq=0
 
-
-json_out=$(mktemp)
 
 cleanup() {
 	runtime=$(( $(date +%s) - ${start_time} ))
-	echo '], "timestamp": "'$(date --iso-8601=seconds)'","runtime": '$runtime' }' >> ${json_out}
-	if ! jq . < ${json_out} > /dev/null 2>&1; then
-		echo 'bad json-output'
-		ferdig=nope
-	fi
-	if [ $(wc -l < ${json_out}) -lt 15 ]; then
-		echo 'too few lines in json-output'
-		ferdig=nope
-	fi
-	if [ $ferdig = "yup" ]; then
-		cp ${json_out} ${prefix}$(date --iso-8601=minute).json
-		cp ${json_out} ${prefix}latest.json
-		lwp-request -m PUT ${put_TARGET} < ${prefix}latest.json
-		echo -n 'data = ' > ${prefix}jsonp
-		cat ${json_out} >> ${prefix}jsonp
-	fi
-	rm ${json_out}
 }
 
 trap cleanup EXIT
 
-echo '{ "tests": [' > ${json_out}
 state() {
 	ret=$1
 	msg=$2
@@ -68,7 +50,18 @@ state() {
 	if [ $s_n != 1 ]; then
 		comma=","
 	fi
-	printf '%s { "title": "%s", "status": "%s", "task": "%s" }\n' "$comma" "$msg" "$_state" "$t_header" >> ${json_out}
+	hash=$(echo "$msg$t_header" | md5sum | awk '{print $1}')
+	{
+	  cat <<-_EOF_
+	  {
+	    "Title": "$t_header",
+	    "Description": "$msg",
+	    "Status": "$_state",
+	    "Seq": $seq
+	   }
+_EOF_
+	} | lwp-request -d -m PUT ${put_TARGET}/track/net/station/${station}/hash/${hash} 
+	seq=$(( $seq + 1 ))
 }
 
 mping() {
@@ -108,7 +101,19 @@ remote_ping() {
 		if [ $s_n != 1 ]; then
 			comma=","
 		fi
-		printf '%s { "title": "%s", "status": "skipped", "task": "%s" }\n' "$comma" "Ping from $src to $target $comment" "$t_header" >> ${json_out}
+		msg="Ping from $src to $target $comment"
+		hash=$(echo "$msg$t_header" | md5sum | awk '{print $1}')
+		{
+			cat <<-_EOF_
+			  {
+			    "Title": "$t_header",
+			    "Description": "$msg",
+			    "Status": "skipped",
+			    "Seq": $seq
+			   }
+			_EOF_
+		} | lwp-request -d -m PUT ${put_TARGET}/track/net/station/${station}/hash/${hash} 
+		seq=$(( $seq + 1 ))
 		return 0
 	fi
 }
