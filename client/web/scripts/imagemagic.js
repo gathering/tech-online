@@ -52,7 +52,15 @@ const createImageMagic = ({
     return new Promise((resolve, reject) => {
       setRandomActiveImage();
       const image = images[activeImage];
-      elements.inactive.style = `background-image: url(${image.url})`;
+      const isVideo = image.url.endsWith(".mp4");
+
+      if (isVideo) {
+        elements.inactive.style = "";
+        elements.inactive.innerHTML = `<video loop muted playsinline autoplay src="${image.url}" />`;
+      } else {
+        elements.inactive.style = `background-image: url(${image.url})`;
+        elements.inactive.innerHTML = "";
+      }
 
       // Wait for image to load. For now we just a assume X time
       // rather than actually detecting if image is loaded.
