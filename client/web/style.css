@@ -1,0 +1,80 @@
+* {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+#kropp {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+#kropp,
+#container {
+  background-color: red;
+}
+
+#kropp.success,
+#kropp.success > #container {
+  background-color: green;
+}
+
+#ja {
+  display: none;
+}
+
+#kropp.success > #container > #ja {
+  display: block;
+}
+
+#kropp.success > #container > #nei {
+  display: none;
+}
+
+#container {
+  text-align: center;
+  padding: 2em;
+}
+
+.imageMagic.container,
+.imageMagic.image {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  z-index: -2;
+  transition: opacity 2s ease-in;
+}
+.imageMagic video {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.imageMagic .title {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: black;
+  color: white;
+  padding: 1em;
+  opacity: 0.8;
+}
+.imageMagic.container.active,
+.imageMagic.image.active {
+  z-index: -1;
+  opacity: 1;
+}
