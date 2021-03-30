@@ -62,6 +62,8 @@ If you want to build it, use ``go build -o foo ./backend/cmd/test``.
 The schema from the SQL is there too. The credentials are pretty much
 hardcoded in gondulapi (hooray), but should be trivial to recover.
 
+Outdated, see `gondulapi-techo <https://github.com/gathering/gondulapi-techo>`__.
+
 bootstrap/
 ----------
 
