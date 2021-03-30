@@ -3,7 +3,34 @@ const dato = document.getElementById("dato");
 const imageMagic = createImageMagic({
   target: "#kropp",
   images,
+  onChanged: publishImageInformation,
 });
+
+// If a global `hookUrl` is set and we are online, notify webhook when image changes
+function publishImageInformation(image) {
+  if (hookUrl && kropp.classList.contains("success")) {
+    fetch(hookUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        embeds: [
+          {
+            title: image.title,
+            author: { name: image.creator },
+            image: {
+              url: image.url,
+            },
+            footer: {
+              text: `Check out this masterwork of a competition entry, and others like it at ${image.source}`,
+            },
+          },
+        ],
+      }),
+    });
+  }
+}
 
 /**
  * padding number with leading zeroes so it becomes two digits no matter what
