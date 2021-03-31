@@ -1,0 +1,7 @@
+{
+	"family": "ref-net",
+	"shortname": "ref",
+	"name":"Reference documentation for networking track",
+	"content_format": "markdown",
+	"sequence": 1
+}

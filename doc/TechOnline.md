@@ -1,14 +1,6 @@
-.. contents::
-
-.. sectnum::
 
 Intro
 =====
-
-.. warning::
-
-   This is a WORK IN PROGRESS and is currently the first iteration of a
-   _pilot_. It WILL change.
 
 The task at hand
 ----------------
