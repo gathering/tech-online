@@ -85,7 +85,7 @@ export const Docs = (props) => {
         delete selectedDocument.value;
         delete selectedDocument.label;
 
-        httpPut(`document/${selectedDocument.id}`, selectedDocument, {
+        httpPut(`document/${selectedDocument.family}/${selectedDocument.shortname}`, selectedDocument, {
             headers: { Authorization: `Basic ${auth}` },
         })
             .then(() => alert('Successfully updated document'))
