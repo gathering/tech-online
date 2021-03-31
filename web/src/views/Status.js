@@ -5,7 +5,7 @@ import { httpGet, FETCH_STATUS } from '../common/api';
 import './status.scss';
 import { useInterval } from '../common/useInterval';
 
-const stations = ['1', '2', '3', '4'];
+const stations = ['1', '2', '3', '4', '5', '6'];
 
 const Status = () => {
     const { id } = useParams();
@@ -20,7 +20,7 @@ const Status = () => {
     const fetchStationData = useCallback(() => {
         setFetchStatus(FETCH_STATUS.PENDING);
 
-        httpGet('status/station/' + stationId)
+        httpGet('custom/station-tasks-tests/net/' + stationId + '/')
             .then((data) => {
                 setFetchStatus(FETCH_STATUS.RESOLVED);
                 setFetchedStation(stationId);
@@ -96,33 +96,47 @@ const Status = () => {
             )}
             {stationData && (
                 <div className="testlist">
-                    {stationData.Tests.map((test, i) => (
-                        <React.Fragment key={test + i}>
-                            <div
-                                className={`row testlist__test testlist__test--${test.Status} ${
-                                    activeTestDescription === test.Task + i ? 'testlist__test--expanded' : ''
-                                }`}
-                                key={test.Title}
-                                onClick={() => toggleActiveTestDescription(test.Task + i)}
-                            >
-                                <div className="col-xs-2">{test.Status}</div>
-                                <div className="col-xs">{test.Title}</div>
-                            </div>
-                            <div
-                                className={`row testlist__test-description ${
-                                    activeTestDescription === test.Task + i
-                                        ? 'row testlist__test-description--active'
-                                        : ''
-                                }`}
-                            >
-                                <div className="col-xs">
-                                    {test.Description ? (
-                                        <ReactMarkdown source={test.Description} />
-                                    ) : (
-                                        <strong>No extra description for this test</strong>
-                                    )}
-                                </div>
-                            </div>
+                    {stationData.tasks.map((task, i) => (
+                        <React.Fragment key={task + i}>
+                            <h3>{task.name}</h3>
+                            <p>{task.description}</p>
+                            {task.tests.map((test, i) => (
+                                <React.Fragment key={test + i}>
+                                    <div
+                                        className={`row testlist__test testlist__test--${test.status_success} ${
+                                            activeTestDescription === test.id ? 'testlist__test--expanded' : ''
+                                        }`}
+                                        key={test.name}
+                                        onClick={() => toggleActiveTestDescription(test.id)}
+                                    >
+                                        <div className="col-xs-2">
+                                            {test.status_success === true ? 'Ok' : 'Fail'}
+                                            <small>{test.status_description ? ' (more info)' : ''}</small>
+                                        </div>
+                                        <div className="col-xs">
+                                            {test.name}
+                                            <small>{test.description ? ' (more info)' : ''}</small>
+                                        </div>
+                                    </div>
+                                    <div
+                                        className={`row testlist__test-description ${
+                                            activeTestDescription === test.id
+                                                ? 'row testlist__test-description--active'
+                                                : ''
+                                        }`}
+                                    >
+                                        <div className="col-xs">
+                                            <strong>Test</strong>: {test.description ? test.description : 'No extra description.'}
+                                        </div>
+                                        <div className="col-xs">
+                                            <strong>Status</strong>: {test.status_description ? test.status_description : 'No extra description.'}
+                                        </div>
+                                        <div className="col-xs">
+                                            <strong>Timestamp</strong>: <code>{test.timestamp}</code>
+                                        </div>
+                                    </div>
+                                </React.Fragment>
+                            ))}
                         </React.Fragment>
                     ))}
                 </div>
