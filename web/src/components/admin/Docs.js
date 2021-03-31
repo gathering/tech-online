@@ -18,7 +18,13 @@ export const Docs = (props) => {
     const [auth, setAuth] = useState(localStorage.getItem('adminAuth') ?? '');
 
     useEffect(() => {
-        localStorage.setItem('adminAuth', auth);
+        let pw;
+        if (auth === '' || auth === undefined) {
+            pw = btoa(prompt('Enter username and password in username:password format'));
+            setAuth(pw);
+        }
+
+        localStorage.setItem('adminAuth', auth ?? pw);
     }, [auth]);
 
     useEffect(() => {
@@ -76,18 +82,16 @@ export const Docs = (props) => {
     }
 
     function submitDocument() {
-        let pw;
-        if (auth === '') {
-            pw = btoa(prompt('Enter username and password in username:password format'));
-            setAuth(pw);
-        }
-
         delete selectedDocument.value;
         delete selectedDocument.label;
+
         httpPut(`document/${selectedDocument.id}`, selectedDocument, {
-            headers: { Authorization: `Basic ${auth ? auth : pw}` },
+            headers: { Authorization: `Basic ${auth}` },
         })
             .then(() => alert('Successfully updated document'))
+            .then(() => {
+                window.location.reload();
+            })
             .catch((err) => {
                 console.warn(err);
                 if (err.code === 401) {
