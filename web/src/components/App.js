@@ -20,6 +20,9 @@ const App = () => {
                             Participate
                         </NavLink>
                     )}
+                    <a href="https://discordapp.com/invite/PmSTYdT" target="_blank" rel="noopener noreferrer">
+                        Discord Server
+                    </a>
                 </div>
                 <div className="nav-right">
                     {!loggedIn && (
