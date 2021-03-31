@@ -43,8 +43,6 @@ cleanup() {
 trap cleanup EXIT
 
 state() {
-	# ret=$1
-	# msg=$2
 	test_shortname="$1"
 	test_name="$2"
 	status_raw="$3"
@@ -64,7 +62,6 @@ state() {
 	if [ $s_n != 1 ]; then
 		comma=","
 	fi
-	#hash=$(echo "$msg$t_header" | md5sum | awk '{print $1}')
 	{
 		cat <<-_EOF_
 		{
@@ -90,8 +87,12 @@ mping() {
 	return $ret
 }
 
+sshh() {
+	ssh -oStrictHostKeyChecking=no -oPreferredAuthentications=publickey "$@"
+}
+
 test_mgmt() {
-	ssh -oPreferredAuthentications=publickey $1 show system uptime | grep -q  Time
+	sshh $1 show system uptime | grep -q  Time
 	ret=$?
 	state "ssh-$1-$2" "SSH to $1 $2" "$ret"
 	if [ $ret = 0 ]; then
@@ -110,7 +111,7 @@ remote_ping() {
 	comment=$3
 
 	if mgmt_ok ${mgmt_ip[$src]}; then
-		ssh -oPreferredAuthentications=publickey ${mgmt_ip[$src]} ping count 2 wait 1 $target 2>&1 | egrep -q '\s0% packet loss'
+		sshh ${mgmt_ip[$src]} ping count 2 wait 1 $target 2>&1 | egrep -q '\s0% packet loss'
 		ret=$?
 		state "ping-$src-$target" "Ping from $src to $target $comment" "$ret"
 		return $ret
@@ -151,7 +152,7 @@ mgmt() {
 	shift
 	rest="$*"
 	if mgmt_ok ${mgmt_ip[$src]}; then
-		ssh -oPreferredAuthentications=publickey $src "$rest"
+		sshh $src "$rest"
 		return 0
 	fi
 	return 1
