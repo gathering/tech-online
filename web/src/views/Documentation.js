@@ -50,7 +50,7 @@ export const Documentation = () => {
             <div className="title">
                 <h1>Documentation</h1>
             </div>
-            <div className="frontpage-container">
+            <div className="documentation-container">
                 <h2>Select documentation</h2>
                 <Select
                     options={tabs}
@@ -60,7 +60,11 @@ export const Documentation = () => {
                     }}
                 />
                 {(loadingState === FETCH_STATUS.IDLE || loadingState === FETCH_STATUS.PENDING) && <h2>Loading...</h2>}
-                {loadingState === FETCH_STATUS.RESOLVED && <Markdown /*plugins={[gfm]}*/ children={docs[0].content} />}
+                {loadingState === FETCH_STATUS.RESOLVED && (
+                    <div className="docs">
+                        <Markdown /*plugins={[gfm]}*/ children={docs[0].content} />
+                    </div>
+                )}
             </div>
         </div>
     );
