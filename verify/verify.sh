@@ -92,8 +92,14 @@ sshh() {
 }
 
 test_mgmt() {
-	sshh $1 show system uptime | grep -q  Time
-	ret=$?
+	if [ $3 -eq 0 ]; then
+		sshh $1 show system uptime | grep -q  Time
+		ret=$?
+		status_description=
+	else
+		ret=1
+		status_description="Skipped."
+	fi
 	state "ssh-$1-$2" "SSH to $1 $2" "$ret"
 	if [ $ret = 0 ]; then
 		mgmt_ok="${mgmt_ok} $1 "
@@ -161,7 +167,8 @@ mgmt() {
 v_mgmt() {
 	header "management"
 	for a in core distro edge0 edge1; do
-		mping ${mgmt_ip[$a]} "$a" && test_mgmt ${mgmt_ip[$a]} $a
+		mping ${mgmt_ip[$a]} "$a"
+		test_mgmt ${mgmt_ip[$a]} $a $?
 	done
 	do_hint hint_mgmt
 }
