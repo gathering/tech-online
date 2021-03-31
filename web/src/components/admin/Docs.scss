@@ -1,0 +1,42 @@
+#document-edit {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    column-gap: 15px;
+    row-gap: 0px;
+
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 2px solid currentColor;
+    border-radius: 2px;
+}
+
+#params {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: repeat(5, 0.5fr);
+    column-gap: 15px;
+    row-gap: 5px;
+
+    h3 {
+        padding: 0;
+        // margin: auto 0;
+    }
+
+    .select-content-type {
+        padding: auto 0;
+    }
+}
+
+#content {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 4fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+
+.buttons {
+    margin-top: 15px;
+    text-align: center;
+}

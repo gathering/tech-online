@@ -1,7 +1,14 @@
 #!/bin/bash
 
+# Usage:
+# 1. Add your default SSH pubkey to the stations.
+# 2. Add the backend basic auth password to "password" in PWD.
+# 3. Run it: for i in {1..6}; do screen -S "station-$i" -dm bash -c "while : ; do ./verify.sh $i ; sleep 5 ; done"; done
+
+set -u
+
 station=${1:-1}
-prefix=10.10${station}.
+prefix=10.${station}.
 echo station $station
 start_time=$(date +%s)
 hint_int=n
@@ -13,8 +20,8 @@ mgmt_ip[edge1]=${prefix}200.10
 mgmt_ok=""
 mgmt_bad=""
 
-password=$(cat ~/password)
-put_TARGET="https://${password}@techo.gathering.org/api/test"
+password=$(cat password)
+backend_endpoint="https://${password}@techo.gathering.org/api/test/"
 declare -A linknets
 linknets[distro-core]="${prefix}200.1 core ${prefix}200.2 distro"
 linknets[distro-edge0]="${prefix}200.5 distro ${prefix}200.6 edge0"
@@ -36,45 +43,58 @@ cleanup() {
 trap cleanup EXIT
 
 state() {
-	ret=$1
-	msg=$2
+	test_shortname="$1"
+	test_name="$2"
+	status_raw="$3"
+	status_description="${4:-}"
+
 	s_n=$(( $s_n + 1 ))
-	if [ $ret != 0 ]; then
+	if [ $status_raw != 0 ]; then
 		_state="fail"
+		success="false"
 		lfail=$(( $lfail + 1 ))
 	else
 		_state="ok"
+		success="true"
 	fi
-	printf "[ %4s ] %s\n" "$_state" "$msg"
+	printf "[ %-4s ] [ %-46s ] %s (%s)\n" "$_state" "$test_shortname" "$test_name" "$status_description"
 	comma=""
 	if [ $s_n != 1 ]; then
 		comma=","
 	fi
-	hash=$(echo "$msg$t_header" | md5sum | awk '{print $1}')
 	{
-	  cat <<-_EOF_
-	  {
-	    "Title": "$t_header",
-	    "Description": "$msg",
-	    "Status": "$_state",
-	    "Seq": $seq
-	   }
-_EOF_
-	} | lwp-request -d -m PUT ${put_TARGET}/track/net/station/${station}/hash/${hash} 
+		cat <<-_EOF_
+		{
+		"track": "net",
+		"task_shortname": "$t_header",
+		"shortname": "$test_shortname",
+		"station_shortname": "${station}",
+		"name": "$test_name",
+		"description": "",
+		"sequence": $seq,
+		"status_success": $success,
+		"status_description": "$status_description"
+		}
+		_EOF_
+	} | lwp-request -d -m POST "${backend_endpoint}" >&2
 	seq=$(( $seq + 1 ))
 }
 
 mping() {
 	ping -c1 -q -W 1 $1 2>&1 >/dev/null
 	ret=$?
-	state "$ret" "Ping of $1 $2"
+	state "ping-$1-$2" "Ping of $1 $2" "$ret"
 	return $ret
 }
 
+sshh() {
+	ssh -oStrictHostKeyChecking=no -oPreferredAuthentications=publickey "$@"
+}
+
 test_mgmt() {
-	ssh $1 show system uptime | grep -q  Time
+	sshh $1 show system uptime | grep -q  Time
 	ret=$?
-	state "$ret" "SSH to $1 $2"
+	state "ssh-$1-$2" "SSH to $1 $2" "$ret"
 	if [ $ret = 0 ]; then
 		mgmt_ok="${mgmt_ok} $1 "
 	fi
@@ -90,34 +110,17 @@ remote_ping() {
 	target=$2
 	comment=$3
 
-	if mgmt_ok ${mgmt_ip[$src]}; then	
-		ssh ${mgmt_ip[$src]} ping count 2 wait 1 $target 2>&1 | egrep -q '\s0% packet loss'
+	if mgmt_ok ${mgmt_ip[$src]}; then
+		sshh ${mgmt_ip[$src]} ping count 2 wait 1 $target 2>&1 | egrep -q '\s0% packet loss'
 		ret=$?
-		state "$ret" "Ping from $src to $target $comment"
+		state "ping-$src-$target" "Ping from $src to $target $comment" "$ret"
 		return $ret
 	else
-		echo "[ skip ] Skipped (no functional mgmt connection to $src)"
-		comma=""
-		if [ $s_n != 1 ]; then
-			comma=","
-		fi
-		msg="Ping from $src to $target $comment"
-		hash=$(echo "$msg$t_header" | md5sum | awk '{print $1}')
-		{
-			cat <<-_EOF_
-			  {
-			    "Title": "$t_header",
-			    "Description": "$msg",
-			    "Status": "skipped",
-			    "Seq": $seq
-			   }
-			_EOF_
-		} | lwp-request -d -m PUT ${put_TARGET}/track/net/station/${station}/hash/${hash} 
-		seq=$(( $seq + 1 ))
-		return 0
+		ret=1
+		state "ping-$src-$target" "Ping from $src to $target $comment" "$ret" "Skipped."
+		return $ret
 	fi
 }
-
 
 header() {
 	echo " *****: $*"
@@ -148,8 +151,8 @@ mgmt() {
 	src=$1
 	shift
 	rest="$*"
-	if mgmt_ok ${mgmt_ip[$src]}; then	
-		ssh $src "$rest"
+	if mgmt_ok ${mgmt_ip[$src]}; then
+		sshh $src "$rest"
 		return 0
 	fi
 	return 1
@@ -163,8 +166,6 @@ v_mgmt() {
 	do_hint hint_mgmt
 }
 
-
-
 link_test() {
 	aside=$1
 	aname=$2
@@ -173,8 +174,8 @@ link_test() {
 	fname="$2-$4"
 	mping $aside "$fname: $aname global"
 	mping $bside "$fname: $bname global"
-	remote_ping $aname $bside "$fname: $aname from $bname" 
-	remote_ping $bname $aside "$fname: $bname from $aname" 
+	remote_ping $aname $bside "$fname: $aname from $bname"
+	remote_ping $bname $aside "$fname: $bname from $aname"
 }
 
 linkp() {
@@ -182,9 +183,9 @@ linkp() {
 	for a in ${!linknets[*]}; do
 		link_test ${linknets[$a]}
 	done
-#	link_test ${prefix}200.1 core 10.1.200.2 distro
-#	link_test ${prefix}200.5 distro 10.1.200.6 edge0
-#	link_test ${prefix}200.9 distro 10.1.200.10 edge1
+	# link_test ${prefix}200.1 core 10.1.200.2 distro
+	# link_test ${prefix}200.5 distro 10.1.200.6 edge0
+	# link_test ${prefix}200.9 distro 10.1.200.10 edge1
 	do_hint hint_link
 }
 
@@ -197,7 +198,6 @@ laptop() {
 	do_hint hint_participant
 }
 
-
 lacp_core() {
 	header 'LACP'
 	echo -n '[ xxxx ] Clearing counters...'
@@ -209,7 +209,7 @@ lacp_core() {
 	echo -e "$lines" | awk '/\s+0$/ { exit 1 }; '
 	ret=$?
 
-	state "$ret" "LACP-check of core-distro interfaces"
+	state "lacp-core-distro" "LACP-check of core-distro interfaces" "$ret"
 	if [ $ret != 0 ]; then
 		echo "No LACP packets received on at least one interface"
 		echo -e "$lines"
@@ -244,7 +244,7 @@ task4() {
 	remote_ping edge0 ${prefix}100.1 "edge0 - gw ip - locally from edge0"
 	remote_ping edge0 ${prefix}100.2 "edge0 - client ip - locally from edge0"
 }
-	
+
 v_mgmt
 task1
 task2
