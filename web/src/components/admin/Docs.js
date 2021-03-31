@@ -191,7 +191,9 @@ export const Docs = (props) => {
                             <button id="submit" onClick={() => submitDocument()}>
                                 Submit
                             </button>
-                            <button id="reset">Reset</button>
+                            <button id="reset" onClick={() => window.location.reload()}>
+                                Reset
+                            </button>
                         </div>
                     </>
                 )}
