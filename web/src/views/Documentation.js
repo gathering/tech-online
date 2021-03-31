@@ -55,6 +55,8 @@ export const Documentation = () => {
                 <Select
                     options={tabs}
                     value={activeTab}
+                    className="react-select-container"
+                    classNamePrefix="react-select"
                     onChange={(newValue) => {
                         setActiveTab(newValue);
                     }}

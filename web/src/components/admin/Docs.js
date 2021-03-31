@@ -110,13 +110,23 @@ export const Docs = (props) => {
             <>
                 <div id="family-select">
                     <h3>Family</h3>
-                    <Select options={families} onChange={onFamilyChange} />
+                    <Select
+                        options={families}
+                        onChange={onFamilyChange}
+                        className="react-select-container"
+                        classNamePrefix="react-select"
+                    />
                 </div>
                 <div id="document-select">
                     {Object.keys(selectedFamily).length !== 0 && (
                         <>
                             <h3>Document</h3>
-                            <Select options={documents[selectedFamily.value]} onChange={onDocumentChange} />
+                            <Select
+                                options={documents[selectedFamily.value]}
+                                onChange={onDocumentChange}
+                                className="react-select-container"
+                                classNamePrefix="react-select"
+                            />
                         </>
                     )}
                 </div>
@@ -162,8 +172,9 @@ export const Docs = (props) => {
 
                                 <h3>Content type</h3>
                                 <Select
-                                    className="select-content-type"
                                     options={contentTypes}
+                                    className="react-select-container"
+                                    classNamePrefix="react-select"
                                     onChange={(newValue) => {
                                         setSelectedDocument((oldDocument) => ({
                                             ...oldDocument,
