@@ -84,6 +84,10 @@
                     color: #3d3d3d;
                 }
 
+                &--skipped {
+                    background: orange;
+                }
+
                 &-description {
                     padding-bottom: 2rem;
 

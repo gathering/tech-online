@@ -204,12 +204,20 @@ const Status = () => {
                                             activeTestDescription === getTestId(task, test)
                                                 ? 'testlist__test--expanded'
                                                 : ''
-                                        }`}
+                                        } ${
+                                            test?.status_description?.includes('Skipped')
+                                                ? 'testlist__test--skipped'
+                                                : ''
+                                        } `}
                                         key={test.name}
                                         onClick={() => toggleActiveTestDescription(getTestId(task, test))}
                                     >
                                         <div className="col-xs-2">
-                                            {test.status_success === true ? 'Ok' : 'Fail'}
+                                            {test?.status_description?.includes('Skipped')
+                                                ? 'Skipped'
+                                                : test.status_success === true
+                                                ? 'Ok'
+                                                : 'Fail'}
                                             <small>{test.status_description ? ' (more info)' : ''}</small>
                                         </div>
                                         <div className="col-xs">
