@@ -1,0 +1,48 @@
+@import '../styles/theme';
+
+.signup {
+    &-container {
+        margin: 2rem auto;
+        max-width: 1140px;
+        padding: 3rem 1rem;
+        background-color: lighten($backgroundColor, 5);
+        -webkit-box-shadow: 2px 4px 6px 0px rgba(0, 0, 0, 0.33);
+        -moz-box-shadow: 2px 4px 6px 0px rgba(0, 0, 0, 0.33);
+        box-shadow: 2px 4px 6px 0px rgba(0, 0, 0, 0.33);
+    }
+
+    .title {
+        font-family: 'BigNoodleTitling';
+        color: rgba(255, 255, 255, 0.9);
+        letter-spacing: 2px;
+        font-size: 1.25rem;
+        background-color: $primaryColor;
+        padding: 1rem;
+        -webkit-box-shadow: 2px 4px 6px 0px rgba(0, 0, 0, 0.5);
+        -moz-box-shadow: 2px 4px 6px 0px rgba(0, 0, 0, 0.5);
+        box-shadow: 2px 4px 6px 0px rgba(0, 0, 0, 0.5);
+
+        h1 {
+            max-width: 1140px;
+            margin: 0 auto;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .signup {
+        &-container {
+            .flex-row {
+                flex-direction: column-reverse;
+                .flex-item {
+                    padding-bottom: 2rem;
+                }
+            }
+        }
+
+        .title,
+        h2 {
+            text-align: center;
+        }
+    }
+}

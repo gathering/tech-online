@@ -20,7 +20,7 @@ const Signup = () => {
     let fetchStatus, fetchResult;
 
     if (!code) {
-        <Redirect to="/login" />;
+        return <Redirect to="/login" />;
     } else {
         [fetchStatus, fetchResult] = useLogin(code, '/signup');
     }
@@ -37,14 +37,21 @@ const Signup = () => {
     if (fetchStatus === FETCH_STATUS.RESOLVED) {
         return (
             <div className="signup">
+                <div className="title">
+                    <h1>Sign up</h1>
+                </div>
                 <div className="signup-container">
-                    <Select options={paths} value={paths[0]} onChange={(value) => setSelectedPath(value)} />
+                    <Select
+                        className="react-select-container"
+                        classNamePrefix="react-select"
+                        options={paths}
+                        value={selectedPath ?? paths[0]}
+                        onChange={(value) => setSelectedPath(value)}
+                    />
                 </div>
             </div>
         );
     }
-
-    console.log(fetchStatus);
 
     return (
         <div className="signup">
