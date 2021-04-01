@@ -3,6 +3,7 @@ import { Switch, Route, NavLink } from 'react-router-dom';
 import * as Views from '../views';
 import { useUserState } from '../store/userContext';
 import nextronLogo from '../assets/nextron.svg';
+import nexthopLogo from '../assets/nexthop.svg';
 
 const App = () => {
     const user = useUserState();
@@ -51,11 +52,16 @@ const App = () => {
                     <Route path="/admin/:tab?" component={Views.Admin} />
                     {/* <Route path="/demo" component={Views.Demo} /> */}
                 </Switch>
-                <div className="sponsors flex-row">
-                    <h4>Check out our great sponsor!</h4>
-                    <a href="https://www.nextron.no" target="_blank" rel="noreferrer">
-                        <img src={nextronLogo} alt="nextron" />
-                    </a>
+                <div className="sponsors">
+                    <h4>Check out our great sponsors!</h4>
+                    <div className="sponsors-row">
+                        <a href="https://www.nextron.no" target="_blank" rel="noreferrer">
+                            <img src={nextronLogo} alt="nextron" />
+                        </a>
+                        <a href="https://www.nexthop.no" target="_blank" rel="noreferrer">
+                            <img src={nexthopLogo} alt="Nexthop" />
+                        </a>
+                    </div>
                 </div>
             </main>
             <footer>
