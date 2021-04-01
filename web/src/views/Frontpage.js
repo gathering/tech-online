@@ -14,7 +14,8 @@ const Frontpage = () => {
             <div className="frontpage-container">
 		<h2>UPDATE: Sign up now for friday fun!</h2>
 		<hr />
-		<p>To sign up, click "LOG IN" in the top right corner and select sign up. We assign time slots on the fly, but join discord for feedback!</p>
+		<p>We hade some issues with the sign up system on thursday, but things should be working now, so give it a shot!</P>
+		<p>To sign up, click "LOG IN" in the top right corner and select sign up. We assign time slots on the fly, but join discord for feedback! If things seem wonky, either try logging out and back in again, or hit us up on discord.</p>
 		<p>We are running a few more participants through the exercises tonight, thursday, but are gearing up for <b>friday evening</b> as well! On Friday, slots will be available from 15:00 an onward throught the evening. If you have a preference for time, add a comment on the signup and we'll sort you out as best we can!</p>
 		<p>If friday doesn't work for you, make a comment asking for a saturday slot - if there's enough interest, we'll keep going.</p>
 		<strong>Regardless, join us on the #tech channel on <a href="https://discordapp.com/invite/PmSTYdT">The Gathering's Discord</a>.</strong>
