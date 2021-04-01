@@ -21,7 +21,7 @@ export const Net = () => {
         setFetchStatus(FETCH_STATUS.PENDING);
         httpGet(`timeslots/?user-token=${user.profile.uuid}&track=net`)
             .then((data) => {
-                httpGet(`timeslots/${data[0].id}/?user-token=${user.profile.uuid}`).then((timeslot) => {
+                httpGet(`stations/?timeslot=${data[0].id}/?user-token=${user.profile.uuid}`).then((timeslot) => {
                     setTimeslot(timeslot[0]);
                     setNetParticipationData(data);
                     setFetchStatus(FETCH_STATUS.RESOLVED);
