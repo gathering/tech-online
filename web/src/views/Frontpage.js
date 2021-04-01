@@ -28,6 +28,13 @@ const Frontpage = () => {
 		Participants (you?) will be given an opportunity to configure real network hardware, with lots of assistance. This is a realistic simulation of how real network engineers work, on real hardware. You get feedback through a series of verification scripts that simulate how actual monitoring software work, and ultimately, you will see a real physical end-user-pc go from off-line to on-line over a video stream. </p>
 		<p>The exercise takes somewhere between an hour (for the experienced) and 5-6 hours. You get access to our great mentors along the way, which will answer any questions you have.</p>
 		<p>Tech:Online first took place during the easter of 2020, and saw about 20 participants go through the challenge, which was far more than we had dared to expect.</p>
+		<img src="https://techo21-cam.gathering.systems/proxy/cam2.jpg" height="550px" /> 
+		<h2>Signups and timeline</h2>
+		<hr />
+		<p>On thursday april 1st, 13:00 CET, a presentation about Tech:Online will be held at <a href="https://www.twitch.tv/tgtvcreative">twitch.tv/tgtvcreative</a>. At the same time, signups will be available here.</p>
+		<p>The first network tracks will be scheduled from 17:00 on the same day - check your signup page for your time slot.</p>
+		<p>The first server tracks will be scheduled from 18:00 on the same day - check your signup page for your time slot.</p>
+		<strong>Regardless, join us on the #tech channel on <a href="https://discordapp.com/invite/PmSTYdT">The Gathering's Discord</a></strong>
 		<h2>Why?</h2>
                 <hr />
 		<p>Every year during easter, The Gathering takes place and somewhere between 5000 and 10 000 people visit the venue to participate in an amazing digital festival. But for obvious reasons, we've had to cancel this event twice in a row now.</p>
