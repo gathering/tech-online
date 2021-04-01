@@ -12,6 +12,16 @@ const Frontpage = () => {
             </div>
 
             <div className="frontpage-container">
+		<h2>UPDATE: Sign up now for friday fun!</h2>
+		<hr />
+		<p>To sign up, click "LOG IN" in the top right corner and select sign up. We assign time slots on the fly, but join discord for feedback!</p>
+		<p>We are running a few more participants through the exercises tonight, thursday, but are gearing up for <b>friday evening</b> as well! On Friday, slots will be available from 15:00 an onward throught the evening. If you have a preference for time, add a comment on the signup and we'll sort you out as best we can!</p>
+		<p>If friday doesn't work for you, make a comment asking for a saturday slot - if there's enough interest, we'll keep going.</p>
+		<strong>Regardless, join us on the #tech channel on <a href="https://discordapp.com/invite/PmSTYdT">The Gathering's Discord</a>.</strong>
+		<br />
+		<div style={{height: "350px", overflow: "hidden"}}>
+		  <img src="https://techo21-cam.gathering.systems/proxy/cam2.jpg" height="550px" style={{position: "relative", top:"-300px"}} /> 
+		</div>
                 <h2>What is Tech:Online?</h2>
                 <hr />
                 <p>
@@ -21,14 +31,6 @@ const Frontpage = () => {
 		<p>The exercise takes somewhere between an hour (for the experienced) and 5-6 hours. You get access to our great mentors along the way, which will answer any questions you have.</p>
 		<p>Tech:Online first took place during the easter of 2020, and saw about 20 participants go through the challenge, which was far more than we had dared to expect.</p>
 
-		<div style={{height: "350px", overflow: "hidden"}}>
-		  <img src="https://techo21-cam.gathering.systems/proxy/cam2.jpg" height="550px" style={{position: "relative", top:"-300px"}} /> 
-		</div>
-		<h2>Signups</h2>
-		<hr />
-		<p>To sign up, click "LOG IN" in the top right corner and select sign up. We assign time slots on the fly, but join discord for feedback!</p>
-		<strong>Regardless, join us on the #tech channel on <a href="https://discordapp.com/invite/PmSTYdT">The Gathering's Discord</a></strong>
-		<br />
 		<h2>Why?</h2>
                 <hr />
 		<p>Every year during easter, The Gathering takes place and somewhere between 5000 and 10 000 people visit the venue to participate in an amazing digital festival. But for obvious reasons, we've had to cancel this event twice in a row now.</p>
