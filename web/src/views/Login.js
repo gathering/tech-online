@@ -13,15 +13,24 @@ const Login = () => {
 
     if (!code) {
         return (
-            <div className="login">
-                <h1>
-                    <a
-                        href={`https://unicorn.zoodo.io/oauth/authorize/?client_id=${process.env.CLIENT_ID}&response_type=code&redirect_uri=${window.location.origin}/login`}
-                    >
-                        Log in
-                    </a>
-                </h1>
-            </div>
+            <>
+                <div className="login">
+                    <h1>
+                        <a
+                            href={`https://unicorn.zoodo.io/oauth/authorize/?client_id=${process.env.CLIENT_ID}&response_type=code&redirect_uri=${window.location.origin}/login`}
+                        >
+                            Log in
+                        </a>
+                    </h1>
+                    <h1>
+                        <a
+                            href={`https://unicorn.zoodo.io/oauth/authorize/?client_id=${process.env.CLIENT_ID}&response_type=code&redirect_uri=${window.location.origin}/signup`}
+                        >
+                            Sign up
+                        </a>
+                    </h1>
+                </div>
+            </>
         );
     } else {
         [fetchStatus, fetchResult] = useLogin(code);

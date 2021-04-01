@@ -45,6 +45,7 @@ const App = () => {
                 <Switch>
                     <Route path="/" exact component={Views.Frontpage} />
                     <Route path="/login" component={Views.Login} />
+                    <Route path="/signup" component={Views.Signup} />
                     <Route path="/documentation" component={Views.Documentation} />
                     <Route path="/participate" component={Views.Participate} />
                     <Route path="/status/:id?" component={Views.Status} />
