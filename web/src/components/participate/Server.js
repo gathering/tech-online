@@ -80,13 +80,13 @@ export const Server = () => {
     ) {
         return (
             <>
-                {netParticipationData[0].notes && (
+                {timeslot?.notes && (
                     <section>
                         <div className="row">
                             <div className="col-xs">
                                 <div className="admonition admonition--danger">
                                     <div className="admonition__title">PSA</div>
-                                    {netParticipationData[0].notes}
+                                    {timeslot.notes}
                                 </div>
                             </div>
                         </div>
@@ -112,7 +112,7 @@ export const Server = () => {
                                         </div>
                                     </div>
 
-                                    <ReactMarkdown>{timeslot.credentials}</ReactMarkdown>
+                                    <ReactMarkdown source={timeslot.credentials} />
                                     {/* <div className="row between-xs station__row">
                                         <div className="col-xs col-md-3">
                                             <strong>Host</strong>

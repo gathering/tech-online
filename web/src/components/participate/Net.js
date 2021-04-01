@@ -80,7 +80,7 @@ export const Net = () => {
     ) {
         return (
             <>
-                {netParticipationData[0].notes && (
+                {timeslot?.notes && (
                     <section>
                         <div className="row">
                             <div className="col-xs">
@@ -112,7 +112,7 @@ export const Net = () => {
                                         </div>
                                     </div>
 
-                                    <ReactMarkdown>{timeslot.credentials}</ReactMarkdown>
+                                    <ReactMarkdown source={timeslot.credentials} />
                                     {/* <div className="row between-xs station__row">
                                         <div className="col-xs col-md-3">
                                             <strong>Host</strong>
