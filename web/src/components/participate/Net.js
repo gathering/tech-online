@@ -8,6 +8,7 @@ import { useInterval } from '../../common/useInterval';
 
 export const Net = () => {
     const [netParticipationData, setNetParticipationData] = useState();
+    const [timeslot, setTimeslot] = useState();
     const [fetchStatus, setFetchStatus] = useState(FETCH_STATUS.IDLE);
     const user = useUserState();
     const isAuthed = userIsAuthed(user);
@@ -20,8 +21,11 @@ export const Net = () => {
         setFetchStatus(FETCH_STATUS.PENDING);
         httpGet(`timeslots/?user-token=${user.profile.uuid}&track=net`)
             .then((data) => {
-                setNetParticipationData(data);
-                setFetchStatus(FETCH_STATUS.RESOLVED);
+                httpGet(`timeslots/${data[0].id}/?user-token=${user.profile.uuid}`).then((timeslot) => {
+                    setTimeslot(timeslot[0]);
+                    setNetParticipationData(data);
+                    setFetchStatus(FETCH_STATUS.RESOLVED);
+                });
             })
             .catch((err) => {
                 setNetParticipationData(false);
@@ -103,15 +107,17 @@ export const Net = () => {
                                     <div className="row between-xs">
                                         <div className="col-xs">
                                             <h2 className="station__header">
-                                                Station #{netParticipationData.Station.Id}
+                                                Station #{netParticipationData[0].Station.Id}
                                             </h2>
                                         </div>
                                     </div>
-                                    <div className="row between-xs station__row">
+
+                                    <ReactMarkdown>{timeslot.credentials}</ReactMarkdown>
+                                    {/* <div className="row between-xs station__row">
                                         <div className="col-xs col-md-3">
                                             <strong>Host</strong>
                                         </div>
-                                        <div className="col-xs">{netParticipationData.Station.Jumphost}</div>
+                                        <div className="col-xs">{netParticipationData[0].Station.Jumphost}</div>
                                     </div>
                                     <div className="row between-xs station__row">
                                         <div className="col-xs col-md-3">
@@ -123,21 +129,21 @@ export const Net = () => {
                                         <div className="col-xs col-md-3">
                                             <strong>Password</strong>
                                         </div>
-                                        <div className="col-xs"> {netParticipationData.Station.Password}</div>
+                                        <div className="col-xs"> {netParticipationData[0].Station.Password}</div>
                                     </div>
                                     <div className="row between-xs station__row">
                                         <div className="col-xs col-md-3">
                                             <strong>Network</strong>
                                         </div>
-                                        <div className="col-xs">{netParticipationData.Station.Net}</div>
-                                    </div>
+                                        <div className="col-xs">{netParticipationData[0].Station.Net}</div>
+                                    </div> */}
 
-                                    {netParticipationData.Station.Notes && (
+                                    {netParticipationData[0]?.Station?.Notes && (
                                         <div className="row between-xs station__row">
                                             <div className="col-xs">
                                                 <div className="admonition admonition--warning">
                                                     <div className="admonition__title">Station specific notes</div>
-                                                    <ReactMarkdown source={netParticipationData.Station.Notes} />
+                                                    <ReactMarkdown source={netParticipationData[0]?.Station?.Notes} />
                                                 </div>
                                             </div>
                                         </div>
