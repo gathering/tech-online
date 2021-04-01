@@ -5,6 +5,7 @@ import { httpGet, FETCH_STATUS } from '../common/api';
 import './status.scss';
 import { useInterval } from '../common/useInterval';
 import ReactMarkdown from 'react-markdown';
+import Collapsible from 'react-collapsible';
 
 const VALID_TRACKS = ['server', 'net'];
 
@@ -191,9 +192,9 @@ const Status = () => {
                     {stationData.tasks.map((task, i) => (
                         <React.Fragment key={task + i}>
                             <h3>{task.name}</h3>
-                            <div>
+                            <Collapsible trigger="Toggle task description">
                                 <ReactMarkdown>{task.description}</ReactMarkdown>
-                            </div>
+                            </Collapsible>
                             {task.tests.map((test, i) => (
                                 <React.Fragment key={test + i}>
                                     <div

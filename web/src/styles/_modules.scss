@@ -11,3 +11,21 @@
 		color: $backgroundColor;
 	}
 }
+
+.Collapsible {
+    margin-bottom: 1em;
+
+    &__trigger {
+        padding: .5em;
+        background-color: grey;
+        cursor: pointer;
+
+        &.is-open, &:hover {
+            background-color: $primaryColor;
+        }
+    }
+    &__contentInner {
+        padding: 1em;
+        background-color: $backgroundColor;
+    }
+}
