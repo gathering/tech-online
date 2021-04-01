@@ -11,7 +11,7 @@ const VALID_TRACKS = ['server', 'net'];
 const Status = () => {
     const { track: rawTrack } = useParams();
     const [track, setTrack] = useState(VALID_TRACKS.includes(rawTrack) ? rawTrack : 'net');
-    const [stations, setStations] = useState([]);
+    const [stationsData, setStationsData] = useState();
     const [stationId, setStationId] = useState(undefined);
     const [stationData, setStationData] = useState();
     const [fetchStatus, setFetchStatus] = useState(FETCH_STATUS.IDLE);
@@ -21,8 +21,8 @@ const Status = () => {
     const [lastUpdated, setLastUpdated] = useState();
     const fetchFailed = useMemo(() => fetchStatus === FETCH_STATUS.REJECTED, [fetchStatus]);
 
-    const hasStations = useCallback(() => stations.length && fetchStationsStatus !== FETCH_STATUS.PENDING, [
-        stations,
+    const hasStations = useCallback(() => stationsData && fetchStationsStatus !== FETCH_STATUS.PENDING, [
+        stationsData,
         fetchStationsStatus,
     ]);
 
@@ -41,6 +41,9 @@ const Status = () => {
                 });
         } else {
             data = {
+                id: 'server',
+                type: 'server',
+                name: 'Server',
                 stations: [
                     { id: '1', shortname: '1' },
                     { id: '2', shortname: '2' },
@@ -59,18 +62,8 @@ const Status = () => {
         }
 
         setStationsFetchStatus(FETCH_STATUS.RESOLVED);
-        setStations(
-            data.stations.length
-                ? data.stations
-                : [
-                      {
-                          id: '1',
-                          shortname: '1',
-                          tasks: [],
-                      },
-                  ]
-        );
-        setStationId(data.stations?.[0]?.shortname || '1');
+        setStationsData(data);
+        setStationId(data.stations?.[0]?.shortname || 'fallback');
         return;
     }, [track]);
 
@@ -101,17 +94,17 @@ const Status = () => {
 
     // Fetch stations
     useEffect(() => {
-        if (!stations.length && fetchStationsStatus !== FETCH_STATUS.PENDING) {
+        if (!stationsData && fetchStationsStatus !== FETCH_STATUS.PENDING) {
             initTrack();
         }
-    }, [stations, initTrack, fetchStationsStatus]);
+    }, [stationsData, initTrack, fetchStationsStatus]);
 
     // Change tracks when needed
     useEffect(() => {
         const newTrack = VALID_TRACKS.includes(rawTrack) ? rawTrack : 'net';
         if (newTrack !== track) {
             setTrack(newTrack);
-            setStations([]);
+            setStationsData();
             setStationData();
             setStationId(undefined);
         }
@@ -169,7 +162,7 @@ const Status = () => {
 
             <div className="row center-xs tabs">
                 {stationId &&
-                    stations.map(({ id, shortname }) => (
+                    (stationsData?.stations || []).map(({ id, shortname }) => (
                         <div key={id} className="col-xs">
                             <h2
                                 onClick={() => setStationId(shortname)}
@@ -187,7 +180,7 @@ const Status = () => {
                     </div>
                 </div>
             )}
-            {stationData && (
+            {stationData ? (
                 <div className="testlist">
                     {stationData.tasks.map((task, i) => (
                         <React.Fragment key={task + i}>
@@ -241,6 +234,8 @@ const Status = () => {
                         </React.Fragment>
                     ))}
                 </div>
+            ) : (
+                <p>No active stations found</p>
             )}
         </div>
     );
