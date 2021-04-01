@@ -21,8 +21,8 @@ const Frontpage = () => {
 		<p>The exercise takes somewhere between an hour (for the experienced) and 5-6 hours. You get access to our great mentors along the way, which will answer any questions you have.</p>
 		<p>Tech:Online first took place during the easter of 2020, and saw about 20 participants go through the challenge, which was far more than we had dared to expect.</p>
 
-		<div style={{height: "250px", overflow: "hidden"}}>
-		  <img src="https://techo21-cam.gathering.systems/proxy/cam2.jpg" height="550px" style={{position: "relative", top:"-300px"}} /> 
+		<div style={{height: "350px", overflow: "hidden"}}>
+		  <img src="https://techo21-cam.gathering.systems/proxy/cam2.jpg" height="550px" style={{position: "relative", top:"-200px"}} /> 
 		</div>
 		<h2>Signups and timeline</h2>
 		<hr />
