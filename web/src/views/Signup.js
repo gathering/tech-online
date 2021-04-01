@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { useLocation, Redirect } from 'react-router-dom';
-import { useLogin } from '../store/userContext';
-import { FETCH_STATUS } from '../common/api';
+import { useLogin, useUserState } from '../store/userContext';
+import { FETCH_STATUS, httpPost } from '../common/api';
 import Select from 'react-select';
 import './signup.scss';
 
@@ -16,6 +16,18 @@ const Signup = () => {
     const code = useMemo(() => searchParams.get('code'), [searchParams]);
 
     const [selectedPath, setSelectedPath] = useState(paths[0]);
+    const [notes, setNotes] = useState('');
+    let user = useUserState();
+
+    function submit() {
+        httpPost('timeslot', {
+            user_token: user.profile.uuid,
+            track: selectedPath.value,
+            notes: notes,
+        })
+            .then(() => (window.location.pathname = '/participate'))
+            .catch((err) => alert(`Something went wrong :(\n\n${err}`));
+    }
 
     let fetchStatus, fetchResult;
 
@@ -41,6 +53,11 @@ const Signup = () => {
                     <h1>Sign up</h1>
                 </div>
                 <div className="signup-container">
+                    <h2>Select track</h2>
+                    <ul>
+                        <li>Networking - The same as last year but refined</li>
+                        <li>Server - Setting up DNS and DHCP</li>
+                    </ul>
                     <Select
                         className="react-select-container"
                         classNamePrefix="react-select"
@@ -48,6 +65,15 @@ const Signup = () => {
                         value={selectedPath ?? paths[0]}
                         onChange={(value) => setSelectedPath(value)}
                     />
+                    <br />
+                    <h2>Notes</h2>
+                    <p>
+                        Anything we as Crew should know? Previous experience, required support, preferred timeslots,
+                        etc. Remember to join <strong>#tech</strong> in the <a href="">TG Discord</a> server for better
+                        support and communication with Crew.
+                    </p>
+                    <textarea value={notes} onChange={(event) => setNotes(event.target.value)}></textarea>
+                    <button onClick={() => submit()}>Submit</button>
                 </div>
             </div>
         );

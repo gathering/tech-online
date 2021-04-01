@@ -22,7 +22,7 @@ export const httpPut = (url, data, config) =>
         ...config,
     });
 
-const client = (
+export const client = (
     endpoint,
     { body, host = process.env.API_URL, forceBlankEol = false, contentType = 'application/json', ...customConfig } = {}
 ) => {

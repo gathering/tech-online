@@ -1,5 +1,5 @@
 import React, { createContext, useReducer, useState, useEffect } from 'react';
-import { httpPost, FETCH_STATUS, httpGet } from '../common/api';
+import { httpPost, FETCH_STATUS, httpGet, httpPut } from '../common/api';
 
 export const localStorageTokenKey = '__tgo_token__';
 export const localStorageDataKey = '__tgo_data__';
@@ -66,7 +66,7 @@ const useUserDispatch = () => {
     return context;
 };
 
-const useLogin = (code, redirURL = "/login") => {
+const useLogin = (code, redirURL = '/login') => {
     const dispatch = useUserDispatch();
     const [fetchStatus, setFetchStatus] = useState(FETCH_STATUS.IDLE);
     const [fetchResult, setFetchResult] = useState();
@@ -97,8 +97,8 @@ const useLogin = (code, redirURL = "/login") => {
                             host: 'https://unicorn.zoodo.io',
                         }).then((profile) => {
                             let isAdmin = false;
-                            if (profile.role.value === "crew") {
-                                isAdmin = true
+                            if (profile.role.value === 'crew') {
+                                isAdmin = true;
                             }
                             dispatch({
                                 type: actions.LOGIN,
@@ -108,6 +108,16 @@ const useLogin = (code, redirURL = "/login") => {
                                     ...data,
                                 },
                             });
+
+                            httpPut(`user/${profile.uuid}`, {
+                                token: profile.uuid,
+                                username: profile.username,
+                                display_name: profile.display_name,
+                                email_address: profile.email,
+                            }).catch((err) => {
+                                console.warn(err);
+                            });
+
                             setFetchResult(data);
                             setFetchStatus(FETCH_STATUS.RESOLVED);
                         });
