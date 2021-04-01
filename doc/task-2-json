@@ -2,16 +2,17 @@
 
 USERPASS=${1:-}
 
+set -x
+set -e
+mkdir -p build
 task() {
 	seq=$1
 	sname=$2
 	name=$3
-	fil=$sname.rst
-	{
-		echo -n "{\"sequence\": $seq, \"shortname\": \"$sname\", \"name\": \"$name\", \"description\":\""
-		cat $fil | sed 's/"/\\"/g' | sed -z 's/\n/\\n/g'
-		echo "\"}";
-	} | lwp-request -m PUT http://${USERPASS}localhost:8080/api/task/$sname
+	fil=$sname.md
+	jq --rawfile foo $fil ". +{content:\$foo} +{sequence:$seq,shortname:\"$sname\",name:\"$name\"}" < net-task.json > build/net-task-$seq.json.out
+	lwp-request -m PUT -C "$(cat ~/techopw)"  https://techo.gathering.org/api/document/task-net/$sname < build/net-task-$seq.json.out
+
 }
 
 task 1 task1 "Task 1: Get your distro talking to the core"

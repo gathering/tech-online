@@ -1,7 +1,7 @@
 There are two edge-switches, so now you get to do the previous task all
 over again.  Instead of repeating the instructions, here's a tip:
 
-``show configuration interfaces | display set`` can be used to extract
+`show configuration interfaces | display set` can be used to extract
 set-statements, edit (in vim/notepad/whatever), and paste it back in. Just
 remember to modify the IP addresses!
 

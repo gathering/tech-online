@@ -1,13 +1,13 @@
 
-Intro
-=====
+Tech:Online - Network track documentation
+=========================================
 
 The task at hand
 ----------------
 
-Our job is simple: We want to get FOO online. FOO is connected to a switch,
-the switch is connected to a distribution switch and the distribution
-switch is connected to the internet.
+Our job is simple: We want to get a "participant", named FOO, online. FOO
+is connected to a switch, the switch is connected to a distribution switch
+and the distribution switch is connected to the internet.
 
 But to support thousands of users, we need to do network segmentation. Your
 job is to configure the Juniper-switches to get FOO online. There are
@@ -17,7 +17,9 @@ The rest of this document is split in three:
 
 1. A suggested progression which should allow you to get things gradually
    up and running and see actual progress. You do not have to follow this,
-   but it is strongly recommended.
+   but it is strongly recommended. This is also seen on the actual task
+   overview so you can associate the different status reports to individual
+   tasks.
 2. Facts about both the hardware configuration and expected IP plan. You
    need this. Parts of the IP plan is mandatory, the rest is strongly
    recommended.
@@ -40,9 +42,6 @@ This is exactly what is being checked for:
    distro and each edge switch.
 3. Likewise: linknets need to work.
 4. The systems should reply to ssh (they do already if brought on-line).
-
-Progress
-========
 
 Environment
 -----------
@@ -73,139 +72,13 @@ machine. But you do not have to worry about locking yourself out: The
 console access you have is "out of band" and does not require the switches
 to work (beyond being able to see a login prompt).
 
-Suggested progress
-------------------
-
-Typically there are three general strategies when setting up a network: 
-
-1. Start at the client and work towards the internet/core
-2. Start at the core and work towards the client
-3. Random order
-
-Because it makes it much easier to test, we recommend following option
-number 2. Specifically:
-
-### Phase 1: First linknet
-
-
-0. Skim through this entire document! There is a ton of useful information!
-1. Find the distro switch with screen
-2. The distribution switch has two cables connected to the core (see the
-   `Reference documentation`_ chapter) and you need to configure them as an
-   aggregated interface.
-3. Set up LACP on distro0, ae0, towards core (see `Tips and tricks`_). That
-   means setting up an `interfaces` section for both physical devices -
-   or a interfaces-range that cover both.
-4. Set up "unit 0" on ae0 on the distro. It needs to have the link-net IP
-   provided in the `Reference documentation`_ chapter.
-5. Check that your uplink ports (`ge-0/0/46` and `ge-0/0/46`) are listed as
-   "up" when you use `show interfaces`.
-6. If they are, check that `ae0.0` is up with `show interfaces ae0.0
-   extensive`.
-7. If you've done everything right up until now, verify.sh should tell you
-   that 10.x.200.2 replies to ping from core, but not globally.
-8. Let your distro switch know that `10.x.200.1` is your default route. See
-   `Reference documentation`_ on static routing to accomplish this.
-9. At this point, you should be able to run `ping 192.168.2.2` from the
-   distro0 switch and get a reply, and the verification script should state
-   that `10.x.200.2` replies both from core and globally.
-
-At this point you have a working distro0 switch! Be happy! Take a break.
-
-Interesting things to try: Try `ssh 10.x.200.2` from the jumphost
-directly. It should let you ssh directly to the switch.
-
-### Phase 2: Establish a link to edge0
-
-Now that distro0 is up, we want to get a link to edge0. We start on
-distro0.
-
-1. Edge0 is connected through ports `ge-0/0/0` and `ge-1/0/0` on
-   distro0. Just as with your core link, you need to configure LACP to bond
-   these to interfaces together.
-2. Create an `interface` section for `ge-0/0/0` and `ge-1/0/0` that
-   enables 802.3ad. Call the ae-interface `ae100` for convenience.
-3. Set up "unit 0" on ae100. You will find the appropriate link-net IP in
-   the reference documentation.
-4. Once this is up, using `show interfaces ae100 extensive` should show
-   the link as DOWN, but it should also show the IP and the physical ports
-   should be listed as up. It's time to connect to edge0.
-5. Open a screen session to `edge0` - log in.
-6. On edge0, it's the same deal, but different interfaces: `ge-0/0/0` and
-   `ge-0/0/1` is connected to the distro.
-7. Do the same as step 2 and 3: Set up an `interface` section for the
-   physical interfaces (`ge-0/0/0` and `ge-0/0/1`). For this end, use
-   `ae0`.
-8. Set up an `interface` section for `ae0` and `ae0` unit 0, with the
-   other end of the link-net IP.
-9. Check `show interfaces ae0`. It _should_ display as UP, and with the
-   correct IP and bandwidth 2Gbps.
-10. Verify: run `ping 10.x.200.5` on edge0 and `ping 10.x.200.6` on
-    distro0: it should reply.
-11. The verify-script will still only get a global reply from 10.x.200.5 -
-    the distro side of the link.
-12. Back on edge0, set up a static route using 10.x.200.5 as default
-    gateway.
-13. Verify should now get a global reply from both 10.x.200.5 and
-    10.x.200.6
-
-If you've gotten this far, you've gotten basic connectivity done! Good
-work! Take a break, brag a bit.
-
-Things to test: Try disabling an up-link with `set interfaces ge-0/0/0
-disable` (in configure), then check the speed of ae0 with `show
-interfaces ae0`. Re-enable the uplink-port with `delete interfaces
-ge-0/0/0 disable`.
-
-### Phase 3: Rinse and repeat for edge1
-
-There are two edge-switches, so now you get to do phase 2 all over again.
-Instead of repeating the instructions, here's a tip:
-
-`show configuration interfaces | display set` can be used to extract
-set-statements, edit (in vim/notepad/whatever), and paste it back in. Just
-remember to modify the IP addresses!
-
-By the end of this phase, all three switches should be fully connected,
-everything should verify correctly, except that the client FOO is still not
-on-line.
-
-### Phase 4: Get a client on-line!
-
-1. Connect to edge0, what you want to do is set all client ports to belong
-   to "family ethernet-switching". This is probably best done with `set
-   interfaces interface-range clients member-range ge-0/0/2 to ge-0/0/47`,
-   and then applying any other interface-statements to the `clients`
-   interface range. See `Reference documentation`_ for examples.
-2. Once this is done, basic switching works, but there's no way for you to
-   know and there's no way to test. You have created a LAN with no
-   connection to the outside world.
-3. Each such port is connected to a vlan, by default, this is the `default`
-   vlan - you can look at it with `show vlans default`.
-4. Assign a "layer 3" interface to the default vlan, it should be named
-   `vlan.0`.
-5. Assign an IP address to the `vlan.0` interface.
-6. Check if vlan.0 is up with `show interface vlan.0`.
-7. Ping 10.x.100.2 locally from edge0 - it should now reply (locally).
-8. To get it working globally, you need to log in to distro0 and create a
-   static route for 10.x.100.0/24 via 10.x.200.6 (the edge0 linknet IP).
-9. Check that it works.
-10. Do the same for edge1 :D
-
-If you made it this far, the verify script should be very happy just about
-now, and you should be happy as well!
-
-Things to try: You may want to set up OSPF instead of all this static
-routing. For our 3-switch example, it's not a big deal, but as you can
-imagine, keeping track of which network belongs where can get bothersome.
-Try deleting all the static routing, except the default route on distr0,
-and setting up OSPF. It isn't nearly as tricky as it might sound.
-
 Reference documentation
 =======================
 
 Topology
 --------
+
+This is how things are physically wired and logically connected.
 
 ![topology](/pics/topology.svg "Topology")
 
@@ -250,9 +123,10 @@ Console
 -------
 
 Console access is achieved by ssh'ing to the jumphost (access provided
-separately). Please do not miss-use this trust.
+separately). Please do not miss-use this trust - Tech:Online is trust
+based.
 
-Please ask before installing things or chaning the system on the jumphost.
+Please ask before installing things or changing the system on the jumphost.
 You do have sudo-access for the moment, but please behave.
 
 You are connecting to a raspberry pi, which has 4 USB-to-serial adapters
@@ -269,8 +143,7 @@ Pre-configured
 
 For convenience, the following is set up:
 
-1. The distro-switch is already in a virtual-chassis. It is NOT set to
-   avoid split-brain. You may want to do that.
+1. The distro-switch is already in a virtual-chassis.
 2. Each switch has a "tech" user set up. It currently has super-user class.
    See the "credentials" section for credentials.
 3. Each switch has a host-name set.
@@ -278,8 +151,9 @@ For convenience, the following is set up:
    running.
 5. No other configuration is present.
 
-You are free to use 'request system zeroize' if you like. The base
-configuration is present on the jump-host ready to be used if you do.
+You are free to use `request system zeroize` if you like. The base
+configuration is present on the jump-host ready to be used if you do. You
+may want to ask for help first though.
 
 Core
 ----
@@ -627,10 +501,11 @@ you want, though.
 
 Without routing, the router just knows about the IP networks it is directly
 attached to. That means your distro-switch can ping the linknet IP of its
-peers, but nothing that is connected to it.
+peers, but nothing that is connected behind it.
 
 For a regular computer, routing is trivial: You have a single router for
-all traffic. For actual routers, it's slightly more complicated.
+all traffic. This is called a default route. For actual routers, it's
+slightly more complicated.
 
 For edge0 we want to route `10.1.100.0/24` from distro0 to edge0's
 link-net IP, 10.1.200.6. And edge0 needs to have a default route so all
