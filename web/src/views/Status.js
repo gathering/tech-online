@@ -1,16 +1,21 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { NavLink } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { httpGet, FETCH_STATUS } from '../common/api';
 import './status.scss';
 import { useInterval } from '../common/useInterval';
 import ReactMarkdown from 'react-markdown';
+import Collapsible from 'react-collapsible';
 
 const VALID_TRACKS = ['server', 'net'];
 
+const getTrackFromHash = (rawHash) => {
+    return VALID_TRACKS.includes(rawHash.slice(1)) ? rawHash.slice(1) : 'net';
+};
+
 const Status = () => {
-    const { track: rawTrack } = useParams();
-    const [track, setTrack] = useState(VALID_TRACKS.includes(rawTrack) ? rawTrack : 'net');
+    const { hash: rawHash } = useLocation();
+    const [track, setTrack] = useState(getTrackFromHash(rawHash));
     const [stationsData, setStationsData] = useState();
     const [stationId, setStationId] = useState(undefined);
     const [stationData, setStationData] = useState();
@@ -41,9 +46,9 @@ const Status = () => {
                 });
         } else {
             data = {
-                id: 'server',
-                type: 'server',
-                name: 'Server',
+                id: 'net',
+                type: 'net',
+                name: 'net',
                 stations: [
                     { id: '1', shortname: '1' },
                     { id: '2', shortname: '2' },
@@ -61,9 +66,9 @@ const Status = () => {
             return;
         }
 
-        setStationsFetchStatus(FETCH_STATUS.RESOLVED);
         setStationsData(data);
-        setStationId(data.stations?.[0]?.shortname || 'fallback');
+        setStationsFetchStatus(FETCH_STATUS.RESOLVED);
+        setStationId(data.stations?.[0]?.shortname);
         return;
     }, [track]);
 
@@ -72,23 +77,24 @@ const Status = () => {
         httpGet(`custom/station-tasks-tests/${track}/${stationId}/`)
             .then((data) => {
                 httpGet('documents/?family=task-net').then((docs) => {
-                    setFetchStatus(FETCH_STATUS.RESOLVED);
-                    setFetchedStation(stationId);
                     setStationData({
                         ...data,
+                        shortname: data.station_shortname,
                         tasks: data.tasks.map((task) => ({
                             ...task,
                             description: docs.find((doc) => doc.shortname === task.shortname).content,
                         })),
                     });
+                    setFetchedStation(stationId);
                     setLastUpdated(Date.now());
+                    setFetchStatus(FETCH_STATUS.RESOLVED);
                 });
             })
             .catch((err) => {
-                setFetchStatus(FETCH_STATUS.REJECTED);
-                setFetchedStation(stationId);
                 setStationData(false);
+                setFetchedStation(stationId);
                 setLastUpdated(Date.now());
+                setFetchStatus(FETCH_STATUS.REJECTED);
             });
     }, [stationId, track]);
 
@@ -97,18 +103,18 @@ const Status = () => {
         if (!stationsData && fetchStationsStatus !== FETCH_STATUS.PENDING) {
             initTrack();
         }
-    }, [stationsData, initTrack, fetchStationsStatus]);
+    }, [stationsData, fetchStationsStatus, initTrack]);
 
     // Change tracks when needed
     useEffect(() => {
-        const newTrack = VALID_TRACKS.includes(rawTrack) ? rawTrack : 'net';
+        const newTrack = getTrackFromHash(rawHash);
         if (newTrack !== track) {
             setTrack(newTrack);
             setStationsData();
             setStationData();
             setStationId(undefined);
         }
-    }, [rawTrack, setTrack, track]);
+    }, [rawHash, setTrack, track]);
 
     // Fetch data for specific station
     useEffect(() => {
@@ -118,10 +124,7 @@ const Status = () => {
     }, [hasStations, stationData, stationId, fetchStatus, fetchedStation, fetchStationData]);
 
     useInterval(() => {
-        if (!hasStations()) {
-            return;
-        }
-        if (stationId && fetchStatus !== FETCH_STATUS.PENDING) {
+        if (hasStations() && stationId && fetchStatus !== FETCH_STATUS.PENDING) {
             fetchStationData();
         }
     }, 10000);
@@ -154,8 +157,12 @@ const Status = () => {
             <div className="header">
                 <h2>Station status</h2>
                 <div className="nav">
-                    <NavLink to="/status/net">Net</NavLink>
-                    <NavLink to="/status/server">Server</NavLink>
+                    <Link to="/status#net" className={track === 'net' ? 'active' : ''}>
+                        Net
+                    </Link>
+                    <Link to="/status#server" className={track === 'server' ? 'active' : ''}>
+                        Server
+                    </Link>
                 </div>
             </div>
             <hr />
@@ -185,9 +192,9 @@ const Status = () => {
                     {stationData.tasks.map((task, i) => (
                         <React.Fragment key={task + i}>
                             <h3>{task.name}</h3>
-                            <div>
+                            <Collapsible trigger="Toggle task description">
                                 <ReactMarkdown>{task.description}</ReactMarkdown>
-                            </div>
+                            </Collapsible>
                             {task.tests.map((test, i) => (
                                 <React.Fragment key={test + i}>
                                     <div

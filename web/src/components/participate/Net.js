@@ -102,7 +102,7 @@ export const Net = () => {
                     </div>
                     <div className="row">
                         <div className="col-xs">
-                            {timeslot.credentials ? (
+                            {timeslot?.credentials !== undefined ? (
                                 <div className="station">
                                     <div className="row between-xs">
                                         <div className="col-xs">
