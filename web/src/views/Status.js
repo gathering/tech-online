@@ -82,7 +82,7 @@ const Status = () => {
                         shortname: data.station_shortname,
                         tasks: data.tasks.map((task) => ({
                             ...task,
-                            description: docs.find((doc) => doc.shortname === task.shortname).content,
+                            description: docs.find((doc) => doc.shortname === task.shortname)?.content,
                         })),
                     });
                     setFetchedStation(stationId);
@@ -192,9 +192,11 @@ const Status = () => {
                     {stationData.tasks.map((task, i) => (
                         <React.Fragment key={task + i}>
                             <h3>{task.name}</h3>
-                            <Collapsible trigger="Toggle task description">
-                                <ReactMarkdown>{task.description}</ReactMarkdown>
-                            </Collapsible>
+                            {task.description && (
+                                <Collapsible trigger="Toggle task description">
+                                    <ReactMarkdown>{task.description}</ReactMarkdown>
+                                </Collapsible>
+                            )}
                             {task.tests.map((test, i) => (
                                 <React.Fragment key={test + i}>
                                     <div
