@@ -12,14 +12,6 @@ const Frontpage = () => {
             </div>
 
             <div className="frontpage-container">
-                <p style={{ paddingBottom: '2rem' }}>
-                    Tech:Online 2020 saw somewhere around 20 participants go through the network challenge.... Stay
-                    tuned and stay sharp - for Tech:Online 2021 we are brewing up even more fun...
-                </p>
-                <p>
-                    Read more at the{' '}
-                    <a href="https://tech.gathering.org/blog/482/techonline-vinnere-og-oppsummering">Tech Blog</a>
-                </p>
                 <h2>What is Tech:Online?</h2>
                 <hr />
                 <p>
@@ -35,6 +27,7 @@ const Frontpage = () => {
 		<p>The first network tracks will be scheduled from 17:00 on the same day - check your signup page for your time slot.</p>
 		<p>The first server tracks will be scheduled from 18:00 on the same day - check your signup page for your time slot.</p>
 		<strong>Regardless, join us on the #tech channel on <a href="https://discordapp.com/invite/PmSTYdT">The Gathering's Discord</a></strong>
+		<br />
 		<h2>Why?</h2>
                 <hr />
 		<p>Every year during easter, The Gathering takes place and somewhere between 5000 and 10 000 people visit the venue to participate in an amazing digital festival. But for obvious reasons, we've had to cancel this event twice in a row now.</p>
