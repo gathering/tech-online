@@ -24,11 +24,9 @@ const Frontpage = () => {
 		<div style={{height: "350px", overflow: "hidden"}}>
 		  <img src="https://techo21-cam.gathering.systems/proxy/cam2.jpg" height="550px" style={{position: "relative", top:"-300px"}} /> 
 		</div>
-		<h2>Signups and timeline</h2>
+		<h2>Signups</h2>
 		<hr />
-		<p>On thursday april 1st, 13:00 CET, a presentation about Tech:Online will be held at <a href="https://www.twitch.tv/tgtvcreative">twitch.tv/tgtvcreative</a>. At the same time, signups will be available here.</p>
-		<p>The first network tracks will be scheduled from 17:00 on the same day - check your signup page for your time slot.</p>
-		<p>The first server tracks will be scheduled from 18:00 on the same day - check your signup page for your time slot.</p>
+		<p>To sign up, click "LOG IN" in the top right corner and select sign up. We assign time slots on the fly, but join discord for feedback!</p>
 		<strong>Regardless, join us on the #tech channel on <a href="https://discordapp.com/invite/PmSTYdT">The Gathering's Discord</a></strong>
 		<br />
 		<h2>Why?</h2>
