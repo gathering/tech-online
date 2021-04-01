@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { useLocation, Redirect } from 'react-router-dom';
-import { useLogin, useUserState } from '../store/userContext';
-import { FETCH_STATUS, httpPost } from '../common/api';
+import { useLogin, useUserState, userIsAuthed } from '../store/userContext';
+import { FETCH_STATUS, httpGet, httpPost } from '../common/api';
 import Select from 'react-select';
 import './signup.scss';
 
@@ -17,16 +17,27 @@ const Signup = () => {
 
     const [selectedPath, setSelectedPath] = useState(paths[0]);
     const [notes, setNotes] = useState('');
-    let user = useUserState();
+
+    const user = useUserState();
 
     function submit() {
-        httpPost('timeslot', {
-            user_token: user.profile.uuid,
-            track: selectedPath.value,
-            notes: notes,
-        })
-            .then(() => (window.location.pathname = '/participate'))
-            .catch((err) => alert(`Something went wrong :(\n\n${err}`));
+        httpGet(`timeslots/?user-token=${user.profile.uuid}`)
+            .then((res) => {
+                if (res.filter((track) => track.track === selectedPath.value).length > 0) {
+                    alert('You have already registered for this track. Contact Crew if this seems wrong');
+                    throw new Error();
+                }
+            })
+            .then(() => {
+                httpPost('timeslot', {
+                    user_token: user.profile.uuid,
+                    track: selectedPath.value,
+                    notes: notes,
+                })
+                    .then(() => (window.location.pathname = '/participate'))
+                    .catch((err) => alert(`Something went wrong :(\n\n${err}`));
+            })
+            .catch((err) => {});
     }
 
     let fetchStatus, fetchResult;

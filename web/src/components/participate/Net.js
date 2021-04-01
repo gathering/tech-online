@@ -12,6 +12,10 @@ export const Net = () => {
     const user = useUserState();
     const isAuthed = userIsAuthed(user);
 
+    if (!isAuthed) {
+        return <Redirect to="/login" />;
+    }
+
     const fetchParticipationData = useCallback(() => {
         setFetchStatus(FETCH_STATUS.PENDING);
         httpGet(`timeslots/?user-token=${user.profile.uuid}&track=net`)
@@ -64,10 +68,6 @@ export const Net = () => {
 
     if (fetchStatus === FETCH_STATUS.REJECTED) {
         return <h1>Failed to fetch data</h1>;
-    }
-
-    if (!isAuthed) {
-        return <Redirect to="/login" />;
     }
 
     if (fetchStatus === FETCH_STATUS.RESOLVED && netParticipationData?.length > 0) {
@@ -159,7 +159,7 @@ export const Net = () => {
             </>
         );
     } else if (netParticipationData?.length === 0) {
-        return <h1>You have not yet been assigned a timeslot</h1>;
+        return <Redirect to="/signup" />;
     }
 
     return <h1>Loading...</h1>;
