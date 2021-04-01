@@ -28,9 +28,19 @@ const Status = () => {
 
     const getTestId = (task, test) => `${task.shortname}-${test.shortname}`;
 
-    const fetchStations = useCallback(() => {
-        if (track === 'net') {
-            const data = {
+    const initTrack = useCallback(async () => {
+        let data;
+        setStationsFetchStatus(FETCH_STATUS.PENDING);
+        if (track === 'server') {
+            await httpGet(`custom/track-stations/${track}/`)
+                .then((d) => {
+                    data = d;
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        } else {
+            data = {
                 stations: [
                     { id: '1', shortname: '1' },
                     { id: '2', shortname: '2' },
@@ -40,23 +50,28 @@ const Status = () => {
                     { id: '6', shortname: '6' },
                 ],
             };
-            setStationsFetchStatus(FETCH_STATUS.RESOLVED);
-            setStations(data.stations);
-            setStationId(data.stations?.[0]?.shortname);
+        }
+
+        if (!data) {
+            setStationsFetchStatus(FETCH_STATUS.REJECTED);
+            setLastUpdated(Date.now());
             return;
         }
 
-        setStationsFetchStatus(FETCH_STATUS.PENDING);
-        httpGet(`custom/track-stations/${track}/`)
-            .then((data) => {
-                setStationsFetchStatus(FETCH_STATUS.RESOLVED);
-                setStations(data.stations);
-                setStationId(data.stations?.[0]?.shortname);
-            })
-            .catch((err) => {
-                setStationsFetchStatus(FETCH_STATUS.REJECTED);
-                setLastUpdated(Date.now());
-            });
+        setStationsFetchStatus(FETCH_STATUS.RESOLVED);
+        setStations(
+            data.stations.length
+                ? data.stations
+                : [
+                      {
+                          id: '1',
+                          shortname: '1',
+                          tasks: [],
+                      },
+                  ]
+        );
+        setStationId(data.stations?.[0]?.shortname || '1');
+        return;
     }, [track]);
 
     const fetchStationData = useCallback(() => {
@@ -87,9 +102,9 @@ const Status = () => {
     // Fetch stations
     useEffect(() => {
         if (!stations.length && fetchStationsStatus !== FETCH_STATUS.PENDING) {
-            fetchStations();
+            initTrack();
         }
-    }, [stations, fetchStations, fetchStationsStatus]);
+    }, [stations, initTrack, fetchStationsStatus]);
 
     // Change tracks when needed
     useEffect(() => {
