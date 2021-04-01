@@ -22,7 +22,7 @@ const Frontpage = () => {
 		<p>Tech:Online first took place during the easter of 2020, and saw about 20 participants go through the challenge, which was far more than we had dared to expect.</p>
 
 		<div style={{height: "250px", overflow: "hidden"}}>
-		  <img src="https://techo21-cam.gathering.systems/proxy/cam2.jpg" height="550px" /> 
+		  <img src="https://techo21-cam.gathering.systems/proxy/cam2.jpg" height="550px" style={{position: "relative", top:"-300px"}} /> 
 		</div>
 		<h2>Signups and timeline</h2>
 		<hr />
