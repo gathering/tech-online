@@ -66,7 +66,7 @@ const useUserDispatch = () => {
     return context;
 };
 
-const useLogin = (code) => {
+const useLogin = (code, redirURL = "/login") => {
     const dispatch = useUserDispatch();
     const [fetchStatus, setFetchStatus] = useState(FETCH_STATUS.IDLE);
     const [fetchResult, setFetchResult] = useState();
@@ -79,7 +79,7 @@ const useLogin = (code) => {
                     'oauth/token/',
                     {
                         code: code,
-                        redirect_uri: `${window.location.origin}/login`,
+                        redirect_uri: `${window.location.origin}${redirURL}`,
                         grant_type: 'authorization_code',
                         client_secret: process.env.CLIENT_SECRET,
                         client_id: process.env.CLIENT_ID,
