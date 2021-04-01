@@ -513,54 +513,32 @@ traffic is sent to the distro. That means for every network, all routers
 must have a clear idea how to connect to each other. It's possible to set
 this up manually, using "static routing", but it quickly gets cumbersome.
 
-This creates two problems, first, the obvious: You need to update a ton of
-static routes all over the place. Even with just three devices, it's very
-easy to make mistakes. Secondly: If there are multiple routes from A to B,
-there is no way to handle that.
-
-That's where dynamic routing comes into play. Dynamic routing is when two
-or more routers use a protocol to communicate their routing information.
-There are multiple protocols available, but we will be using OSPF - Open
-Shortest Path First.
-
-Core has already been set up with OSPF.
-
-OSPF can be somewhat complex, but on Junos, getting a simple setup like
-ours working is next to trivial.
-
 ### Routing - practice
 
-Setting up basic OSPF on Junos is pretty straight forward. There are
-different mechanisms that you want to use in a production environment, but
-for Tech:Online, you just need to set up "area 0.0.0.0" and define what
-interfaces should participate.
-
-The short version is:
+Setting up static routing is simple, if a bit tedious. You generally want
+to specify a default route, and a route for each client network. For a
+default route, what you want is:
 
 ```
-   set protocols ospf area 0.0.0.0 interface ae0.0
+set routing-options static route 0.0.0.0/0 next-hop 10.x.200.1
 ```
 
-For distro0, you also need to enable it for "downstream" interfaces to
-edge0 and edge1:
+This is for the distro, where 10.x.200.1 is the core. For the edge switches
+you need to replace 10.x.200.1 with the link-net ip used to connect to the
+distro.
+
+This will enable routing traffic OUT of the stack, but to get traffic back
+down, the distro needs to route the client networks (10.x.100.x) to the
+relevant stations, so on the distro, you want:
 
 ```
-   set protocols ospf area 0.0.0.0 interface ae100.0
-   set protocols ospf area 0.0.0.0 interface ae101.0
+set routing-options static route 10.x.100.0/0 next-hop 10.x.200.6
+set routing-options static route 10.x.101.0/0 next-hop 10.x.200.10
 ```
+(in addition to the default route)
 
-On edge0 and edge1 you want to enable it on the upstream interface, but you
-also want to enable it on the "client vlan", so but we don't need to
-actually communicate actively there. This is a bit of a hack, but works
-well for our use case:
-
-```
-   set protocols ospf area 0.0.0.0 interface ae0.0
-   set protocols ospf area 0.0.0.0 interface vlan.0 passive
-```
-
-And that's it! Check out the result after a commit with `show ospf
-table` after a few seconds.
+That should be just about it, check the result after a commit and see if it
+works on the status page!
 
 Leftovers
 ---------

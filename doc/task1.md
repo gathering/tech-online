@@ -15,7 +15,7 @@
 7. If you've done everything right up until now, the status page should tell you
    that 10.x.200.2 replies to ping from core, but not globally.
 8. Let your distro switch know that `10.x.200.1` is your default route. See
-   `Reference documentation`_ on routing to accomplish this.
+   `Reference documentation`_ on static routing to accomplish this.
 9. At this point, you should be able to run `ping 8.8.8.8` from the
    distro0 switch and get a reply, and the status page should state
    that `10.x.200.2` replies both from core and globally.
