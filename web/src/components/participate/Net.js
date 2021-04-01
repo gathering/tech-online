@@ -102,12 +102,12 @@ export const Net = () => {
                     </div>
                     <div className="row">
                         <div className="col-xs">
-                            {netParticipationData.Station ? (
+                            {timeslot.credentials ? (
                                 <div className="station">
                                     <div className="row between-xs">
                                         <div className="col-xs">
                                             <h2 className="station__header">
-                                                Station #{netParticipationData[0].Station.Id}
+                                                {timeslot.name}
                                             </h2>
                                         </div>
                                     </div>
