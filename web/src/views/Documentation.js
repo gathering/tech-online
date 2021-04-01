@@ -64,7 +64,12 @@ export const Documentation = () => {
                 {(loadingState === FETCH_STATUS.IDLE || loadingState === FETCH_STATUS.PENDING) && <h2>Loading...</h2>}
                 {loadingState === FETCH_STATUS.RESOLVED && (
                     <div className="docs">
-                        <Markdown /*plugins={[gfm]}*/ children={docs[0].content} />
+                        {docs.map((doc) => (
+                            <>
+                                <h1>{doc.name}</h1>
+                                <Markdown children={doc.content} allowDangerousHtml />
+                            </>
+                        ))}
                     </div>
                 )}
             </div>
