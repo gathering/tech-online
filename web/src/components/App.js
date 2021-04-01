@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { Switch, Route, NavLink } from 'react-router-dom';
 import * as Views from '../views';
 import { useUserState } from '../store/userContext';
+import nextronLogo from '../assets/nextron.svg';
 
 const App = () => {
     const user = useUserState();
@@ -50,6 +51,12 @@ const App = () => {
                     <Route path="/admin/:tab?" component={Views.Admin} />
                     {/* <Route path="/demo" component={Views.Demo} /> */}
                 </Switch>
+                <div className="sponsors flex-row">
+                    <h4>Check out our great sponsor!</h4>
+                    <a href="https://www.nextron.no" target="_blank" rel="noreferrer">
+                        <img src={nextronLogo} alt="nextron" />
+                    </a>
+                </div>
             </main>
             <footer>
                 <a href="https://gathering.org" target="_blank" rel="noopener noreferrer">
