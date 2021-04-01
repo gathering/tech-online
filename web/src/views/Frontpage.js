@@ -20,7 +20,10 @@ const Frontpage = () => {
 		Participants (you?) will be given an opportunity to configure real network hardware, with lots of assistance. This is a realistic simulation of how real network engineers work, on real hardware. You get feedback through a series of verification scripts that simulate how actual monitoring software work, and ultimately, you will see a real physical end-user-pc go from off-line to on-line over a video stream. </p>
 		<p>The exercise takes somewhere between an hour (for the experienced) and 5-6 hours. You get access to our great mentors along the way, which will answer any questions you have.</p>
 		<p>Tech:Online first took place during the easter of 2020, and saw about 20 participants go through the challenge, which was far more than we had dared to expect.</p>
-		<img src="https://techo21-cam.gathering.systems/proxy/cam2.jpg" height="550px" /> 
+
+		<div style="height: 250px; overflow: hidden">
+		  <img src="https://techo21-cam.gathering.systems/proxy/cam2.jpg" height="550px" /> 
+		</div>
 		<h2>Signups and timeline</h2>
 		<hr />
 		<p>On thursday april 1st, 13:00 CET, a presentation about Tech:Online will be held at <a href="https://www.twitch.tv/tgtvcreative">twitch.tv/tgtvcreative</a>. At the same time, signups will be available here.</p>
