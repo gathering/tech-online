@@ -5,8 +5,7 @@ Reset-rutine for net-track:
 3. killall -u tech
 4. Endre passord 'sudo passwd tech'
 5. Dissassosier brukeren med stasjonen (FIXME: Hvordan? :D) og lagre
-   passord i stasjonen
-   CIRKA: curl https://techo.gathering.org/api/station/1932481b-4126-4cf3-8913-49d0faff75f5/ -X PUT --data '{"id":"1932481b-4126-4cf3-8913-49d0faff75f5","track":"net","shortname":"2","name":"Station #2","status":"active","credentials":"ssh address, username, whatever, NEW secret password","notes":"","timeslot":""}'
+   passord i stasjone - kjør ./pwchange.sh STASJONSNR auth-info
 
 6. Kjør bootscrap script for alle devicer - tips: tmux og 'tmux-all'
    scriptet fyrer av alt. Følg litt med og vent. Tar glatt 5-15 minutter.
