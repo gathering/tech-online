@@ -1,0 +1,166 @@
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { Redirect } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
+import { FETCH_STATUS, httpGet } from '../../common/api';
+import { useUserState, userIsAuthed } from '../../store/userContext';
+import './net.scss';
+import { useInterval } from '../../common/useInterval';
+
+export const Net = () => {
+    const [netParticipationData, setNetParticipationData] = useState();
+    const [fetchStatus, setFetchStatus] = useState(FETCH_STATUS.IDLE);
+    const user = useUserState();
+    const isAuthed = userIsAuthed(user);
+
+    const fetchParticipationData = useCallback(() => {
+        setFetchStatus(FETCH_STATUS.PENDING);
+        httpGet(`timeslots/?user-token=${user.profile.uuid}&track=net`)
+            .then((data) => {
+                setNetParticipationData(data);
+                setFetchStatus(FETCH_STATUS.RESOLVED);
+            })
+            .catch((err) => {
+                setNetParticipationData(false);
+                setFetchStatus(FETCH_STATUS.REJECTED);
+            });
+    }, [user]);
+
+    useEffect(() => {
+        if ((netParticipationData === undefined || netParticipationData === []) && fetchStatus === FETCH_STATUS.IDLE) {
+            fetchParticipationData();
+        }
+    }, [netParticipationData, fetchStatus, fetchParticipationData]);
+
+    useInterval(() => {
+        if (netParticipationData && fetchStatus !== FETCH_STATUS.IDLE) {
+            fetchParticipationData();
+        }
+    }, 10000);
+
+    const timeSlot = useMemo(() => {
+        if (!netParticipationData || !netParticipationData[0].begin_time || !netParticipationData[0].end_time) {
+            return null;
+        }
+
+        const Start = netParticipationData[0].begin_time;
+        const End = netParticipationData[0].end_time;
+        const from = Date.parse(Start);
+        const to = Date.parse(End);
+        const dtf = new Intl.DateTimeFormat('nb-no', {
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+        });
+
+        const str = `You have been assigned a timeslot from ${dtf.format(from)} to ${dtf.format(to)}`;
+
+        return str;
+    }, [netParticipationData]);
+
+    if (fetchStatus === FETCH_STATUS.PENDING && netParticipationData === []) {
+        return <h1>Fetching data...</h1>;
+    }
+
+    if (fetchStatus === FETCH_STATUS.REJECTED) {
+        return <h1>Failed to fetch data</h1>;
+    }
+
+    if (!isAuthed) {
+        return <Redirect to="/login" />;
+    }
+
+    if (fetchStatus === FETCH_STATUS.RESOLVED && netParticipationData?.length > 0) {
+        return (
+            <>
+                {netParticipationData[0].notes && (
+                    <section>
+                        <div className="row">
+                            <div className="col-xs">
+                                <div className="admonition admonition--danger">
+                                    <div className="admonition__title">PSA</div>
+                                    {netParticipationData[0].notes}
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                )}
+                <section>
+                    <div className="row">
+                        <div className="col-xs">
+                            <h1>Connection information</h1>
+                            {timeSlot && <strong>{timeSlot}</strong>}
+                            <hr />
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-xs">
+                            {netParticipationData.Station ? (
+                                <div className="station">
+                                    <div className="row between-xs">
+                                        <div className="col-xs">
+                                            <h2 className="station__header">
+                                                Station #{netParticipationData.Station.Id}
+                                            </h2>
+                                        </div>
+                                    </div>
+                                    <div className="row between-xs station__row">
+                                        <div className="col-xs col-md-3">
+                                            <strong>Host</strong>
+                                        </div>
+                                        <div className="col-xs">{netParticipationData.Station.Jumphost}</div>
+                                    </div>
+                                    <div className="row between-xs station__row">
+                                        <div className="col-xs col-md-3">
+                                            <strong>User</strong>
+                                        </div>
+                                        <div className="col-xs">techo</div>
+                                    </div>
+                                    <div className="row between-xs station__row">
+                                        <div className="col-xs col-md-3">
+                                            <strong>Password</strong>
+                                        </div>
+                                        <div className="col-xs"> {netParticipationData.Station.Password}</div>
+                                    </div>
+                                    <div className="row between-xs station__row">
+                                        <div className="col-xs col-md-3">
+                                            <strong>Network</strong>
+                                        </div>
+                                        <div className="col-xs">{netParticipationData.Station.Net}</div>
+                                    </div>
+
+                                    {netParticipationData.Station.Notes && (
+                                        <div className="row between-xs station__row">
+                                            <div className="col-xs">
+                                                <div className="admonition admonition--warning">
+                                                    <div className="admonition__title">Station specific notes</div>
+                                                    <ReactMarkdown source={netParticipationData.Station.Notes} />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            ) : (
+                                <>
+                                    <h2>You are currently not assigned to a station</h2>
+                                    <strong>Feel free to hang out in Discord while you wait</strong>
+                                </>
+                            )}
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div className="row">
+                        <div className="col-xs">
+                            <h1>Tasks</h1>
+                        </div>
+                    </div>
+                </section>
+            </>
+        );
+    } else if (netParticipationData?.length === 0) {
+        return <h1>You have not yet been assigned a timeslot</h1>;
+    }
+
+    return <h1>Loading...</h1>;
+};
