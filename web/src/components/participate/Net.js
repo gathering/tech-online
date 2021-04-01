@@ -70,7 +70,10 @@ export const Net = () => {
         return <h1>Failed to fetch data</h1>;
     }
 
-    if (fetchStatus === FETCH_STATUS.RESOLVED && netParticipationData?.length > 0) {
+    if (
+        fetchStatus === FETCH_STATUS.RESOLVED ||
+        (fetchStatus === FETCH_STATUS.PENDING && netParticipationData?.length > 0)
+    ) {
         return (
             <>
                 {netParticipationData[0].notes && (

@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { httpGet, FETCH_STATUS } from '../common/api';
 import './status.scss';
 import { useInterval } from '../common/useInterval';
+import ReactMarkdown from 'react-markdown';
 
 const VALID_TRACKS = ['server', 'net'];
 
@@ -62,10 +63,18 @@ const Status = () => {
         setFetchStatus(FETCH_STATUS.PENDING);
         httpGet(`custom/station-tasks-tests/${track}/${stationId}/`)
             .then((data) => {
-                setFetchStatus(FETCH_STATUS.RESOLVED);
-                setFetchedStation(stationId);
-                setStationData(data);
-                setLastUpdated(Date.now());
+                httpGet('documents/?family=task-net').then((docs) => {
+                    setFetchStatus(FETCH_STATUS.RESOLVED);
+                    setFetchedStation(stationId);
+                    setStationData({
+                        ...data,
+                        tasks: data.tasks.map((task) => ({
+                            ...task,
+                            description: docs.find((doc) => doc.shortname === task.shortname).content,
+                        })),
+                    });
+                    setLastUpdated(Date.now());
+                });
             })
             .catch((err) => {
                 setFetchStatus(FETCH_STATUS.REJECTED);
@@ -168,7 +177,9 @@ const Status = () => {
                     {stationData.tasks.map((task, i) => (
                         <React.Fragment key={task + i}>
                             <h3>{task.name}</h3>
-                            <p>{task.description}</p>
+                            <div>
+                                <ReactMarkdown>{task.description}</ReactMarkdown>
+                            </div>
                             {task.tests.map((test, i) => (
                                 <React.Fragment key={test + i}>
                                     <div
