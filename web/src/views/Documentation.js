@@ -4,7 +4,7 @@ import './documentation.scss';
 import { httpGet, FETCH_STATUS } from '../common/api';
 
 import Select from 'react-select';
-import Markdown from 'react-markdown';
+import Markdown, { renderers } from 'react-markdown';
 // import * as gfm from 'react-gfm';
 
 const _scrollTo = (id) => {
@@ -12,6 +12,17 @@ const _scrollTo = (id) => {
     if (element) {
         element.scrollIntoView();
     }
+};
+
+const renderHeadingWithLink = (props, misc, tab) => {
+    const child = props?.node?.children?.[0];
+
+    if (child && child.type === 'text' && child.value) {
+        const hash = [tab.value, child.value.replace(/[^\w]/g, '-').toLowerCase()].filter(Boolean).join('_');
+        return <a href={`#${hash}`}>{renderers.heading(props, misc)}</a>;
+    }
+
+    return renderers.heading(props, misc);
 };
 
 // TODO Fix linking to id
@@ -24,10 +35,32 @@ const tabs = [
     { value: 'task-server', label: 'Task Server' },
 ];
 
+const DocsList = ({ docs = [], tab = {} } = {}) =>
+    docs.length ? (
+        <div className="docs">
+            {docs.map((doc) => (
+                <span key={`${doc.family}-${doc.shortname}-${doc.sequence}`}>
+                    <h1>{doc.name}</h1>
+                    <Markdown
+                        renderers={{
+                            heading: (props, misc) => renderHeadingWithLink(props, misc, tab),
+                        }}
+                        allowDangerousHtml
+                    >
+                        {doc.content}
+                    </Markdown>
+                </span>
+            ))}
+        </div>
+    ) : (
+        <p>No documents found on selected topic</p>
+    );
+
 export const Documentation = () => {
-    let { hash } = useLocation();
-    hash = hash.slice(1);
-    const [activeTab, setActiveTab] = useState(hash ? tabs.map((tab) => tab.value === hash)[0] : tabs[0]);
+    const { hash: rawHash } = useLocation();
+    // headingHash can be used to trigger scroll to, but keep in mind document might not be loaded yet
+    const [hash, _headingHash] = rawHash.slice(1).split('_');
+    const [activeTab, setActiveTab] = useState((hash && tabs.find((tab) => tab.value === hash)) || tabs[0]);
     const [loadingState, setLoadingState] = useState(FETCH_STATUS.IDLE);
 
     const [docs, setDocs] = useState([]);
@@ -58,20 +91,12 @@ export const Documentation = () => {
                     className="react-select-container"
                     classNamePrefix="react-select"
                     onChange={(newValue) => {
+                        window.location.hash = newValue.value;
                         setActiveTab(newValue);
                     }}
                 />
                 {(loadingState === FETCH_STATUS.IDLE || loadingState === FETCH_STATUS.PENDING) && <h2>Loading...</h2>}
-                {loadingState === FETCH_STATUS.RESOLVED && (
-                    <div className="docs">
-                        {docs.map((doc) => (
-                            <>
-                                <h1>{doc.name}</h1>
-                                <Markdown children={doc.content} allowDangerousHtml />
-                            </>
-                        ))}
-                    </div>
-                )}
+                {loadingState === FETCH_STATUS.RESOLVED && <DocsList docs={docs} tab={activeTab} />}
             </div>
         </div>
     );
