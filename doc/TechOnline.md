@@ -533,8 +533,8 @@ down, the distro needs to route the client networks (10.x.100.x) to the
 relevant stations, so on the distro, you want:
 
 ```
-set routing-options static route 10.x.100.0/0 next-hop 10.x.200.6
-set routing-options static route 10.x.101.0/0 next-hop 10.x.200.10
+set routing-options static route 10.x.100.0/24 next-hop 10.x.200.6
+set routing-options static route 10.x.101.0/24 next-hop 10.x.200.10
 ```
 (in addition to the default route)
 
