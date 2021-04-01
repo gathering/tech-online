@@ -37,7 +37,7 @@ const App = () => {
                             Admin
                         </NavLink>
                     )}
-                    <NavLink to="/status/net">Status</NavLink>
+                    <NavLink to="/status">Status</NavLink>
                     {loggedIn && <NavLink to="/logout">Log out</NavLink>}
                 </div>
             </header>
@@ -48,7 +48,7 @@ const App = () => {
                     <Route path="/signup" component={Views.Signup} />
                     <Route path="/documentation" component={Views.Documentation} />
                     <Route path="/participate" component={Views.Participate} />
-                    <Route path="/status/:track?/:id?" component={Views.Status} />
+                    <Route path="/status" component={Views.Status} />
                     <Route path="/logout" component={Views.Logout} />
                     <Route path="/admin/:tab?" component={Views.Admin} />
                     {/* <Route path="/demo" component={Views.Demo} /> */}

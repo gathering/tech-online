@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { NavLink } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { httpGet, FETCH_STATUS } from '../common/api';
 import './status.scss';
 import { useInterval } from '../common/useInterval';
@@ -8,9 +8,13 @@ import ReactMarkdown from 'react-markdown';
 
 const VALID_TRACKS = ['server', 'net'];
 
+const getTrackFromHash = (rawHash) => {
+    return VALID_TRACKS.includes(rawHash.slice(1)) ? rawHash.slice(1) : 'net';
+};
+
 const Status = () => {
-    const { track: rawTrack } = useParams();
-    const [track, setTrack] = useState(VALID_TRACKS.includes(rawTrack) ? rawTrack : 'net');
+    const { hash: rawHash } = useLocation();
+    const [track, setTrack] = useState(getTrackFromHash(rawHash));
     const [stationsData, setStationsData] = useState();
     const [stationId, setStationId] = useState(undefined);
     const [stationData, setStationData] = useState();
@@ -98,18 +102,18 @@ const Status = () => {
         if (!stationsData && fetchStationsStatus !== FETCH_STATUS.PENDING) {
             initTrack();
         }
-    }, [stationsData, fetchStationsStatus]);
+    }, [stationsData, fetchStationsStatus, initTrack]);
 
     // Change tracks when needed
     useEffect(() => {
-        const newTrack = VALID_TRACKS.includes(rawTrack) ? rawTrack : 'net';
+        const newTrack = getTrackFromHash(rawHash);
         if (newTrack !== track) {
             setTrack(newTrack);
             setStationsData();
             setStationData();
             setStationId(undefined);
         }
-    }, [rawTrack, setTrack, track]);
+    }, [rawHash, setTrack, track]);
 
     // Fetch data for specific station
     useEffect(() => {
@@ -152,8 +156,12 @@ const Status = () => {
             <div className="header">
                 <h2>Station status</h2>
                 <div className="nav">
-                    <NavLink to="/status/net">Net</NavLink>
-                    <NavLink to="/status/server">Server</NavLink>
+                    <Link to="/status#net" className={track === 'net' ? 'active' : ''}>
+                        Net
+                    </Link>
+                    <Link to="/status#server" className={track === 'server' ? 'active' : ''}>
+                        Server
+                    </Link>
                 </div>
             </div>
             <hr />
