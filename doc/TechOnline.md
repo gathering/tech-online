@@ -180,7 +180,8 @@ Pictures
 Credentials
 -----------
 
-SSH to the provided IP using the provided username and password (FIXME).
+SSH to the provided IP using the provided username and password, seen on
+your status page (click "participate").
 
 Switches are set up with a user called "tech", password "Juniperftw!". You
 are welcome to set up other users.

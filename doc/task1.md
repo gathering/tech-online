@@ -8,7 +8,7 @@
    or a interfaces-range that cover both.
 4. Set up "unit 0" on ae0 on the distro. It needs to have the link-net IP
    provided in the `Reference documentation`_ chapter.
-5. Check that your uplink ports (`ge-0/0/46` and `ge-0/0/46`) are listed as
+5. Check that your uplink ports (`ge-0/0/47` and `ge-1/0/47`) are listed as
    "up" when you use `show interfaces`.
 6. If they are, check that `ae0.0` is up with `show interfaces ae0.0
    extensive`.
