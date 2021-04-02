@@ -79,7 +79,8 @@
                 transition: opacity 100ms ease-out;
             }
 
-            &__test, &__doc {
+            &__test,
+            &__doc {
                 margin: auto;
                 padding: 0.5rem;
                 margin-bottom: 0.25rem;

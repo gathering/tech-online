@@ -12,30 +12,71 @@ const Frontpage = () => {
             </div>
 
             <div className="frontpage-container">
-		<h2>UPDATE: Sign up now for friday fun!</h2>
-		<hr />
-		<p>We hade some issues with the sign up system on thursday, but things should be working now, so give it a shot!</p>
-		<p>To sign up, click "LOG IN" in the top right corner and select sign up. We assign time slots on the fly, but join discord for feedback! If things seem wonky, either try logging out and back in again, or hit us up on discord.</p>
-		<p>We are running a few more participants through the exercises tonight, thursday, but are gearing up for <b>friday evening</b> as well! On Friday, slots will be available from 15:00 an onward throught the evening. If you have a preference for time, add a comment on the signup and we'll sort you out as best we can!</p>
-		<p>If friday doesn't work for you, make a comment asking for a saturday slot - if there's enough interest, we'll keep going.</p>
-		<strong>Regardless, join us on the <strong>#tech</strong> channel and the <strong>Tech NOC</strong> voice channel on <a href="https://discordapp.com/invite/PmSTYdT">The Gathering's Discord</a>.</strong>
-		<br />
-		<div style={{height: "350px", overflow: "hidden"}}>
-		  <img src="https://techo21-cam.gathering.systems/proxy/cam2.jpg" height="550px" style={{position: "relative", top:"-300px"}} /> 
-		</div>
+                <h2>UPDATE: Sign up now for friday fun!</h2>
+                <hr />
+                <p>
+                    We hade some issues with the sign up system on thursday, but things should be working now, so give
+                    it a shot!
+                </p>
+                <p>
+                    To sign up, click "LOG IN" in the top right corner and select sign up. We assign time slots on the
+                    fly, but join discord for feedback! If things seem wonky, either try logging out and back in again,
+                    or hit us up on discord.
+                </p>
+                <p>
+                    We are running a few more participants through the exercises tonight, thursday, but are gearing up
+                    for <b>friday evening</b> as well! On Friday, slots will be available from 15:00 an onward throught
+                    the evening. If you have a preference for time, add a comment on the signup and we'll sort you out
+                    as best we can!
+                </p>
+                <p>
+                    If friday doesn't work for you, make a comment asking for a saturday slot - if there's enough
+                    interest, we'll keep going.
+                </p>
+                <strong>
+                    Regardless, join us on the <strong>#tech</strong> channel and the <strong>Tech NOC</strong> voice
+                    channel on <a href="https://discordapp.com/invite/PmSTYdT">The Gathering's Discord</a>.
+                </strong>
+                <br />
+                <div style={{ height: '350px', overflow: 'hidden' }}>
+                    <img
+                        src="https://techo21-cam.gathering.systems/proxy/cam2.jpg"
+                        height="550px"
+                        style={{ position: 'relative', top: '-300px' }}
+                    />
+                </div>
                 <h2>What is Tech:Online?</h2>
                 <hr />
                 <p>
                     <strong>Tech:Online is a network-hacking event and experiment!</strong>
-		    <br />
-		Participants (you?) will be given an opportunity to configure real network hardware, with lots of assistance. This is a realistic simulation of how real network engineers work, on real hardware. You get feedback through a series of verification scripts that simulate how actual monitoring software work, and ultimately, you will see a real physical end-user-pc go from off-line to on-line over a video stream. </p>
-		<p>The exercise takes somewhere between an hour (for the experienced) and 5-6 hours. You get access to our great mentors along the way, which will answer any questions you have.</p>
-		<p>Tech:Online first took place during the easter of 2020, and saw about 20 participants go through the challenge, which was far more than we had dared to expect.</p>
+                    <br />
+                    Participants (you?) will be given an opportunity to configure real network hardware, with lots of
+                    assistance. This is a realistic simulation of how real network engineers work, on real hardware. You
+                    get feedback through a series of verification scripts that simulate how actual monitoring software
+                    work, and ultimately, you will see a real physical end-user-pc go from off-line to on-line over a
+                    video stream.{' '}
+                </p>
+                <p>
+                    The exercise takes somewhere between an hour (for the experienced) and 5-6 hours. You get access to
+                    our great mentors along the way, which will answer any questions you have.
+                </p>
+                <p>
+                    Tech:Online first took place during the easter of 2020, and saw about 20 participants go through the
+                    challenge, which was far more than we had dared to expect.
+                </p>
 
-		<h2>Why?</h2>
+                <h2>Why?</h2>
                 <hr />
-		<p>Every year during easter, The Gathering takes place and somewhere between 5000 and 10 000 people visit the venue to participate in an amazing digital festival. But for obvious reasons, we've had to cancel this event twice in a row now.</p>
-		<p>But some of us know that The Gathering lets us experiment with things we otherwise never get to touch, and we wanted to see if we could simulate some of that on-line, and while we're at it, invite even more people to participate!</p>
+                <p>
+                    Every year during easter, The Gathering takes place and somewhere between 5000 and 10 000 people
+                    visit the venue to participate in an amazing digital festival. But for obvious reasons, we've had to
+                    cancel this event twice in a row now.
+                </p>
+                <p>
+                    But some of us know that The Gathering lets us experiment with things we otherwise never get to
+                    touch, and we wanted to see if we could simulate some of that on-line, and while we're at it, invite
+                    even more people to participate!
+                </p>
                 <p>
                     <strong>Enter: Tech:Online.</strong>
                     <br />
@@ -55,22 +96,39 @@ const Frontpage = () => {
                     similar to how we would do things at The Gathering, and your task is to get the "participant"
                     online.
                 </p>
-		<h2>NEW in 2021: Two different tracks!</h2>
+                <h2>NEW in 2021: Two different tracks!</h2>
                 <hr />
-		<p>There will be two tracks (exercises) available. You can choose to participate in either or both.</p>
-		<p>
-		<strong>Tech:Net</strong>
-		<br />
-		In the network track you will configure two access switches and a distribution switch to get a participant on-line. This is the same exercise we ran last year, but hopefully even more stream lined. You will learn how basic routing works, how networks become more robust (and faster) by using multiple cables to connect switches, and of course how switches are configured in general. This is an exercise anyone with an SSH client can participate in.</p>
-		<p>
-		<strong>Tech:Server</strong>
-		<br />
-		New as of 2021 is the chance to configure two cruciual services for any network: DHCP and DNS. A network without DNS and DHCP is not very functional. You will learn what happens when you plug your PC into a switch and how DHCP is used to auto-configure network settings for clients (e.g.: your laptop, phone, etc). You will also learn how a domain name is converted to an IP address using DNS and the difference between a recursive DNS server and an authoitative one. These are absolutely crucial components on the Internet, and while the jargon might seem dense, they are in many respects remarkably simple when you get down to it.</p>
-		<p>
-		<strong>Combined: How to run any-size network!</strong>
-		<br />
-		Well, almost...</p>
-		<p>If you complete both of these exercises, you will know almost everything there is to know about the fundamental building blocks of the internet. The same principles are used for your local network at home as is used for large ISPs with hundereds of thousands of customers.</p>
+                <p>There will be two tracks (exercises) available. You can choose to participate in either or both.</p>
+                <p>
+                    <strong>Tech:Net</strong>
+                    <br />
+                    In the network track you will configure two access switches and a distribution switch to get a
+                    participant on-line. This is the same exercise we ran last year, but hopefully even more stream
+                    lined. You will learn how basic routing works, how networks become more robust (and faster) by using
+                    multiple cables to connect switches, and of course how switches are configured in general. This is
+                    an exercise anyone with an SSH client can participate in.
+                </p>
+                <p>
+                    <strong>Tech:Server</strong>
+                    <br />
+                    New as of 2021 is the chance to configure two cruciual services for any network: DHCP and DNS. A
+                    network without DNS and DHCP is not very functional. You will learn what happens when you plug your
+                    PC into a switch and how DHCP is used to auto-configure network settings for clients (e.g.: your
+                    laptop, phone, etc). You will also learn how a domain name is converted to an IP address using DNS
+                    and the difference between a recursive DNS server and an authoitative one. These are absolutely
+                    crucial components on the Internet, and while the jargon might seem dense, they are in many respects
+                    remarkably simple when you get down to it.
+                </p>
+                <p>
+                    <strong>Combined: How to run any-size network!</strong>
+                    <br />
+                    Well, almost...
+                </p>
+                <p>
+                    If you complete both of these exercises, you will know almost everything there is to know about the
+                    fundamental building blocks of the internet. The same principles are used for your local network at
+                    home as is used for large ISPs with hundereds of thousands of customers.
+                </p>
                 <div className="flex-row">
                     <div className="flex-item">
                         <h2>Who can participate?</h2>
@@ -109,7 +167,6 @@ const Frontpage = () => {
                         <img src="//techo.gathering.org/pics/techo.png" />
                     </div>
                 </div>
-
             </div>
         </div>
     );

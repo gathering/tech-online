@@ -22,7 +22,7 @@ export const useStationsData = (track) => {
 
     useInterval(() => {
         fetchStations();
-    }, 30000)
+    }, 30000);
 
     return track ? (stationsData || []).filter((s) => s.track === track) : stationsData || [];
 };
