@@ -7,7 +7,6 @@ import { useStationTasksData } from '../common/useStationTasksData';
 import './status.scss';
 import { useInterval } from '../common/useInterval';
 import ReactMarkdown from 'react-markdown';
-import Collapsible from 'react-collapsible';
 
 const Status = () => {
     const track = useTrack();
@@ -32,6 +31,7 @@ const Status = () => {
     };
 
     const calculateTestId = (task, test) => `${task.shortname}-${test.shortname}`;
+    const calculateDocId = (task) => `${task.shortname}-doc`;
     const isAvailableToUsers = (station) => station?.status === 'active';
     const isBooked = (station) => station?.timeslot !== '';
     const isMaintenance = (station) => station?.status === 'maintenance';
@@ -110,9 +110,29 @@ const Status = () => {
                     <React.Fragment key={task.id}>
                         <h3>{task.name}</h3>
                         {task.description && (
-                            <Collapsible trigger="Toggle task description">
-                                <ReactMarkdown>{task.description}</ReactMarkdown>
-                            </Collapsible>
+                            <React.Fragment key={task.id}>
+                                <div
+                                    className={`row testlist__doc testlist__doc--neutral ${
+                                        activeTestDescription === calculateDocId(task) ? 'testlist__doc--expanded' : ''
+                                    }
+                                    `}
+                                    key={task.id}
+                                    onClick={() => toggleActiveTestDescription(calculateDocId(task))}
+                                >
+                                    <div className="col-xs-2">Task description</div>
+                                </div>
+                                <div
+                                    className={`row testlist__doc-description ${
+                                        activeTestDescription === calculateDocId(task)
+                                            ? 'row testlist__doc-description--active'
+                                            : ''
+                                    }`}
+                                >
+                                    <div className="col-xs">
+                                        <ReactMarkdown>{task.description}</ReactMarkdown>
+                                    </div>
+                                </div>
+                            </React.Fragment>
                         )}
                         {task.tests.map((test) => (
                             <React.Fragment key={test.id}>
