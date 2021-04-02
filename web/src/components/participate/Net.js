@@ -96,16 +96,18 @@ export const Net = () => {
         return (
             <>
                 <section>
-                    <div className="row">
-                        <div className="col-xs">
-                            <h1>Connection information</h1>
-                            {timeSlot && <strong>{timeSlot}</strong>}
-                            <hr />
+                    {timeSlot && (
+                        <div className="row">
+                            <div className="col-xs">
+                                <strong>{timeSlot}</strong>
+                                <hr />
+                            </div>
                         </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-xs">
-                            {timeslot?.credentials !== undefined ? (
+                    )}
+                    {timeslot?.credentials !== undefined ? (
+                        <div className="row">
+                            <div className="col-xs">
+                                <h1>Connection information</h1>
                                 <div className="station">
                                     <div className="row between-xs">
                                         <div className="col-xs">
@@ -150,14 +152,14 @@ export const Net = () => {
                                         </div>
                                     )}
                                 </div>
-                            ) : (
-                                <>
-                                    <h2>You are currently not assigned to a station</h2>
-                                    <strong>Feel free to hang out in Discord while you wait</strong>
-                                </>
-                            )}
+                            </div>
                         </div>
-                    </div>
+                    ) : (
+                        <>
+                            <h2>You are currently not assigned to a station</h2>
+                            <strong>Feel free to hang out in Discord while you wait</strong>
+                        </>
+                    )}
                 </section>
                 {timeslot?.notes && (
                     <section>
