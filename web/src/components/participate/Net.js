@@ -157,7 +157,7 @@ export const Net = () => {
                     ) : (
                         <>
                             <h2>You are currently not assigned to a station</h2>
-                            <p class="notAssigned">
+                            <p className="notAssigned">
                                 Feel free to hang out in Discord in <strong>#tech</strong> or the{' '}
                                 <strong>Tech NOC</strong> voice channel while you wait
                             </p>
