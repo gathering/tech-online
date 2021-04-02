@@ -41,7 +41,10 @@ const Signup = () => {
                         window.location.pathname = `/participate`;
                         window.location.hash = selectedPath.value;
                     })
-                    .catch((err) => alert(`Something went wrong :(\n\n${err}`));
+                    .catch((err) => {
+                        alert(`Something went wrong :(\n\n${err}`);
+                        console.warn(err);
+                    });
             })
             .catch((err) => {});
     }
