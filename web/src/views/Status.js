@@ -11,7 +11,7 @@ import Collapsible from 'react-collapsible';
 
 const Status = () => {
     const track = useTrack();
-    const stations = useStationsData(track).filter((s) => s.track === 'net' || s.status === 'active');
+    const stations = useStationsData(track).filter((s) => s.track === 'net' || s.status !== 'terminated');
     const [station, setStation] = useState(stations[0] || undefined);
     const [tasksData, live] = useStationTasksData(station);
     const [activeTestDescription, setActiveTestDescription] = useState();
@@ -33,6 +33,8 @@ const Status = () => {
 
     const calculateTestId = (task, test) => `${task.shortname}-${test.shortname}`;
     const isAvailableToUsers = (station) => station?.status === 'active';
+    const isBooked = (station) => station?.timeslot !== '';
+    const isMaintenance = (station) => station?.status === 'maintenance';
 
     return (
         <div className="status-container">
@@ -56,10 +58,17 @@ const Status = () => {
                             onClick={() => setStation(s)}
                             className={`tabs__item ${station?.id === s?.id ? 'tabs__item--active' : ''} ${
                                 !isAvailableToUsers(s) ? 'tabs__item--closed' : ''
-                            }`}
+                            } ${isBooked(s) ? 'tabs_item--booked' : 'tabs_item--available'}`}
                         >
                             {s.name || `#${s.shortname}`}
                         </h2>
+                        <h3
+                            className={`status ${
+                                isMaintenance(s) ? 'maintenance' : isBooked(s) ? 'booked' : 'available'
+                            }`}
+                        >
+                            {isMaintenance(s) ? 'Maintenance' : isBooked(s) ? 'Booked' : 'Available'}
+                        </h3>
                     </div>
                 ))}
             </div>

@@ -46,6 +46,23 @@
                     border-bottom: 2px solid $ascentColor;
                 }
             }
+
+            .status {
+                margin-bottom: 0;
+                margin-top: 0.5rem;
+
+                &.available {
+                    color: #39dd6d;
+                }
+
+                &.booked {
+                    color: #dd2c32;
+                }
+
+                &.maintenance {
+                    color: grey;
+                }
+            }
         }
 
         .testlist {
@@ -57,7 +74,6 @@
                 cursor: default;
                 transition: opacity 100ms ease-out;
             }
-
 
             &__test {
                 margin: auto;
