@@ -10,6 +10,7 @@ export const Net = () => {
     const [netParticipationData, setNetParticipationData] = useState();
     const [timeslot, setTimeslot] = useState();
     const [fetchStatus, setFetchStatus] = useState(FETCH_STATUS.IDLE);
+    const [hasSignedUp, setHasSignedUp] = useState(true);
     const user = useUserState();
     const isAuthed = userIsAuthed(user);
 
@@ -21,11 +22,17 @@ export const Net = () => {
         setFetchStatus(FETCH_STATUS.PENDING);
         httpGet(`timeslots/?user-token=${user.profile.uuid}&track=net`)
             .then((data) => {
-                httpGet(`stations/?timeslot=${data[0].id}&user-token=${user.profile.uuid}`).then((timeslot) => {
-                    setTimeslot(timeslot[0]);
-                    setNetParticipationData(data);
-                    setFetchStatus(FETCH_STATUS.RESOLVED);
-                });
+                if (data.length > 0) {
+                    httpGet(`stations/?timeslot=${data[0].id}&user-token=${user.profile.uuid}`).then((timeslot) => {
+                        setTimeslot(timeslot[0]);
+                        setNetParticipationData(data);
+                        setHasSignedUp(true);
+                        setFetchStatus(FETCH_STATUS.RESOLVED);
+                    });
+                } else {
+                    setHasSignedUp(false);
+                    setFetchStatus(FETCH_STATUS.REJECTED);
+                }
             })
             .catch((err) => {
                 setNetParticipationData(false);
@@ -71,7 +78,17 @@ export const Net = () => {
     }
 
     if (fetchStatus === FETCH_STATUS.REJECTED) {
-        return <h1>Failed to fetch data</h1>;
+        if (hasSignedUp) {
+            return <h1>Failed to fetch data</h1>;
+        } else {
+            return (
+                <>
+                    <p>
+                        You are not signed up for the network track. You can sign up <a href="/signup">here</a>
+                    </p>
+                </>
+            );
+        }
     }
 
     if (
@@ -86,7 +103,7 @@ export const Net = () => {
                             <div className="col-xs">
                                 <div className="admonition admonition--danger">
                                     <div className="admonition__title">PSA</div>
-                                    {netParticipationData[0].notes}
+                                    {timeslot.notes}
                                 </div>
                             </div>
                         </div>
@@ -106,9 +123,7 @@ export const Net = () => {
                                 <div className="station">
                                     <div className="row between-xs">
                                         <div className="col-xs">
-                                            <h2 className="station__header">
-                                                {timeslot.name}
-                                            </h2>
+                                            <h2 className="station__header">{timeslot.name}</h2>
                                         </div>
                                     </div>
 
