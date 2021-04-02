@@ -36,7 +36,11 @@ const Signup = () => {
                     track: selectedPath.value,
                     notes: `Discord: ${discord}\n\nUser provided notes: ${notes}`,
                 })
-                    .then(() => (window.location.pathname = `/participate#${selectedPath.value}`))
+                    .then(() => {
+                        window.location.hash = selectedPath.value;
+                        window.location.pathname = `/participate`;
+                        window.location.hash = selectedPath.value;
+                    })
                     .catch((err) => alert(`Something went wrong :(\n\n${err}`));
             })
             .catch((err) => {});
