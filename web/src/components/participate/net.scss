@@ -2,6 +2,10 @@
 
 .participate {
     &-container {
+        .notAssigned {
+            padding-top: 0;
+        }
+
         hr {
             margin-bottom: 1rem;
         }

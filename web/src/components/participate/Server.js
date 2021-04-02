@@ -157,7 +157,10 @@ export const Server = () => {
                     ) : (
                         <>
                             <h2>You are currently not assigned to a station</h2>
-                            <strong>Feel free to hang out in Discord while you wait</strong>
+                            <p class="notAssigned">
+                                Feel free to hang out in the Discord server in <strong>#tech</strong> or the{' '}
+                                <strong>Tech NOC</strong> voice channel while you wait
+                            </p>
                         </>
                     )}
                 </section>
