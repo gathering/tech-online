@@ -17,8 +17,10 @@ const Signup = () => {
 
     const [selectedPath, setSelectedPath] = useState(paths[0]);
     const [notes, setNotes] = useState('');
+    const [discord, setDiscord] = useState('');
 
     const user = useUserState();
+    const isAuthed = userIsAuthed(user);
 
     function submit() {
         httpGet(`timeslots/?user-token=${user.profile.uuid}`)
@@ -32,7 +34,7 @@ const Signup = () => {
                 httpPost('timeslot', {
                     user_token: user.profile.uuid,
                     track: selectedPath.value,
-                    notes: notes,
+                    notes: `Discord: ${discord}\n\nUser provided notes: ${notes}`,
                 })
                     .then(() => (window.location.pathname = '/participate'))
                     .catch((err) => alert(`Something went wrong :(\n\n${err}`));
@@ -43,7 +45,9 @@ const Signup = () => {
     let fetchStatus, fetchResult;
 
     if (!code) {
-        return <Redirect to="/login" />;
+        if (!isAuthed) {
+            return <Redirect to="/login" />;
+        }
     } else {
         [fetchStatus, fetchResult] = useLogin(code, '/signup');
     }
@@ -57,34 +61,47 @@ const Signup = () => {
         );
     }
 
-    if (fetchStatus === FETCH_STATUS.RESOLVED) {
+    if (fetchStatus === FETCH_STATUS.RESOLVED || isAuthed) {
         return (
             <div className="signup">
                 <div className="title">
                     <h1>Sign up</h1>
                 </div>
                 <div className="signup-container">
-                    <h2>Select track</h2>
-                    <ul>
-                        <li>Networking - The same as last year but refined</li>
-                        <li>Server - Setting up DNS and DHCP</li>
-                    </ul>
-                    <Select
-                        className="react-select-container"
-                        classNamePrefix="react-select"
-                        options={paths}
-                        value={selectedPath ?? paths[0]}
-                        onChange={(value) => setSelectedPath(value)}
-                    />
-                    <br />
-                    <h2>Notes</h2>
-                    <p>
-                        Anything we as Crew should know? Previous experience, required support, preferred timeslots,
-                        etc. Remember to join <strong>#tech</strong> in the{' '}
-                        <a href="https://discord.gg/WYCXWNVcH5">TG Discord</a> server for better support and
-                        communication with Crew.
-                    </p>
-                    <textarea value={notes} onChange={(event) => setNotes(event.target.value)}></textarea>
+                    <div className="form">
+                        <h2>Select track</h2>
+                        <ul>
+                            <li>Networking - The same as last year but refined</li>
+                            <li>Server - Setting up DNS and DHCP</li>
+                        </ul>
+                        <Select
+                            className="react-select-container"
+                            classNamePrefix="react-select"
+                            options={paths}
+                            value={selectedPath ?? paths[0]}
+                            onChange={(value) => setSelectedPath(value)}
+                        />
+                    </div>
+                    <div className="form">
+                        <h2>Notes</h2>
+                        <p>
+                            Anything we as Crew should know? Previous experience, required support, preferred timeslots,
+                            etc. Remember to join <strong>#tech</strong> in the{' '}
+                            <a href="https://discord.gg/WYCXWNVcH5" target="_blank">
+                                TG Discord
+                            </a>{' '}
+                            server for better support and communication with Crew.
+                        </p>
+                        <textarea value={notes} onChange={(event) => setNotes(event.target.value)}></textarea>
+                    </div>
+                    <div className="form">
+                        <h2>Discord username</h2>
+                        <p>
+                            We as crew need your discord username to be able to communicate with you as efficiently as
+                            possible. Please use the format <strong>username#0000</strong>
+                        </p>
+                        <input type="text" value={discord} onChange={(event) => setDiscord(event.target.value)} />
+                    </div>
                     <button onClick={() => submit()}>Submit</button>
                 </div>
             </div>
