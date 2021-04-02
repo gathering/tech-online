@@ -76,7 +76,7 @@ const Status = () => {
         setFetchStatus(FETCH_STATUS.PENDING);
         httpGet(`custom/station-tasks-tests/${track}/${stationId}/`)
             .then((data) => {
-                httpGet('documents/?family=task-net').then((docs) => {
+                httpGet(`documents/?family=task-${track}`).then((docs) => {
                     setStationData({
                         ...data,
                         shortname: data.station_shortname,
