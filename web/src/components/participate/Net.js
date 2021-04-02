@@ -103,7 +103,7 @@ export const Net = () => {
                             <div className="col-xs">
                                 <div className="admonition admonition--danger">
                                     <div className="admonition__title">PSA</div>
-                                    {timeslot.notes}
+                                    <ReactMarkdown source={timeslot.notes} />
                                 </div>
                             </div>
                         </div>
