@@ -62,6 +62,10 @@
                 &.maintenance {
                     color: grey;
                 }
+
+                &.dirty {
+                    color: orange;
+                }
             }
         }
 

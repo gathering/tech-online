@@ -35,6 +35,7 @@ const Status = () => {
     const isAvailableToUsers = (station) => station?.status === 'active';
     const isBooked = (station) => station?.timeslot !== '';
     const isMaintenance = (station) => station?.status === 'maintenance';
+    const isDirty = (station) => station?.status === 'dirty';
 
     return (
         <div className="status-container">
@@ -64,10 +65,22 @@ const Status = () => {
                         </h2>
                         <h3
                             className={`status ${
-                                isMaintenance(s) ? 'maintenance' : isBooked(s) ? 'booked' : 'available'
+                                isDirty(s)
+                                    ? 'dirty'
+                                    : isMaintenance(s)
+                                    ? 'maintenance'
+                                    : isBooked(s)
+                                    ? 'booked'
+                                    : 'available'
                             }`}
                         >
-                            {isMaintenance(s) ? 'Maintenance' : isBooked(s) ? 'Booked' : 'Available'}
+                            {isDirty(s)
+                                ? 'Dirty'
+                                : isMaintenance(s)
+                                ? 'Maintenance'
+                                : isBooked(s)
+                                ? 'Booked'
+                                : 'Available'}
                         </h3>
                     </div>
                 ))}
