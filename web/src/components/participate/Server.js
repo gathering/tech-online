@@ -58,9 +58,7 @@ export const Server = () => {
         }
 
         const Start = netParticipationData[0].begin_time;
-        const End = netParticipationData[0].end_time;
         const from = Date.parse(Start);
-        const to = Date.parse(End);
         const dtf = new Intl.DateTimeFormat('nb-no', {
             month: 'long',
             day: 'numeric',
@@ -68,7 +66,7 @@ export const Server = () => {
             minute: '2-digit',
         });
 
-        const str = `You have been assigned a timeslot from ${dtf.format(from)} to ${dtf.format(to)}`;
+        const str = `You have been assigned a timeslot from ${dtf.format(from)}`;
 
         return str;
     }, [netParticipationData]);
