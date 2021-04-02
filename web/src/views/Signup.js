@@ -36,7 +36,7 @@ const Signup = () => {
                     track: selectedPath.value,
                     notes: `Discord: ${discord}\n\nUser provided notes: ${notes}`,
                 })
-                    .then(() => (window.location.pathname = '/participate'))
+                    .then(() => (window.location.pathname = `/participate#${selectedPath.value}`))
                     .catch((err) => alert(`Something went wrong :(\n\n${err}`));
             })
             .catch((err) => {});
