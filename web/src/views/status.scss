@@ -37,6 +37,10 @@
             &__item {
                 cursor: pointer;
 
+                &--closed {
+                    color: grey;
+                }
+
                 &--active {
                     color: $primaryColor;
                     border-bottom: 2px solid $ascentColor;
@@ -46,6 +50,14 @@
 
         .testlist {
             padding-top: 1rem;
+            transition: opacity 300ms ease-out;
+
+            &--out-of-date {
+                opacity: 0.5;
+                cursor: default;
+                transition: opacity 100ms ease-out;
+            }
+
 
             &__test {
                 margin: auto;
