@@ -103,18 +103,6 @@ export const Server = () => {
                             <hr />
                         </div>
                     </div>
-                    {timeslot?.notes && (
-                        <section>
-                            <div className="row">
-                                <div className="col-xs">
-                                    <div className="admonition admonition--warning">
-                                        <div className="admonition__title">Server information</div>
-                                        <ReactMarkdown source={timeslot.notes} />
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                    )}
                     <div className="row">
                         <div className="col-xs">
                             {timeslot?.credentials !== undefined ? (
@@ -171,6 +159,18 @@ export const Server = () => {
                         </div>
                     </div>
                 </section>
+                {timeslot?.notes && (
+                    <section>
+                        <div className="row">
+                            <div className="col-xs">
+                                <div className="admonition admonition--warning">
+                                    <div className="admonition__title">Server information</div>
+                                    <ReactMarkdown source={timeslot.notes} />
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                )}
                 <section>
                     <div className="row">
                         <div className="col-xs">
