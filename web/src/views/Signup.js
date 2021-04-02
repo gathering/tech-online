@@ -34,7 +34,7 @@ const Signup = () => {
                 httpPost('timeslot', {
                     user_token: user.profile.uuid,
                     track: selectedPath.value,
-                    notes: `Discord: ${discord}\n\nUser provided notes: ${notes}`,
+                    notes: `Discord: ${discord}\n\n${notes}`,
                 })
                     .then(() => {
                         window.location.hash = selectedPath.value;
