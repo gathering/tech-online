@@ -11,7 +11,7 @@ import Collapsible from 'react-collapsible';
 
 const Status = () => {
     const track = useTrack();
-    const stations = useStationsData(track);
+    const stations = useStationsData(track).filter((s) => s.track === 'net' || s.status === 'active');
     const [station, setStation] = useState(stations[0] || undefined);
     const [tasksData, live] = useStationTasksData(station);
     const [activeTestDescription, setActiveTestDescription] = useState();
