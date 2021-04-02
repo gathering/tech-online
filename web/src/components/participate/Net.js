@@ -95,18 +95,6 @@ export const Net = () => {
     ) {
         return (
             <>
-                {timeslot?.notes && (
-                    <section>
-                        <div className="row">
-                            <div className="col-xs">
-                                <div className="admonition admonition--danger">
-                                    <div className="admonition__title">PSA</div>
-                                    <ReactMarkdown source={timeslot.notes} />
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                )}
                 <section>
                     <div className="row">
                         <div className="col-xs">
@@ -114,6 +102,18 @@ export const Net = () => {
                             {timeSlot && <strong>{timeSlot}</strong>}
                             <hr />
                         </div>
+                        {timeslot?.notes && (
+                            <section>
+                                <div className="row">
+                                    <div className="col-xs">
+                                        <div className="admonition admonition--warning">
+                                            <div className="admonition__title">Notice</div>
+                                            <ReactMarkdown source={timeslot.notes} />
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        )}
                     </div>
                     <div className="row">
                         <div className="col-xs">

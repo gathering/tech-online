@@ -95,18 +95,6 @@ export const Server = () => {
     ) {
         return (
             <>
-                {timeslot?.notes && (
-                    <section>
-                        <div className="row">
-                            <div className="col-xs">
-                                <div className="admonition admonition--danger">
-                                    <div className="admonition__title">PSA</div>
-                                    {timeslot.notes}
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                )}
                 <section>
                     <div className="row">
                         <div className="col-xs">
@@ -115,6 +103,18 @@ export const Server = () => {
                             <hr />
                         </div>
                     </div>
+                    {timeslot?.notes && (
+                        <section>
+                            <div className="row">
+                                <div className="col-xs">
+                                    <div className="admonition admonition--warning">
+                                        <div className="admonition__title">Server information</div>
+                                        <ReactMarkdown source={timeslot.notes} />
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    )}
                     <div className="row">
                         <div className="col-xs">
                             {timeslot?.credentials !== undefined ? (
