@@ -80,8 +80,9 @@ const Signup = () => {
                     <h2>Notes</h2>
                     <p>
                         Anything we as Crew should know? Previous experience, required support, preferred timeslots,
-                        etc. Remember to join <strong>#tech</strong> in the <a href="">TG Discord</a> server for better
-                        support and communication with Crew.
+                        etc. Remember to join <strong>#tech</strong> in the{' '}
+                        <a href="https://discord.gg/WYCXWNVcH5">TG Discord</a> server for better support and
+                        communication with Crew.
                     </p>
                     <textarea value={notes} onChange={(event) => setNotes(event.target.value)}></textarea>
                     <button onClick={() => submit()}>Submit</button>
