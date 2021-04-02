@@ -69,7 +69,11 @@ export const Documentation = () => {
         setLoadingState(FETCH_STATUS.PENDING);
         httpGet(`documents/?family=${activeTab.value}`)
             .then((res) => {
-                setDocs(res);
+                setDocs(
+                    res.sort(function (a, b) {
+                        return a.sequence - b.sequence;
+                    })
+                );
                 setLoadingState(FETCH_STATUS.RESOLVED);
             })
             .catch((err) => {
