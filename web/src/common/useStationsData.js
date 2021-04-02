@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { httpGet } from '../common/api';
+import { useInterval } from './useInterval';
 
 export const useStationsData = (track) => {
     const [stationsData, setStationsData] = useState();
@@ -18,6 +19,10 @@ export const useStationsData = (track) => {
     useEffect(() => {
         fetchStations();
     }, [fetchStations]);
+
+    useInterval(() => {
+        fetchStations();
+    }, 30000)
 
     return track ? (stationsData || []).filter((s) => s.track === track) : stationsData || [];
 };
