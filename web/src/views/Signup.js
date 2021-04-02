@@ -94,7 +94,8 @@ const Signup = () => {
                             <a href="https://discord.gg/WYCXWNVcH5" target="_blank">
                                 TG Discord
                             </a>{' '}
-                            server for better support and communication with Crew.
+                            server for better support and communication with Crew. We also have a voice channel{' '}
+                            <strong>Tech NOC</strong> on the bottom of the channel list where we hang out.
                         </p>
                         <textarea value={notes} onChange={(event) => setNotes(event.target.value)}></textarea>
                     </div>
