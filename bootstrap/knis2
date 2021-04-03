@@ -1,0 +1,220 @@
+#!/usr/bin/expect
+
+set timeout 60
+set conf 1
+# set zeroize 1
+set slave 0
+set delay 300
+
+# Avoid typing too fast (m delay per 10 characters)
+set send_slow {10 .05}
+log_user 0
+set tt [lrange $argv 0 0]
+
+log_file -a [file tail $tt]
+spawn cu -f -l $tt
+
+# Check if slave (run after every single expect here)
+expect_after {
+	"Logging to master" {
+		puts "Found slave!"
+		set slave 1
+		exp_continue
+	}
+}
+
+puts "Knising $tt ..."
+puts ""
+
+puts "Logging out."
+send "\n"
+expect {
+	-re "login: " {
+		puts "Already at login prompt."
+	}
+	-re ".+@.+% " {
+		puts "Exiting shell."
+		send "exit\n"
+	}
+	-re ".+@.+> " {
+		puts "Exiting oper CLI."
+		send "exit\n"
+		# Exit shell if root
+		expect -timeout 10 -re ".+@.+% " {
+			send "exit\n"
+		}
+	}
+	-re ".+@.+# " {
+		puts "Exiting conf CLI."
+		send "exit\n"
+		# Don't commit config if changes
+		expect -timeout 5 "yes" {
+			send "yes\n"
+		}
+		expect -timeout 5 -re ".+@.+> " {
+			puts "Exiting oper CLI."
+			send "exit\n"
+			# Exit shell if root
+			expect -timeout 5 -re ".+@.+% " {
+				puts "Exiting shell."
+				send "exit\n"
+			}
+		} timeout { exit }
+	}
+	timeout {
+		puts "Timed out waiting for any kind of prompt."
+		exit
+	}
+}
+send "\n"
+expect -timeout 10 -re "login: " {
+} timeout {
+	puts "Timed out waiting for login prompt after logout."
+	exit
+}
+
+puts "Logging into shell."
+send "\n"
+expect -timeout 10 -re "login: " {
+	send "root\n"
+} timeout { exit }
+expect {
+	"assword:" {
+		send "IAmGroot\n"
+	}
+	-re ".+@.+% " {
+		send "\n"
+	}
+	timeout {
+		puts "Failed to get prompt."
+		exit
+	}
+}
+send "\n"
+expect -re ".+@.+% " {
+} timeout {
+	puts "Failed to log in."
+	exit
+}
+
+# Exit if slave
+if {$slave} {
+	puts "Exiting because slave. Only the master needs to be knised."
+	send "exit\n"
+	expect -re "login: " {} timeout { exit }
+	exit
+}
+
+puts "Nuking rollbacks."
+# Note: They are still listed in "show system commit" but they can't be used
+send "rm /config/juniper.conf.*.gz\n"
+expect -re ".+@.+% " {} timeout { exit }
+send "rm /var/db/config/juniper.conf.*.gz\n"
+expect -re ".+@.+% " {} timeout { exit }
+
+puts "Logging into CLI."
+send "\n"
+expect -re ".+@.+% " {
+	send "cli\n"
+} timeout {
+	puts "Timed out waiting for shell."
+	exit
+}
+expect -re ".+@.+> " {
+	puts "CLI acquired."
+} timeout {
+	puts "Timed out waiting for oper CLI."
+	exit
+}
+send "set cli screen-length 0\n"
+expect -re ".+@.+> " {} timeout { exit }
+
+puts "Finding model."
+set target ""
+send "\n"
+expect -timeout 10 -re ".+@.+> " {
+	send "show chassis hardware\n"
+} timeout { exit }
+expect {
+	"EX2200" {
+		puts "Detected EX2200."
+		puts "Investigating client port to decide which edge switch."
+		send "show interfaces terse | match \"ge-0/0/.*up.*up\" | except \"/(0|0.0|1|1.0) \" | count \n"
+		expect {
+			-re "Count: 0 lines" {
+				puts "Probably edge1."
+				set target "edge1"
+			}
+			-re "Count: 2 lines" {
+				puts "Probably edge0."
+				set target "edge0"
+			}
+			timeout {
+				puts "Unable to decide if edge0 or edge1."
+				exit
+			}
+		}
+	}
+	"EX3300" {
+		puts "Detected EX3300."
+		puts "Probably distro0."
+		set target "distro"
+	}
+	timeout {
+		puts "Unable to decide model."
+		exit
+	}
+}
+if {$target == ""} {
+	puts "Unknown model (not EX2200 or EX3300). Exiting."
+	exit
+}
+
+puts "Defaulting config and applying new config."
+set timeout 120
+set fp [open $target r]
+#set f [open "$target" r]
+#set commands [split [read $f] "\n"]
+#close $f
+send "\n"
+expect -re ".+@.+> " {} timeout { exit }
+send -- "configure\n"
+expect "Entering configuration mode" {
+} timeout {
+	puts "Failed to enter configuration mode."
+	exit
+}
+expect -re ".+@.+# " {
+} timeout {
+	puts "Failed to enter configuration mode."
+	exit
+}
+#send -- "delete\n"
+#expect -timeout 5 "yes" {
+#	send "yes\n"
+#}
+send -- "load factory-default\n"
+expect -re ".+@.+# " {} timeout { exit }
+send -- "delete system commit\n"
+expect -re ".+@.+# " {} timeout { exit }
+while {1} {
+	if {-1 == [gets $fp buf]} break
+	send -s -- "$buf\n"
+	expect -timeout 5 -re ".+@.+# " {} timeout { exit }
+}
+send -- "commit and-quit\n"
+expect "commit complete" {
+} timeout {
+	puts "Timed out waiting for commit."
+	exit
+}
+expect -re ".+@.+> " {} timeout { exit }
+
+puts "Logging out again."
+send "exit\n"
+expect -re ".+@.+% " {} timeout { exit }
+send "exit\n"
+expect -re "login: " {} timeout { exit }
+
+puts ""
+puts "Done!"

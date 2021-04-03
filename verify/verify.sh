@@ -3,7 +3,7 @@
 # Usage:
 # 1. Add your default SSH pubkey to the stations.
 # 2. Add the backend basic auth password to "password" in PWD.
-# 3. Run it: for i in {1..6}; do screen -S "station-$i" -dm bash -c "while : ; do ./verify.sh $i ; sleep 5 ; done"; done
+# 3. Run it: for i in {1..6}; do screen -S "station-$i" -dm bash -c "while : ; do time timeout 60 ./verify.sh $i ; done"; done
 
 set -u
 
@@ -81,7 +81,7 @@ state() {
 }
 
 mping() {
-	ping -c1 -q -W 1 $1 2>&1 >/dev/null
+	ping -c1 -q -W 1 $1 >/dev/null
 	ret=$?
 	state "ping-$1-$2" "Ping of $1 $2" "$ret"
 	return $ret
