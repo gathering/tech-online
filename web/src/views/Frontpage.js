@@ -38,6 +38,7 @@ const Frontpage = () => {
                     channel on <a href="https://discordapp.com/invite/PmSTYdT">The Gathering's Discord</a>.
                 </strong>
                 <br />
+                <br />
                 {/*
                 <div style={{ height: '350px', overflow: 'hidden' }}>
                     <img
