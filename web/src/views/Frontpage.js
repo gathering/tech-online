@@ -38,6 +38,7 @@ const Frontpage = () => {
                     channel on <a href="https://discordapp.com/invite/PmSTYdT">The Gathering's Discord</a>.
                 </strong>
                 <br />
+                {/*
                 <div style={{ height: '350px', overflow: 'hidden' }}>
                     <img
                         src="https://techo21-cam.gathering.systems/proxy/cam2.jpg"
@@ -45,6 +46,7 @@ const Frontpage = () => {
                         style={{ position: 'relative', top: '-300px' }}
                     />
                 </div>
+                */}
                 <h2>What is Tech:Online?</h2>
                 <hr />
                 <p>
