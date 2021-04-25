@@ -17,21 +17,25 @@ const App = () => {
                         TG: Tech Online
                     </NavLink>
                     <NavLink to="/documentation">Reference documentation</NavLink>
+                    {/*
                     {loggedIn && (
                         <NavLink to="/participate" className="participate-link">
                             Participate
                         </NavLink>
                     )}
+                    */}
                     <a href="https://discordapp.com/invite/PmSTYdT" target="_blank" rel="noopener noreferrer">
                         Discord Server
                     </a>
                 </div>
                 <div className="nav-right">
+                    {/*
                     {!loggedIn && (
                         <NavLink to="/login" className="participate-link">
                             Login
                         </NavLink>
                     )}
+                    */}
                     {user.admin && (
                         <NavLink to="/admin" className="participate-link">
                             Admin
