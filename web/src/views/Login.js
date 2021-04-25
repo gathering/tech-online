@@ -15,13 +15,6 @@ const Login = () => {
         return (
             <>
                 <div className="login">
-                    <h1>
-                        <a
-                            href={`https://unicorn.zoodo.io/oauth/authorize/?client_id=${process.env.CLIENT_ID}&response_type=code&redirect_uri=${window.location.origin}/signup`}
-                        >
-                            Sign up
-                        </a>
-                    </h1>
                     <h2>
                         <a
                             href={`https://unicorn.zoodo.io/oauth/authorize/?client_id=${process.env.CLIENT_ID}&response_type=code&redirect_uri=${window.location.origin}/login`}
