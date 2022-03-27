@@ -4,6 +4,7 @@ import * as Views from '../views';
 import { useUserState } from '../store/userContext';
 import nextronLogo from '../assets/nextron.svg';
 import nexthopLogo from '../assets/nexthop.svg';
+import nlogicLogo from '../assets/nlogic.svg';
 
 const App = () => {
     const user = useUserState();
@@ -66,15 +67,18 @@ const App = () => {
                         <a href="https://www.nexthop.no" target="_blank" rel="noreferrer">
                             <img src={nexthopLogo} alt="Nexthop" />
                         </a>
+                        <a href="https://www.nlogic.no" target="_blank" rel="noreferrer">
+                            <img src={nlogicLogo} alt="nlogic" />
+                        </a>
                     </div>
                 </div>
             </main>
             <footer>
                 <a href="https://gathering.org" target="_blank" rel="noopener noreferrer">
-                    Gathering.org
+                    gathering.org
                 </a>
-                <a href="https://friday.horse" target="_blank" rel="noopener noreferrer">
-                    Horses
+                <a href="https://tech.gathering.org" target="_blank" rel="noopener noreferrer">
+                    tech.gathering.org
                 </a>
             </footer>
         </>
