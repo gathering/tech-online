@@ -100,8 +100,6 @@ img {
     }
 
     main {
-        flex-grow: 1;
-
         a {
             color: $primaryColor;
 
@@ -121,8 +119,17 @@ img {
 
             .sponsors-row {
                 display: flex;
+                justify-content: center;
                 flex-direction: row;
                 flex-wrap: wrap;
+                align-items: center;
+
+                * {
+                    max-width: 270px;
+                    flex: 1 1 auto;
+                    align-items: center;
+                    justify-self: center;
+                }
             }
 
             img {
