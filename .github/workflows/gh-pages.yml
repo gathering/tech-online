@@ -40,5 +40,5 @@ jobs:
           chmod 600 "$KEY_FILE"
           eval "$(ssh-agent)"
           ssh-add "$KEY_FILE"
-          cd web/dist
+          cd web/build
           rsync -av -e "ssh -o StrictHostKeyChecking=no" ./ "$RSYNC_USER"@"$RSYNC_HOST":"$RSYNC_DIR"
