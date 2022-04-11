@@ -22,8 +22,8 @@ jobs:
       - name: Install and Build 🔧
         run: |
           cd web
-          npm ci
-          npm run build
+          yarn --no-interactive --frozen-lockfile
+          yarn run build
 
       - name: Deploy
         shell: bash
