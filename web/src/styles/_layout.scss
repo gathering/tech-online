@@ -121,13 +121,22 @@ img {
 
       .sponsors-row {
         display: flex;
+        justify-content: center;
         flex-direction: row;
         flex-wrap: wrap;
+        align-items: center;
+
+        * {
+          max-width: 270px;
+          flex: 1 1 auto;
+          align-items: center;
+          justify-self: center;
+        }
       }
 
       img {
         margin: 0 1.5em 1.5em 1.5em;
-        min-width: 300px;
+        min-width: 200px;
       }
 
       a:hover {
@@ -166,6 +175,15 @@ img {
 
       &:hover {
         color: $ascentColor;
+      }
+      main {
+        a {
+          color: $primaryColor;
+
+          &:visited {
+            color: $primaryColor;
+          }
+        }
       }
     }
   }

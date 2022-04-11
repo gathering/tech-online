@@ -5,6 +5,9 @@ import * as Views from '../views';
 import { useUserState } from '../store/userContext';
 import nextronLogo from '../assets/nextron.svg';
 import nexthopLogo from '../assets/nexthop.svg';
+import nlogicLogo from '../assets/nlogic.svg';
+import elkjopLogo from '../assets/elkjop.svg';
+import frivillighetensarLogo from '../assets/frivillighetensar.svg';
 
 const App = () => {
   const user = useUserState();
@@ -70,6 +73,19 @@ const App = () => {
             <a href="https://www.nexthop.no" target="_blank" rel="noreferrer">
               <img src={nexthopLogo as any} alt="Nexthop" />
             </a>
+            <a href="https://www.nlogic.no" target="_blank" rel="noreferrer">
+              <img src={nlogicLogo as any} alt="nlogic" />
+            </a>
+            <a href="https://elkjop.no" target="_blank" rel="noreferrer">
+              <img src={elkjopLogo as any} alt="Elkjop" />
+            </a>
+            <a
+              href="https://frivillighetensar.no/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <img src={frivillighetensarLogo as any} alt="Frivillighetensar" />
+            </a>
           </div>
         </div>
       </main>
@@ -79,14 +95,14 @@ const App = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Gathering.org
+          gathering.org
         </a>
         <a
-          href="https://friday.horse"
+          href="https://tech.gathering.org"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Horses
+          tech.gathering.org
         </a>
       </footer>
     </>

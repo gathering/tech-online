@@ -11,10 +11,10 @@ const Frontpage = () => {
       </div>
 
       <div className="frontpage-container">
-        <h2>Tech:Online 2021 is now over</h2>
+        <h2>Ready for Tech:Online 2022?</h2>
         <hr />
-        <p>Hope to see you all next year!</p>
-        <br />
+        <p>More information and registration available soon!</p>
+
         <br />
         {/*
                 <div style={{ height: '350px', overflow: 'hidden' }}>
