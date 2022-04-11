@@ -1,126 +1,126 @@
 @import '../styles/theme';
 
 .frontpage {
-    &-container {
-        margin: 2rem auto;
-        max-width: 1140px;
-        padding: 3rem 1rem;
-        background-color: lighten($backgroundColor, 5);
-        -webkit-box-shadow: 2px 4px 6px 0px rgba(0, 0, 0, 0.33);
-        -moz-box-shadow: 2px 4px 6px 0px rgba(0, 0, 0, 0.33);
-        box-shadow: 2px 4px 6px 0px rgba(0, 0, 0, 0.33);
+  &-container {
+    margin: 2rem auto;
+    max-width: 1140px;
+    padding: 3rem 1rem;
+    background-color: lighten($backgroundColor, 5);
+    -webkit-box-shadow: 2px 4px 6px 0px rgba(0, 0, 0, 0.33);
+    -moz-box-shadow: 2px 4px 6px 0px rgba(0, 0, 0, 0.33);
+    box-shadow: 2px 4px 6px 0px rgba(0, 0, 0, 0.33);
 
-        p {
-            padding-top: 1rem;
-        }
+    p {
+      padding-top: 1rem;
+    }
+  }
+
+  .winners {
+    max-width: 300px;
+    margin: 0 auto;
+    padding-bottom: 3rem;
+    background-color: $backgroundColor;
+    padding: 2rem;
+    border-radius: 1rem;
+    margin-bottom: 2rem;
+
+    &__header {
+      text-align: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid $ascentColor;
     }
 
-    .winners {
-        max-width: 300px;
-        margin: 0 auto;
-        padding-bottom: 3rem;
-        background-color: $backgroundColor;
-        padding: 2rem;
-        border-radius: 1rem;
-        margin-bottom: 2rem;
-
-        &__header {
-            text-align: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid $ascentColor;
-        }
-
-        &__list {
-            &-item {
-                display: flex;
-                justify-content: center;
-                padding-bottom: 1rem;
-                font-size: 1.1rem;
-
-                color: $primaryColor;
-                font-weight: bold;
-            }
-        }
-    }
-
-    .title {
-        font-family: 'BigNoodleTitling';
-        color: rgba(255, 255, 255, 0.9);
-        letter-spacing: 2px;
-        font-size: 1.25rem;
-        background-color: $primaryColor;
-        padding: 1rem;
-        -webkit-box-shadow: 2px 4px 6px 0px rgba(0, 0, 0, 0.5);
-        -moz-box-shadow: 2px 4px 6px 0px rgba(0, 0, 0, 0.5);
-        box-shadow: 2px 4px 6px 0px rgba(0, 0, 0, 0.5);
-
-        h1 {
-            max-width: 1140px;
-            margin: 0 auto;
-        }
-    }
-
-    .flex-row {
+    &__list {
+      &-item {
         display: flex;
+        justify-content: center;
+        padding-bottom: 1rem;
+        font-size: 1.1rem;
 
-        .flex-item {
-            flex: 1 1 0px;
-            padding: 0 0.5rem;
-
-            &:first-of-type {
-            }
-
-            &:last-of-type {
-                padding-right: 0;
-            }
-        }
+        color: $primaryColor;
+        font-weight: bold;
+      }
     }
+  }
 
-    li {
-        padding-bottom: 0.75rem;
+  .title {
+    font-family: 'BigNoodleTitling';
+    color: rgba(255, 255, 255, 0.9);
+    letter-spacing: 2px;
+    font-size: 1.25rem;
+    background-color: $primaryColor;
+    padding: 1rem;
+    -webkit-box-shadow: 2px 4px 6px 0px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 2px 4px 6px 0px rgba(0, 0, 0, 0.5);
+    box-shadow: 2px 4px 6px 0px rgba(0, 0, 0, 0.5);
+
+    h1 {
+      max-width: 1140px;
+      margin: 0 auto;
     }
+  }
 
-    .signup-row {
-        text-align: center;
-        padding-top: 3rem;
-        a {
-            background: $primaryColor;
-            border: none;
-            padding: 15px 32px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            border-radius: 3px;
-            font-family: 'BigNoodleTitling';
-            letter-spacing: 2px;
-            color: #fff;
-            margin: 0;
-            font-size: 1.85rem;
-            cursor: pointer;
-            transition: background 0.2s ease-in-out;
+  .flex-row {
+    display: flex;
 
-            &:hover {
-                background: darken($primaryColor, 15%);
-            }
-        }
+    .flex-item {
+      flex: 1 1 0px;
+      padding: 0 0.5rem;
+
+      &:first-of-type {
+      }
+
+      &:last-of-type {
+        padding-right: 0;
+      }
     }
+  }
+
+  li {
+    padding-bottom: 0.75rem;
+  }
+
+  .signup-row {
+    text-align: center;
+    padding-top: 3rem;
+    a {
+      background: $primaryColor;
+      border: none;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      border-radius: 3px;
+      font-family: 'BigNoodleTitling';
+      letter-spacing: 2px;
+      color: #fff;
+      margin: 0;
+      font-size: 1.85rem;
+      cursor: pointer;
+      transition: background 0.2s ease-in-out;
+
+      &:hover {
+        background: darken($primaryColor, 15%);
+      }
+    }
+  }
 }
 
 @media (max-width: 768px) {
-    .frontpage {
-        &-container {
-            .flex-row {
-                flex-direction: column-reverse;
-                .flex-item {
-                    padding-bottom: 2rem;
-                }
-            }
+  .frontpage {
+    &-container {
+      .flex-row {
+        flex-direction: column-reverse;
+        .flex-item {
+          padding-bottom: 2rem;
         }
-
-        .title,
-        h2 {
-            text-align: center;
-        }
+      }
     }
+
+    .title,
+    h2 {
+      text-align: center;
+    }
+  }
 }

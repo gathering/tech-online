@@ -1,13 +1,13 @@
 .react-select-container {
-    .react-select__option {
-        &--is-focused {
-            background-color: $ascentColor;
-        }
-        &--is-selected {
-            background-color: darken($ascentColor, 7);
-        }
+  .react-select__option {
+    &--is-focused {
+      background-color: $ascentColor;
     }
-    .react-select__menu {
-        color: $backgroundColor;
+    &--is-selected {
+      background-color: darken($ascentColor, 7);
     }
+  }
+  .react-select__menu {
+    color: $backgroundColor;
+  }
 }

@@ -1,17 +1,17 @@
 .login {
-    text-align: center;
-    padding-top: 6rem;
+  text-align: center;
+  padding-top: 6rem;
 
-    h1 {
-        a {
-            color: white;
-            text-decoration: none;
+  h1 {
+    a {
+      color: white;
+      text-decoration: none;
 
-            &:hover {
-                text-decoration: underline;
-            }
-        }
-
-        font-size: 6rem;
+      &:hover {
+        text-decoration: underline;
+      }
     }
+
+    font-size: 6rem;
+  }
 }

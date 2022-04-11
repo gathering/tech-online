@@ -1,45 +1,45 @@
 @import '../styles/theme';
 
 .admin {
-    &-container {
-        margin: 2rem auto;
-        max-width: 1140px;
-        padding: 3rem 1rem;
-        background-color: lighten($backgroundColor, 5);
-        -webkit-box-shadow: 2px 4px 6px 0px rgba(0, 0, 0, 0.33);
-        -moz-box-shadow: 2px 4px 6px 0px rgba(0, 0, 0, 0.33);
-        box-shadow: 2px 4px 6px 0px rgba(0, 0, 0, 0.33);
+  &-container {
+    margin: 2rem auto;
+    max-width: 1140px;
+    padding: 3rem 1rem;
+    background-color: lighten($backgroundColor, 5);
+    -webkit-box-shadow: 2px 4px 6px 0px rgba(0, 0, 0, 0.33);
+    -moz-box-shadow: 2px 4px 6px 0px rgba(0, 0, 0, 0.33);
+    box-shadow: 2px 4px 6px 0px rgba(0, 0, 0, 0.33);
 
-        p {
-            padding-top: 1rem;
-        }
-
-        .tabs {
-            &__item {
-                cursor: pointer;
-
-                &--active {
-                    color: $primaryColor;
-                    border-bottom: 2px solid $ascentColor;
-                }
-            }
-        }
+    p {
+      padding-top: 1rem;
     }
 
-    .title {
-        font-family: 'BigNoodleTitling';
-        color: rgba(255, 255, 255, 0.9);
-        letter-spacing: 2px;
-        font-size: 1.25rem;
-        background-color: $primaryColor;
-        padding: 1rem;
-        -webkit-box-shadow: 2px 4px 6px 0px rgba(0, 0, 0, 0.5);
-        -moz-box-shadow: 2px 4px 6px 0px rgba(0, 0, 0, 0.5);
-        box-shadow: 2px 4px 6px 0px rgba(0, 0, 0, 0.5);
+    .tabs {
+      &__item {
+        cursor: pointer;
 
-        h1 {
-            max-width: 1140px;
-            margin: 0 auto;
+        &--active {
+          color: $primaryColor;
+          border-bottom: 2px solid $ascentColor;
         }
+      }
     }
+  }
+
+  .title {
+    font-family: 'BigNoodleTitling';
+    color: rgba(255, 255, 255, 0.9);
+    letter-spacing: 2px;
+    font-size: 1.25rem;
+    background-color: $primaryColor;
+    padding: 1rem;
+    -webkit-box-shadow: 2px 4px 6px 0px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 2px 4px 6px 0px rgba(0, 0, 0, 0.5);
+    box-shadow: 2px 4px 6px 0px rgba(0, 0, 0, 0.5);
+
+    h1 {
+      max-width: 1140px;
+      margin: 0 auto;
+    }
+  }
 }

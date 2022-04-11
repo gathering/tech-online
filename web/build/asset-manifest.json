@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/static/css/main.a6f62f1c.css",
+    "main.js": "/static/js/main.3bc72646.js",
+    "static/media/poc.jpg": "/static/media/poc.dbb24b5f38a24d96a519.jpg",
+    "static/media/big_noodle_titling.ttf": "/static/media/big_noodle_titling.e2ebffa44fbb63381589.ttf",
+    "static/media/nexthop.svg": "/static/media/nexthop.55f67db6fc20215dbacf6c909c5d6486.svg",
+    "static/media/nextron.svg": "/static/media/nextron.48c4f65c2cabde840b1904276ba24662.svg",
+    "index.html": "/index.html",
+    "main.a6f62f1c.css.map": "/static/css/main.a6f62f1c.css.map",
+    "main.3bc72646.js.map": "/static/js/main.3bc72646.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a6f62f1c.css",
+    "static/js/main.3bc72646.js"
+  ]
+}

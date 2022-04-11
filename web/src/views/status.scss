@@ -1,140 +1,140 @@
 @import '../styles/theme';
 
 .status {
-    &-container {
-        margin: 4rem auto;
-        max-width: 1140px;
-        padding: 3rem 1rem;
-        background-color: lighten($backgroundColor, 5);
-        -webkit-box-shadow: 2px 4px 6px 0px rgba(0, 0, 0, 0.33);
-        -moz-box-shadow: 2px 4px 6px 0px rgba(0, 0, 0, 0.33);
-        box-shadow: 2px 4px 6px 0px rgba(0, 0, 0, 0.33);
+  &-container {
+    margin: 4rem auto;
+    max-width: 1140px;
+    padding: 3rem 1rem;
+    background-color: lighten($backgroundColor, 5);
+    -webkit-box-shadow: 2px 4px 6px 0px rgba(0, 0, 0, 0.33);
+    -moz-box-shadow: 2px 4px 6px 0px rgba(0, 0, 0, 0.33);
+    box-shadow: 2px 4px 6px 0px rgba(0, 0, 0, 0.33);
 
-        hr {
-            margin-bottom: 1rem;
-        }
-
-        .header {
-            display: flex;
-
-            .nav {
-                margin-left: auto;
-
-                a {
-                    padding: 1em;
-                    margin-left: 0.5em;
-                    color: white !important;
-                    background-color: grey;
-
-                    &.active {
-                        background-color: $primaryColor;
-                    }
-                }
-            }
-        }
-
-        .tabs {
-            &__item {
-                cursor: pointer;
-
-                &--closed {
-                    color: grey;
-                }
-
-                &--active {
-                    color: $primaryColor;
-                    border-bottom: 2px solid $ascentColor;
-                }
-            }
-
-            .status {
-                margin-bottom: 0;
-                margin-top: 0.5rem;
-
-                &.available {
-                    color: #39dd6d;
-                }
-
-                &.booked {
-                    color: #dd2c32;
-                }
-
-                &.maintenance {
-                    color: grey;
-                }
-
-                &.dirty {
-                    color: orange;
-                }
-            }
-        }
-
-        .testlist {
-            padding-top: 1rem;
-            transition: opacity 300ms ease-out;
-
-            &--out-of-date {
-                opacity: 0.5;
-                cursor: default;
-                transition: opacity 100ms ease-out;
-            }
-
-            &__test,
-            &__doc {
-                margin: auto;
-                padding: 0.5rem;
-                margin-bottom: 0.25rem;
-                border-radius: 3px;
-                position: relative;
-                cursor: pointer;
-
-                &:after {
-                    content: '<';
-                    position: absolute;
-                    right: 1rem;
-                    transform: rotate(-90deg);
-                    transition: transform 0.1s ease-in-out;
-                    font-weight: bold;
-                }
-
-                &--expanded {
-                    &:after {
-                        transform: rotate(-270deg);
-                    }
-                }
-
-                & > *:first-child {
-                    text-transform: capitalize;
-                }
-
-                &--true {
-                    background: #39dd6d;
-                    color: #3d3d3d;
-                }
-
-                &--false {
-                    background: #dd2c32;
-                    color: #3d3d3d;
-                }
-
-                &--skipped {
-                    background: orange;
-                }
-
-                &--neutral {
-                    background: grey;
-                }
-
-                &-description {
-                    padding-bottom: 2rem;
-
-                    display: none;
-
-                    &--active {
-                        display: block;
-                    }
-                }
-            }
-        }
+    hr {
+      margin-bottom: 1rem;
     }
+
+    .header {
+      display: flex;
+
+      .nav {
+        margin-left: auto;
+
+        a {
+          padding: 1em;
+          margin-left: 0.5em;
+          color: white !important;
+          background-color: grey;
+
+          &.active {
+            background-color: $primaryColor;
+          }
+        }
+      }
+    }
+
+    .tabs {
+      &__item {
+        cursor: pointer;
+
+        &--closed {
+          color: grey;
+        }
+
+        &--active {
+          color: $primaryColor;
+          border-bottom: 2px solid $ascentColor;
+        }
+      }
+
+      .status {
+        margin-bottom: 0;
+        margin-top: 0.5rem;
+
+        &.available {
+          color: #39dd6d;
+        }
+
+        &.booked {
+          color: #dd2c32;
+        }
+
+        &.maintenance {
+          color: grey;
+        }
+
+        &.dirty {
+          color: orange;
+        }
+      }
+    }
+
+    .testlist {
+      padding-top: 1rem;
+      transition: opacity 300ms ease-out;
+
+      &--out-of-date {
+        opacity: 0.5;
+        cursor: default;
+        transition: opacity 100ms ease-out;
+      }
+
+      &__test,
+      &__doc {
+        margin: auto;
+        padding: 0.5rem;
+        margin-bottom: 0.25rem;
+        border-radius: 3px;
+        position: relative;
+        cursor: pointer;
+
+        &:after {
+          content: '<';
+          position: absolute;
+          right: 1rem;
+          transform: rotate(-90deg);
+          transition: transform 0.1s ease-in-out;
+          font-weight: bold;
+        }
+
+        &--expanded {
+          &:after {
+            transform: rotate(-270deg);
+          }
+        }
+
+        & > *:first-child {
+          text-transform: capitalize;
+        }
+
+        &--true {
+          background: #39dd6d;
+          color: #3d3d3d;
+        }
+
+        &--false {
+          background: #dd2c32;
+          color: #3d3d3d;
+        }
+
+        &--skipped {
+          background: orange;
+        }
+
+        &--neutral {
+          background: grey;
+        }
+
+        &-description {
+          padding-bottom: 2rem;
+
+          display: none;
+
+          &--active {
+            display: block;
+          }
+        }
+      }
+    }
+  }
 }
