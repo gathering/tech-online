@@ -9,6 +9,8 @@ import nlogicLogo from '../assets/nlogic.svg';
 import elkjopLogo from '../assets/elkjop.svg';
 import frivillighetensarLogo from '../assets/frivillighetensar.svg';
 
+const loginEnabled = process.env.REACT_APP_LOGIN_ENABLED === 'true';
+
 const App = () => {
   const user = useUserState();
   const loggedIn = useMemo(() => !!user.access_token, [user]);
@@ -22,12 +24,6 @@ const App = () => {
           </NavLink>
           <NavLink to="/documentation">Reference documentation</NavLink>
 
-          {loggedIn && (
-            <NavLink to="/participate" className="participate-link">
-              Participate
-            </NavLink>
-          )}
-
           <a
             href="https://discord.gg/gathering"
             target="_blank"
@@ -35,9 +31,15 @@ const App = () => {
           >
             Discord Server
           </a>
+
+          {loggedIn && (
+            <NavLink to="/participate" className="participate-link">
+              Participate
+            </NavLink>
+          )}
         </div>
         <div className="nav-right">
-          {!loggedIn && (
+          {!loggedIn && loginEnabled && (
             <NavLink to="/login" className="participate-link">
               Login
             </NavLink>
@@ -55,7 +57,7 @@ const App = () => {
       <main>
         <Switch>
           <Route path="/" exact component={Views.Frontpage} />
-          <Route path="/login" component={Views.Login} />
+          {loginEnabled && <Route path="/login" component={Views.Login} />}
           <Route path="/signup" component={Views.Signup} />
           <Route path="/documentation" component={Views.Documentation} />
           <Route path="/participate" component={Views.Participate} />

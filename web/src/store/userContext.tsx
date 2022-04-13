@@ -77,6 +77,7 @@ const useLogin = (code: string, redirURL = '/login') => {
     (async () => {
       if (fetchStatus === FETCH_STATUS.IDLE) {
         setFetchStatus(FETCH_STATUS.PENDING);
+
         await httpPost(
           'oauth/token/',
           {

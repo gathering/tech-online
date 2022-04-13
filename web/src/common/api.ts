@@ -62,11 +62,10 @@ export async function client<T = any>(
   }
 
   if (c.contentType === 'application/x-www-form-urlencoded') {
-    config.body = Object.entries(c.body)
-      .map(
-        ([key, _value]) =>
-          encodeURIComponent(key) + '=' + encodeURIComponent(c.value)
-      )
+    config.body = JSON.parse(config.body) as Record<string, string>;
+
+    config.body = Object.entries(config.body)
+      .map(([key, value]: [string, any]) => `${key}=${value}`)
       .join('&');
   }
 
