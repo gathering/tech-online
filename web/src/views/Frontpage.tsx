@@ -20,7 +20,15 @@ const Frontpage = () => {
         <p>
           Are you curious about being Tech crew at The Gathering? Or any other
           LAN parties? On Friday, April 15th, 14:30 CEST, a conversation with a
-          few members from Tech will be held on TGCreative Twitch
+          few members from Tech will be held on the{' '}
+          <a
+            href="https://www.twitch.tv/tgtvcreative"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            TGTVCreative twitch
+          </a>{' '}
+          channel.
         </p>
         <p>
           While you are waiting, check out the reference documentation in the
