@@ -7,3 +7,4 @@ export { Status } from './Status';
 export { Logout } from './Logout';
 export { Admin } from './Admin';
 export { Signup } from './Signup';
+export { NotFound } from './NotFound';

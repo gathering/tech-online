@@ -65,6 +65,7 @@ const App = () => {
           <Route path="/logout" component={Views.Logout} />
           <Route path="/admin/:tab?" component={Views.Admin} />
           {/* <Route path="/demo" component={Views.Demo} /> */}
+          <Route path="*" component={Views.NotFound} />
         </Switch>
         <div className="sponsors">
           <h4>Check out our great sponsors!</h4>
