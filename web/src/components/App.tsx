@@ -57,7 +57,7 @@ const App = () => {
       <main>
         <Switch>
           <Route path="/" exact component={Views.Frontpage} />
-          {loginEnabled && <Route path="/login" component={Views.Login} />}
+          <Route path="/login" component={Views.Login} />
           <Route path="/signup" component={Views.Signup} />
           <Route path="/documentation" component={Views.Documentation} />
           <Route path="/participate" component={Views.Participate} />

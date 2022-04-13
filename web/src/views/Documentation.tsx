@@ -68,7 +68,7 @@ export const Documentation = () => {
   // headingHash can be used to trigger scroll to, but keep in mind document might not be loaded yet
   const [hash, _headingHash] = rawHash.slice(1).split('_');
   const [activeTab, setActiveTab] = useState(
-    (hash && tabs.find((tab) => tab.value === hash)) || tabs[0]
+    (hash && tabs.find((tab) => tab.value === hash)) || undefined
   );
   const [loadingState, setLoadingState] = useState(FETCH_STATUS.IDLE);
 
@@ -76,7 +76,7 @@ export const Documentation = () => {
 
   useEffect(() => {
     setLoadingState(FETCH_STATUS.PENDING);
-    httpGet<Document[]>(`documents/?family=${activeTab.value}`)
+    httpGet<Document[]>(`documents/?family=${activeTab?.value}`)
       .then((res) => {
         setDocs(
           res.sort(function (a, b) {
@@ -111,7 +111,7 @@ export const Documentation = () => {
         {(loadingState === FETCH_STATUS.IDLE ||
           loadingState === FETCH_STATUS.PENDING) && <h2>Loading...</h2>}
         {loadingState === FETCH_STATUS.RESOLVED && (
-          <DocsList docs={docs} tab={activeTab} />
+          <DocsList docs={docs} tab={activeTab!} />
         )}
       </div>
     </div>
