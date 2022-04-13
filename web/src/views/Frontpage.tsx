@@ -11,11 +11,15 @@ const Frontpage = () => {
       </div>
 
       <div className="frontpage-container">
-        <h2>Ready for Tech:Online 2022?</h2>
-        <hr />
-        <p>More information and registration available soon!</p>
-
-        <br />
+      <h2>UPDATE: Tech:Online 2022?</h2>
+      <hr/>
+      <p> <b>We are working on getting the signup ready and Tech:Online is going live on the evening of Thursday, 14. April.</b> </p>
+      <p> Are you curious about being Tech crew at The Gathering? Or any other LAN parties? On Friday, April 15th, 14:30 CEST, a conversation with a few members from Tech will be held on <a href="https://www.twitch.tv/tgtvcreative">twitch.tv/tgtvcreative</a>.</p>
+      <p>While you are waiting, check out the reference documentation in the link above</p>
+      <strong>
+        Join us on the <strong>#tech</strong> channel on <a href="https://discordapp.com/invite/PmSTYdT">The Gathering's Discord</a>.
+      </strong>
+      <br />
         {/*
                 <div style={{ height: '350px', overflow: 'hidden' }}>
                     <img
@@ -26,7 +30,7 @@ const Frontpage = () => {
                 </div>
                 */}
         <h2>What is Tech:Online?</h2>
-        <hr />
+        <hr/>
         <p>
           <strong>
             Tech:Online is a network-hacking event and experiment!
@@ -52,7 +56,7 @@ const Frontpage = () => {
         </p>
 
         <h2>Why?</h2>
-        <hr />
+        <hr/>
         <p>
           Every year during easter, The Gathering takes place and somewhere
           between 5000 and 10 000 people visit the venue to participate in an
@@ -88,7 +92,7 @@ const Frontpage = () => {
           to get the "participant" online.
         </p>
         <h2>NEW in 2021: Two different tracks!</h2>
-        <hr />
+        <hr/>
         <p>
           There will be two tracks (exercises) available. You can choose to
           participate in either or both.
@@ -133,7 +137,7 @@ const Frontpage = () => {
         <div className="flex-row">
           <div className="flex-item">
             <h2>Who can participate?</h2>
-            <hr />
+            <hr/>
 
             <p>
               <strong>Anyone!</strong>
