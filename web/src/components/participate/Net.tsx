@@ -27,10 +27,12 @@ export const Net = () => {
     return <Redirect to="/login" />;
   }
 
+  console.log(user);
+
   const fetchParticipationData = useCallback(() => {
     setFetchStatus(FETCH_STATUS.PENDING);
     httpGet<NetParticipationData[]>(
-      `timeslots/?user-token=${user.profile.uuid}&track=net`
+      `timeslots/?user-token=${user.user.id}&track=net`
     )
       .then((data) => {
         if (data.length > 0) {

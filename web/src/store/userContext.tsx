@@ -1,5 +1,5 @@
 import React, { createContext, useReducer, useState, useEffect } from 'react';
-import { httpPost, FETCH_STATUS, httpGet, httpPut } from '../common/api';
+import { httpPost, FETCH_STATUS, httpPut } from '../common/api';
 
 export const localStorageTokenKey = '__tgo_token__';
 export const localStorageDataKey = '__tgo_data__';
@@ -79,54 +79,41 @@ const useLogin = (code: string, redirURL = '/login') => {
         setFetchStatus(FETCH_STATUS.PENDING);
 
         await httpPost(
-          'oauth/token/',
+          `api/oauth2/login/?code=${code}&redirect_url=${window.location.origin}/login`,
+          {},
           {
-            code: code,
-            redirect_uri: `${window.location.origin}${redirURL}`,
-            grant_type: 'authorization_code',
-            client_secret: process.env.REACT_APP_CLIENT_SECRET,
-            client_id: process.env.REACT_APP_CLIENT_ID,
-          },
-          {
-            host: 'https://unicorn.gathering.org',
+            host: 'https://techo.gathering.org',
             forceBlankEol: true,
-            contentType: 'application/x-www-form-urlencoded',
           }
         )
           .then(async (data) => {
-            window.localStorage.setItem(
-              localStorageTokenKey,
-              data.access_token
-            );
+            window.localStorage.setItem(localStorageTokenKey, data.token.key);
+            const profile = data.user;
 
-            await httpGet('api/accounts/users/@me/', {
-              host: 'https://unicorn.gathering.org',
-            }).then((profile) => {
-              let isAdmin = false;
-              if (profile.role.value === 'crew') {
-                isAdmin = true;
-              }
-              dispatch({
-                type: actions.LOGIN,
-                payload: {
-                  admin: isAdmin,
-                  profile,
-                  ...data,
-                },
-              });
-
-              httpPut(`user/${profile.uuid}`, {
-                token: profile.uuid,
-                username: profile.username,
-                display_name: profile.display_name,
-                email_address: profile.email,
-              }).catch((err) => {
-                console.warn(err);
-              });
-
-              setFetchResult(data);
-              setFetchStatus(FETCH_STATUS.RESOLVED);
+            let isAdmin = false;
+            if (profile.role === 'crew') {
+              isAdmin = true;
+            }
+            dispatch({
+              type: actions.LOGIN,
+              payload: {
+                admin: isAdmin,
+                profile,
+                ...data,
+              },
             });
+
+            httpPut(`user/${profile.uuid}`, {
+              token: profile.uuid,
+              username: profile.username,
+              display_name: profile.display_name,
+              email_address: profile.email,
+            }).catch((err) => {
+              console.warn(err);
+            });
+
+            setFetchResult(data);
+            setFetchStatus(FETCH_STATUS.RESOLVED);
           })
           .catch((error) => {
             dispatch({ type: actions.LOGOUT });
