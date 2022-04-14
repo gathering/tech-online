@@ -4,7 +4,7 @@ import { httpPost } from '../common/api';
 import { actions, useUserDispatch } from '../store/userContext';
 
 function Logout() {
-  httpPost('oauth/logout');
+  httpPost('oauth2/logout');
 
   const dispatch = useUserDispatch();
   dispatch({ type: actions.LOGOUT });
