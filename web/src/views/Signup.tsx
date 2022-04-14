@@ -64,7 +64,7 @@ const Signup = () => {
       return <Redirect to="/login" />;
     }
   } else {
-    [fetchStatus, fetchResult] = useLogin(code, '/signup');
+    [fetchStatus, fetchResult] = useLogin(code);
   }
 
   if (fetchStatus === FETCH_STATUS.REJECTED) {

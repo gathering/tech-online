@@ -13,7 +13,7 @@ const loginEnabled = process.env.REACT_APP_LOGIN_ENABLED === 'true';
 
 const App = () => {
   const user = useUserState();
-  const loggedIn = useMemo(() => !!user.access_token, [user]);
+  const loggedIn = useMemo(() => !!user.token, [user]);
 
   return (
     <>

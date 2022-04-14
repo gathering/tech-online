@@ -48,6 +48,11 @@ export async function client<T = any>(
     headers.Authorization = `Bearer ${token}`;
   }
 
+  c.host
+    ? // eslint-disable-next-line no-self-assign
+      (c.host = c.host)
+    : (c.host = process.env.REACT_APP_API_URL as string);
+
   const config = {
     method: c.body ? 'POST' : 'GET',
     ...c,
@@ -73,6 +78,7 @@ export async function client<T = any>(
     endpoint += c.forceBlankEol ? '' : '/';
   }
 
+  console.log(c);
   return await fetch(`${c.host}/${endpoint}`, config).then(async (response) => {
     const data: T = await response.json();
     if (response.ok) {

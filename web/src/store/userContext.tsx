@@ -1,5 +1,5 @@
 import React, { createContext, useReducer, useState, useEffect } from 'react';
-import { httpPost, FETCH_STATUS, httpPut } from '../common/api';
+import { httpPost, FETCH_STATUS } from '../common/api';
 
 export const localStorageTokenKey = '__tgo_token__';
 export const localStorageDataKey = '__tgo_data__';
@@ -68,7 +68,7 @@ const useUserDispatch = () => {
   return context;
 };
 
-const useLogin = (code: string, redirURL = '/login') => {
+const useLogin = (code: string) => {
   const dispatch = useUserDispatch();
   const [fetchStatus, setFetchStatus] = useState(FETCH_STATUS.IDLE);
   const [fetchResult, setFetchResult] = useState<any>();
@@ -103,8 +103,7 @@ const useLogin = (code: string, redirURL = '/login') => {
               },
             });
 
-            httpPut(`user/${profile.uuid}`, {
-              token: profile.uuid,
+            httpPost(`user/${profile.id}`, {
               username: profile.username,
               display_name: profile.display_name,
               email_address: profile.email,
