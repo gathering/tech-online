@@ -7,7 +7,7 @@ set system login user kly authentication ssh-rsa "ssh-rsa AAAAB3NzaC1yc2EAAAABJQ
 set system login user olemathias class super-user
 set system login user olemathias authentication ssh-ed25519 "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH+m30vGUjSxdaRvyJkkwK1WYwLIPwql6Hg+pBxdKIkV olemathias.aa.heggem@Oles-MacBook-Pro.local"
 set system login user tech class super-user
-set system login user tech authentication encrypted-password "$5$0nI9uUGZ$GMSPwoozPxlwqNO9HtftYi33OXv6yZ79tFtw2bUKQP8"
+set system login user tech authentication encrypted-password "$5$dHUP9B2J$CDqZ4ZDNRwxNtEkKEgM90.J6T95ad7NQr3mJIb6uvy5"
 set system login user technet class super-user
 set system login user technet authentication encrypted-password "$5$0nI9uUGZ$GMSPwoozPxlwqNO9HtftYi33OXv6yZ79tFtw2bUKQP8"
 set system services ssh root-login allow

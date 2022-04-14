@@ -70,7 +70,7 @@ expect {
 }
 expect {
 	"assword:" {
-		send "IAmGroot\n"
+		send "power10justhot\n"
 	}
 	-re "root.*:.%" {
 		send "\n"

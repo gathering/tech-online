@@ -80,7 +80,7 @@ expect -timeout 10 -re "login: " {
 } timeout { exit }
 expect {
 	"assword:" {
-		send "IAmGroot\n"
+		send "power10justhot\n"
 	}
 	-re ".+@.+% " {
 		send "\n"
