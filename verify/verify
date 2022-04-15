@@ -1,9 +1,13 @@
 #!/bin/bash
 
+# Requirements: libwww-perl
+
 # Usage:
+# -1. Make sure the directory the password etc. is placed in is read-protected to participants can't access it. "chmod 700 $HOME".
+# 0. Add this script to some central node with access to the stations.
 # 1. Add your default SSH pubkey to the stations.
-# 2. Add the backend basic auth password to "password" in PWD.
-# 3. Run it: for i in {1..6}; do screen -S "station-$i" -dm bash -c "while : ; do time timeout 60 ./verify.sh $i ; done"; done
+# 2. Create a "verify" token in the backend and add it to a read-protected file "auth_token" in the current directory.
+# 3. Run it (example for station 0): screen -S "station-0" -dm bash -c "while : ; do time timeout 60 ./verify 0 ; done"
 
 set -u
 
@@ -20,8 +24,8 @@ mgmt_ip[edge1]=${prefix}200.10
 mgmt_ok=""
 mgmt_bad=""
 
-password=$(cat password)
-backend_endpoint="https://${password}@techo.gathering.org/api/test/"
+auth_token=$(cat auth_token)
+backend_endpoint="https://techo.gathering.org/api/test/"
 declare -A linknets
 linknets[distro-core]="${prefix}200.1 core ${prefix}200.2 distro"
 linknets[distro-edge0]="${prefix}200.5 distro ${prefix}200.6 edge0"
@@ -76,7 +80,7 @@ state() {
 		"status_description": "$status_description"
 		}
 		_EOF_
-	} | lwp-request -d -m POST "${backend_endpoint}" >&2
+	} | lwp-request -H "Authorization: Bearer $auth_token" -d -m POST "${backend_endpoint}" >&2
 	seq=$(( $seq + 1 ))
 }
 
