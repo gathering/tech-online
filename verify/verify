@@ -17,7 +17,7 @@ echo station $station
 start_time=$(date +%s)
 hint_int=n
 declare -A mgmt_ip
-mgmt_ip[core]=10.0.99.1
+mgmt_ip[core]=10.91.20.12
 mgmt_ip[distro]=${prefix}200.2
 mgmt_ip[edge0]=${prefix}200.6
 mgmt_ip[edge1]=${prefix}200.10
