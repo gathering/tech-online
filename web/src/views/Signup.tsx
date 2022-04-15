@@ -26,7 +26,7 @@ const Signup = () => {
   const isAuthed = userIsAuthed(user);
 
   function submit() {
-    httpGet(`timeslots/?user-token=${user.profile.id}`)
+    httpGet(`timeslots/?user-id=${user.profile.id}`)
       .then((res) => {
         if (
           res.filter((track: any) => track.track === selectedPath.value)
