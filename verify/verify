@@ -3,7 +3,7 @@
 # Requirements: libwww-perl
 
 # Usage:
-# -1. Make sure the directory the password etc. is placed in is read-protected to participants can't access it. "chmod 700 $HOME".
+# -1. Make sure the directory the password etc. is placed in is read-protected so participants can't access it. "chmod 700 $HOME".
 # 0. Add this script to some central node with access to the stations.
 # 1. Add your default SSH pubkey to the stations.
 # 2. Create a "verify" token in the backend and add it to a read-protected file "auth_token" in the current directory.
@@ -170,7 +170,7 @@ mgmt() {
 
 v_mgmt() {
 	header "management"
-	for a in core distro edge0 edge1; do
+	for a in distro edge0 edge1; do
 		mping ${mgmt_ip[$a]} "$a"
 		test_mgmt ${mgmt_ip[$a]} $a $?
 	done
