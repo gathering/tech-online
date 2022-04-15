@@ -26,7 +26,7 @@ const Signup = () => {
   const isAuthed = userIsAuthed(user);
 
   function submit() {
-    httpGet(`timeslots/?user-token=${user.profile.uuid}`)
+    httpGet(`timeslots/?user-token=${user.profile.id}`)
       .then((res) => {
         if (
           res.filter((track: any) => track.track === selectedPath.value)
@@ -40,7 +40,7 @@ const Signup = () => {
       })
       .then(() => {
         httpPost('timeslot', {
-          user_token: user.profile.uuid,
+          user_token: user.profile.id,
           track: selectedPath.value,
           notes: `Discord: ${discord}\n\n${notes}`,
         })

@@ -37,7 +37,7 @@ export const Net = () => {
       .then((data) => {
         if (data.length > 0) {
           httpGet(
-            `stations/?timeslot=${data[0].id}&user-token=${user.profile.uuid}`
+            `stations/?timeslot=${data[0].id}&user-token=${user.profile.id}`
           ).then((timeslot) => {
             setTimeslot(timeslot[0]);
             setNetParticipationData(data);

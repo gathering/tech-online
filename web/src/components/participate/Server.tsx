@@ -21,11 +21,11 @@ export const Server = () => {
 
   const fetchParticipationData = useCallback(() => {
     setFetchStatus(FETCH_STATUS.PENDING);
-    httpGet(`timeslots/?user-token=${user.profile.uuid}&track=server`)
+    httpGet(`timeslots/?user-token=${user.profile.id}&track=server`)
       .then((data) => {
         if (data.length > 0) {
           httpGet(
-            `stations/?timeslot=${data[0].id}&user-token=${user.profile.uuid}`
+            `stations/?timeslot=${data[0].id}&user-token=${user.profile.id}`
           ).then((timeslot) => {
             setTimeslot(timeslot[0]);
             setNetParticipationData(data);

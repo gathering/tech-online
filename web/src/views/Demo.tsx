@@ -14,7 +14,7 @@ const tokenData = {
 };
 
 const profileData = {
-  uuid: '8953b7bc-4b90-4243-9555-6442a2334641',
+  id: '8953b7bc-4b90-4243-9555-6442a2334641',
   first_name: 'Badger',
   last_name: 'McBadgerface',
   display_name: 'Badger Badger Badger',
