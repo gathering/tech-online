@@ -67,7 +67,7 @@ const Frontpage = () => {
           Every year during easter, The Gathering takes place and somewhere
           between 5000 and 10 000 people visit the venue to participate in an
           amazing digital festival. But for obvious reasons, we've had to cancel
-          this event twice in a row now.
+          this event <s>twice</s> three times in a row now!
         </p>
         <p>
           But some of us know that The Gathering lets us experiment with things

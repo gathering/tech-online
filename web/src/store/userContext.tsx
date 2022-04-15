@@ -78,8 +78,10 @@ const useLogin = (code: string) => {
       if (fetchStatus === FETCH_STATUS.IDLE) {
         setFetchStatus(FETCH_STATUS.PENDING);
 
+        window.localStorage.removeItem(localStorageTokenKey);
+
         await httpPost(
-          `api/oauth2/login/?code=${code}&redirect_url=${window.location.origin}/login`,
+          `api/oauth2/login/?code=${code}&redirect-url=${window.location.origin}/login`,
           {},
           {
             host: 'https://techo.gathering.org',
@@ -91,7 +93,7 @@ const useLogin = (code: string) => {
             const profile = data.user;
 
             let isAdmin = false;
-            if (profile.role === 'crew') {
+            if (profile.role === 'admin') {
               isAdmin = true;
             }
             dispatch({
