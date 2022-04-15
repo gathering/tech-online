@@ -39,8 +39,7 @@ const Signup = () => {
         }
       })
       .then(() => {
-        httpPost('timeslot', {
-          user_token: user.profile.id,
+        httpPost(`timeslot/?user-id=${user.profile.id}`, {
           track: selectedPath.value,
           notes: `Discord: ${discord}\n\n${notes}`,
         })
