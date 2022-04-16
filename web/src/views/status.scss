@@ -59,6 +59,14 @@
           color: #dd2c32;
         }
 
+        &.terminated {
+          color: #ff2c32;
+        }
+
+        &.provisioning {
+          color: orange;
+        }
+
         &.maintenance {
           color: grey;
         }

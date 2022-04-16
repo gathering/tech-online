@@ -45,6 +45,10 @@ const Status = () => {
   const isMaintenance = (station: Station | undefined) =>
     station?.status === 'maintenance';
   const isDirty = (station: Station | undefined) => station?.status === 'dirty';
+  const isTerminated = (station: Station | undefined) =>
+    station?.status === 'terminated';
+  const isProvisioning = (station: Station | undefined) =>
+    station?.status === 'provisioning';
 
   return (
     <div className="status-container">
@@ -85,6 +89,10 @@ const Status = () => {
                   ? 'maintenance'
                   : isBooked(s)
                   ? 'booked'
+                  : isTerminated(s)
+                  ? 'terminated'
+                  : isProvisioning(s)
+                  ? 'provisioning'
                   : 'available'
               }`}
             >
@@ -94,6 +102,10 @@ const Status = () => {
                 ? 'Maintenance'
                 : isBooked(s)
                 ? 'Booked'
+                : isProvisioning(s)
+                ? 'Provisioning'
+                : isTerminated(s)
+                ? 'Terminated'
                 : 'Available'}
             </h3>
           </div>
