@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Requirements: jq curl
+
 # Usage:
 # -1. Make sure the directory the password etc. is placed in is read-protected so participants can't access it. "chmod 700 $HOME".
 # 0. Add this script to every node connected with a serial conenction to the stations, as the root user.
@@ -58,15 +60,17 @@ local_status=provisioning
 update_station
 
 # Kick all techo users
-sudo killall -u techo
+sudo pkill -u techo
 
 # Change the password
 new_password=$(head /dev/urandom | tr -dc a-z0-9 | head -c12)
 echo -e "$new_password\n$new_password" | passwd techo
 
+# Kill all USB serial connections
+sudo pkill -f /dev/ttyUSB
+
 # Bootstrap nodes
 # TODO Run in parallel
-# TODO Does knis2 actually return non-zero status on errors?
 bootstrap_success=1
 for x in /dev/ttyUSB*; do
 	cd "$bootstrap_dir"
