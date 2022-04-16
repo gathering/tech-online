@@ -5,7 +5,7 @@ if [ $# -ne 3 ]; then
         exit 1
 fi
 
-echo statuses should be active, dirty, terminated, maintenance
+echo statuses should be available, ready, dirty, terminated, maintenance
 track=$1
 station=$2
 stat=$3

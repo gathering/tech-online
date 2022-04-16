@@ -7,11 +7,11 @@
 # 0. Add this script to some central node with access to the stations.
 # 1. Add your default SSH pubkey to the stations.
 # 2. Create a "verify" token in the backend and add it to a read-protected file "auth_token" in the current directory.
-# 3. Run it (example for station 0): screen -S "station-0" -dm bash -c "while : ; do time timeout 60 ./verify 0 ; done"
+# 3. Run it: screen -S "verify" -dm bash -c "while : ; do time timeout 60 ./verify ; done"
 
-set -u
+set -u -o pipefail
 
-station=${1:-1}
+station="$(hostname | egrep -o '[0-9]+')"
 prefix=10.${station}.
 echo station $station
 start_time=$(date +%s)
