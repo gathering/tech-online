@@ -6,7 +6,7 @@
 # -1. Make sure the directory the password etc. is placed in is read-protected so participants can't access it. "chmod 700 $HOME".
 # 0. Add this script to every node connected with a serial conenction to the stations, as the root user.
 # 1. Create a "runner" token in the backend and add it to a read-protected file "auth_token" in the current directory.
-# 2. Run it: screen -S "autoprovision" -dm bash -c "while : ; do time ./autoprovision; sleep 5 ; done"
+# 2. Run it: screen -S "autoprovision" -dm bash -c "while : ; do ./autoprovision; sleep 5 ; done"
 
 # How it works:
 # Watch for station to get dirty
@@ -43,7 +43,7 @@ local_credentials=
 
 # Check if dirty
 if [[ $local_status != "dirty" ]]; then
-	echo "Station is not dirty"
+	#echo "Station is not dirty"
 	exit 0
 fi
 echo "Station is DIRTY!"
