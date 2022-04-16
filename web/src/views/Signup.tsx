@@ -26,7 +26,7 @@ const Signup = () => {
   const isAuthed = userIsAuthed(user);
 
   function submit() {
-    httpGet(`timeslots/?user-id=${user.profile.id}`)
+    httpGet(`timeslots/?user=${user.profile.id}`)
       .then((res) => {
         if (
           res.filter((track: any) => track.track === selectedPath.value)
@@ -39,7 +39,7 @@ const Signup = () => {
         }
       })
       .then(() => {
-        httpPost(`timeslot/?user-id=${user.profile.id}`, {
+        httpPost(`timeslot/?user=${user.profile.id}`, {
           user: user.profile.id,
           track: selectedPath.value,
           notes: `Discord: ${discord}\n\n${notes}`,
@@ -51,7 +51,7 @@ const Signup = () => {
           })
           .catch((err) => {
             alert(`Something went wrong :(\n\n${err}`);
-            console.warn(err);
+            console.warn(err.message);
           });
       })
       .catch((err) => console.error(err));

@@ -31,14 +31,10 @@ export const Net = () => {
 
   const fetchParticipationData = useCallback(() => {
     setFetchStatus(FETCH_STATUS.PENDING);
-    httpGet<NetParticipationData[]>(
-      `timeslots/?user-token=${user.user.id}&track=net`
-    )
+    httpGet<NetParticipationData[]>(`timeslots/?track=net`)
       .then((data) => {
         if (data.length > 0) {
-          httpGet(
-            `stations/?timeslot=${data[0].id}&user-token=${user.profile.id}`
-          ).then((timeslot) => {
+          httpGet(`stations/?timeslot=${data[0].id}`).then((timeslot) => {
             setTimeslot(timeslot[0]);
             setNetParticipationData(data);
             setHasSignedUp(true);

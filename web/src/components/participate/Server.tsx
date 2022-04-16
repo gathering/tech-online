@@ -21,12 +21,14 @@ export const Server = () => {
 
   const fetchParticipationData = useCallback(() => {
     setFetchStatus(FETCH_STATUS.PENDING);
-    httpGet(`timeslots/?user-token=${user.profile.id}&track=server`)
-      .then((data) => {
+    httpGet(`timeslots/?track=server`)
+      .then((data: Record<string, string>[]) => {
+        data = data.filter((timeslot) => {
+          timeslot.user === user.profile.id;
+        });
+
         if (data.length > 0) {
-          httpGet(
-            `stations/?timeslot=${data[0].id}&user-token=${user.profile.id}`
-          ).then((timeslot) => {
+          httpGet(`stations/?timeslot=${data[0].id}`).then((timeslot) => {
             setTimeslot(timeslot[0]);
             setNetParticipationData(data);
             setHasSignedUp(true);
