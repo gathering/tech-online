@@ -1,0 +1,94 @@
+#!/bin/bash
+
+# Usage:
+# -1. Make sure the directory the password etc. is placed in is read-protected so participants can't access it. "chmod 700 $HOME".
+# 0. Add this script to every node connected with a serial conenction to the stations, as the root user.
+# 1. Create a "runner" token in the backend and add it to a read-protected file "auth_token" in the current directory.
+# 2. Run it: screen -S "autoprovision" -dm bash -c "while : ; do time ./autoprovision; sleep 5 ; done"
+
+# How it works:
+# Watch for station to get dirty
+# Change station state to provisioning
+# Generate new password and change it for the user
+# Kick off all tech users
+# Start bootstrapping all devices
+# Wait for bootstrapping to finish (if async)
+# Change station state to default and update credentials
+
+auth_token=$(cat auth_token)
+local_shortname="$(hostname | egrep -o '[0-9]+')"
+main_dir="$PWD"
+bootstrap_dir="$main_dir/../bootstrap"
+auth_token_file="$main_dir/auth_token"
+
+# Check for auth token
+if [[ $auth_token == "" ]]; then
+	echo "Auth token not found" >&2
+	echo "Please place it in ./auth_token" >&2
+	exit 1
+fi
+
+# Get the station and info
+local_json="$(curl -sSf -H "Authorization: Bearer $(cat $auth_token_file)" "https://techo.gathering.org/api/stations/?track=net&shortname=$local_shortname" | jq -c '.[]' | head -n1)"
+if [[ $local_json == "" ]]; then
+	echo "Station not found in backend" >&2
+	exit 1
+fi
+local_id="$(echo $local_json | jq .id | sed 's/"//g')"
+local_default_status="$(echo $local_json | jq .default_status | sed 's/"//g')"
+local_status="$(echo $local_json | jq .status | sed 's/"//g')"
+local_credentials=
+
+# Check if dirty
+if [[ $local_status != "dirty" ]]; then
+	echo "Station is not dirty"
+	exit 0
+fi
+echo "Station is DIRTY!"
+
+function update_station {
+	local_json="$(echo $local_json | jq -c ". +{\"status\": \"$local_status\"}")"
+	local_json="$(echo $local_json | jq -c ". +{\"credentials\": \"$local_credentials\"}")"
+	echo $local_json
+	echo $local_json | curl -sSf -H "Authorization: Bearer $(cat $auth_token_file)" "https://techo.gathering.org/api/station/$local_id/" -X PUT --data-binary @-
+}
+
+# Change state
+local_status=provisioning
+update_station
+
+# Kick all techo users
+sudo killall -u techo
+
+# Change the password
+new_password=$(head /dev/urandom | tr -dc a-z0-9 | head -c12)
+echo -e "$new_password\n$new_password" | passwd techo
+
+# Bootstrap nodes
+# TODO Run in parallel
+# TODO Does knis2 actually return non-zero status on errors?
+bootstrap_success=1
+for x in /dev/ttyUSB*; do
+	cd "$bootstrap_dir"
+	./knis2 $x
+	if [[ $? != 0 ]]; then
+		echo "Failed to knis $x" >&2
+		bootstrap_success=0
+	fi
+	cd "$main_dir"
+done
+echo
+if [[ $bootstrap_success != 1 ]]; then
+	echo "Failed to bootstrap at least one device" >&2
+	local_status=maintenance
+	update_station
+	exit 1
+fi
+
+# Update station
+local_status=$local_default_status
+local_credentials="**SSH host**: s${local_id}.techo.no\n**SSH username**: techo\n**SSH password**: ${new_password}"
+update_station
+
+echo
+echo "Great success!"
