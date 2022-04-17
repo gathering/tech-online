@@ -7,33 +7,15 @@ const Frontpage = () => {
   return (
     <div className="frontpage">
       <div className="title">
-        <h1>Welcome to the Tech:Online hub!</h1>
+        <h1>Welcome to the Tech:Online Hub!</h1>
       </div>
 
       <div className="frontpage-container">
-        <h2>UPDATE: Tech:Online 2022?</h2>
+        <h2>Tech:Online 2022</h2>
         <hr />
-        <p>
-          We are working on getting the signup ready and Tech:Online is going
-          live on the evening of Thursday, 14. April.
-        </p>
-        <p>
-          Are you curious about being Tech crew at The Gathering? Or any other
-          LAN parties? On Friday, April 15th, 14:30 CEST, a conversation with a
-          few members from Tech will be held on the{' '}
-          <a
-            href="https://www.twitch.tv/tgtvcreative"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            TGTVCreative twitch
-          </a>{' '}
-          channel.
-        </p>
-        <p>
-          While you are waiting, check out the reference documentation in the
-          link above
-        </p>
+        <p>Long story short, Tech:Online 2022 was cancelled. This is partially because we were located physically at Vikingskipet this year, where we were primarily responsible for providing network connectivity for the other crews (significantly overprovisioned, of course), and partially because both the backend and frontend developers got sick earlier the week before certain important changes for this year were finished implemented. Rather than running some half-baked version Tech:Online, we decided to cut our losses and work on making it better for next year instead.</p>
+        <p> We _did_ host a discussion about LAN party hosting on TGTVCreative, though. In case you didn't catch it, we'll make sure it gets uploaded and linked here in the not-so-distant future.</p>
+        <p>If you want to know more about the project, check out the reference documentation in the link above og contact us somewhere.</p>
         <br />
         <h2>What is Tech:Online?</h2>
         <hr />
